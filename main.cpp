@@ -1,4 +1,7 @@
+#include <iostream>
+
 using namespace std;
+
 //  PROSEDYREDEKLARASJON:
 char les_kommando();
 void skriv_meny();
