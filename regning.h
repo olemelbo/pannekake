@@ -5,11 +5,9 @@ class Regning {
 		float totalsum;
 		char* navn;
 	public:
-		Regning() {}
-		Regning(int total, char* nvn) {}
-		~Regning() {
-			delete navn;
-		}
+    Regning();
+    Regning(int total, char* nvn);
+    ~Regning();
 };
 
 #endif
