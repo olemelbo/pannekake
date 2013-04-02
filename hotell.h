@@ -6,7 +6,6 @@
 #include "singel.h"
 #include "dobbel.h"
 #include "suite.h"
-using namespace std;
 
 class Hotell {
 private:
