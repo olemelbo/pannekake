@@ -1,12 +1,15 @@
 #include <iostream>
 #include "coen.h"
-#include "proc.cpp"
+#include "proc.h"
+#include "hotell.h"
+#include "reg_post.h"
+#include "timer.h"
 
 using namespace std;
 
 //	Globale variable
 Hotell* hotellet;
-Regpost regpost;
+Reg_post regpost;
 Timer timer;
 int dagens_dato = timer.hent_dato();
 

@@ -8,7 +8,7 @@ class Reg_post {
 	public:
 		Reg_post() {}
 		Reg_post(int total, char* nvn) {}
-		~Reg_post();
+        ~Reg_post() {};
 };
 
 #endif
