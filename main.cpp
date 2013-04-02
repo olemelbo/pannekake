@@ -4,17 +4,6 @@
 
 using namespace std;
 
-enum Valg {
-	E1,
-	E2,
-	E3,
-	O1,
-	O2,
-	O3,
-	O4,
-	O5,
-	O6
-};
 
 int main( void ) {
 	char kommando;	//Må endres til å ta tre tegn.
@@ -50,7 +39,7 @@ int main( void ) {
 		break;
 		 case 'K' : vis_alle_data_for_rom();
 		break;
-		 case 'L' : ledige_rom_kategori();
+		 case 'L' : vis_alle_ledige_rom_i_kategori();
 		break;
 		 case 'T' : skriv_til_fil();
 		break;
