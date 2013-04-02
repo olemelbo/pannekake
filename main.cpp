@@ -32,30 +32,34 @@ int main( void ) {
 		break;
 		 case 'R' : registrer_regning();
 		break;
-		 case Valg:E1 : endre_ankomst();
+		 case 'Z' : endre_ankomst();
 		break;
-		 case Valg:E2 : endre_avreisedato();
+		 case 'X' : endre_avreisedato();
 		break;
-		 case Valg:E3 : bytt_rom();
+		 case 'C' : bytt_rom();
 		break;
-		 case Valg:O1 : oversikt_over_hotell();
+		 case 'S' : oversikt_over_hotell();
 		break;
-		 case Valg:O2 : beskrivelse_av_suiter();
+		 case 'D' : beskrivelse_av_suiter();
 		break;
-		 case Valg:O3 : vis_reservasjoner_for_rom();
+		 case 'F' : vis_reservasjoner_for_rom();
 		break;	
-		 case Valg:O4 : rom_ledig();
+		 case 'G' : rom_ledig();
 		break;
-		 case Valg:O5 : vis_reservasjoner_for_rom();
+		 case 'J' : vis_reservasjoner_for_rom();
 		break;
-		 case Valg:O6 : vis_alle_data_for_rom();
+		 case 'K' : vis_alle_data_for_rom();
+		break;
+		 case 'L' : ledige_rom_kategori();
 		break;
 		 case 'T' : skriv_til_fil();
 		break;
 		 case 'H' : bytt_hotell();
 		break;	
-       default:   skriv_meny();  break;
+    	 default:   skriv_meny();  
+        break;
      }
+
      kommando = les_kommando();        //  F†r inn brukers ›nske.
    }
 	avslutt();
