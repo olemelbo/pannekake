@@ -44,7 +44,7 @@ int main( void ) {
 		break;
 		 case 'E 1' : endre_ankomst();
 		break;
-		 case 'E 2' : endre_avreisedato;
+		 case 'E 2' : endre_avreisedato();
 		break;
 		 case 'E 3' : bytt_rom();
 		break;
@@ -76,7 +76,7 @@ void skriv_meny()  {
   cout << "\n\nF›lgende kommandoer er lovlig:";
   cout << "\n\tB -	 Bestill/reserver/book et rom";
   cout << "\n\tA -	 Avbestill et rom";
-  cout << "\n\tI -	 Innsjekking paa(ankomst til) hotellet;
+  cout << "\n\tI -	 Innsjekking paa(ankomst til) hotellet";
   cout << "\n\tU -	 Utsjekking(avreise) fra hotellet";
   cout << "\n\tR -	 Registrer/legg inn en regning paa et rom";
   cout << "\n\tE 1 - Endre ankomst -og/eller avreisedato f>r innsjekking paa hotellet";
@@ -84,7 +84,7 @@ void skriv_meny()  {
   cout << "\n\tE 3 - Bytte til et annet (ledig) rom enn det tildelte";
   cout << "\n\tO 1 - hoveddatene om ett hotell";
   cout << "\n\tO 2 - beskrivelse av alle hotellets suiter";
-  cout << "\n\tO 3 - alle reservasjoner som står i en persons navn;
+  cout << "\n\tO 3 - alle reservasjoner som står i en persons navn";
   cout << "\n\tO 4 - naar et rom er ledig";
   cout << "\n\tO 5 - alle reservasjoner for/paa et rom";
   cout << "\n\tO 6 - alle data for ett roms nåv>erende beboer, inkludert dens regninger";

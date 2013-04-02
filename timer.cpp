@@ -1,6 +1,6 @@
 
 #include <ctime>              //  tm-struct, time-funksjoner
-#include "timer2.h"           //  (Denne filens deklarasjoner)
+#include "timer.h"           //  (Denne filens deklarasjoner)
 
 
 // **************************************************************************
