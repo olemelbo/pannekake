@@ -4,6 +4,11 @@
 
 using namespace std;
 
+//	Globale variable
+Hotell* hotellet;
+Regpost regpost;
+Timer timer;
+int dagens_dato = timer.hent_dato();
 
 int main( void ) {
 	char kommando;	//Må endres til å ta tre tegn.
