@@ -8,7 +8,9 @@
 
 #include "utils.h"
 #include "coen.h"
-
+#include <cstring>
+#include <stdio.h>
+#include <stdlib.h>
 using namespace std;
 
 char* read_text(ifstream& file) {

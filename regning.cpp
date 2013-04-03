@@ -7,15 +7,15 @@
 //
 
 #include "regning.h"
-
+#include "listtool.h"
 Regning::Regning() {
-    
+	// Denne skal ikke kjøres    
 }
 
-Regning::Regning(int total, char* nvn) {
+Regning::Regning(int total, char* nvn) : Num_element(total) {
     
 }
 
 Regning::~Regning() {
-    delete navn;
+    
 }
