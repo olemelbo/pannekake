@@ -2,6 +2,9 @@
 #define __ROM_H
 
 #include "listtool.h"
+#include <fstream>
+
+using namespace std;
 
 class Rom: public Num_element {
 protected:
@@ -12,6 +15,7 @@ protected:
 public:
 	Rom();
 	Rom(int romnr);
+    Rom(int romnr, ifstream &file);
 	~Rom();
 };
 

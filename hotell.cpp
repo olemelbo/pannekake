@@ -10,6 +10,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <fstream>
+#include "listtool.h"
 #include "hotell.h"
 #include "utils.h"
 
@@ -39,6 +40,36 @@ Hotell::Hotell(char* fil) {
         ekstra_seng_pris    = read_int(infile);
         antall_fasciliteter = read_int(infile);
         
+        for(int i = 0; i < antall_fasciliteter; i++) {
+            fasciliteter[i] = read_text(infile);
+        }
+        
+        rom[SINGEL] = new List(Sorted);
+        int antall_singel = read_int(infile);
+        
+        for(int i = 0; i < antall_singel; i++) {
+            int romnr = read_int(infile);
+            Singel* s = new Singel(romnr, infile);
+            rom[SINGEL]->add(s);
+        }
+        
+        rom[DOBBEL] = new List(Sorted);
+        int antall_dobbel = read_int(infile);
+        
+        for(int i = 0; i < antall_dobbel; i++) {
+            int romnr = read_int(infile);
+            Dobbel* d = new Dobbel(romnr, infile);
+            rom[DOBBEL]->add(d);
+        }
+        
+        rom[SUITE] = new List(Sorted);
+        int antall_suiter = read_int(infile);
+        
+        for(int i = 0; i < antall_suiter; i++) {
+            int romnr = read_int(infile);
+            Suite* s = new Suite(romnr, infile);
+            rom[SUITE]->add(s);
+        }
     } else {
         cout << "Kunne ikke lese filen.";
     }

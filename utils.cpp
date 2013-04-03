@@ -26,3 +26,8 @@ int read_int(ifstream& file) {
     file.getline(tmp, MAX_TEXT);
     return atoi(tmp);
 }
+
+bool read_bool(ifstream &file) {
+    int test = read_int(file);
+    return test > 0 ? true : false;
+}

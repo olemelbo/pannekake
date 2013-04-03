@@ -12,7 +12,7 @@ private:
 public:
 	Singel();
 	Singel(int romnr);
-    Singel(ifstream& infile);
+    Singel(int romnr, ifstream& infile);
 	~Singel();
 };
 

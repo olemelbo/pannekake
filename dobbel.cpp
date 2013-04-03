@@ -7,6 +7,7 @@
 //
 
 #include "dobbel.h"
+#include "utils.h"
 
 Dobbel::Dobbel() {
     
@@ -14,6 +15,10 @@ Dobbel::Dobbel() {
 
 Dobbel::Dobbel(int romnr) : Rom(romnr) {
     
+}
+
+Dobbel::Dobbel(int romnr, ifstream &file): Rom(romnr, file) {
+    ekstra_seng = read_bool(file);
 }
 
 Dobbel::~Dobbel() {

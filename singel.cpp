@@ -16,7 +16,7 @@ Singel::Singel(int romnr): Rom(romnr) {
     
 }
 
-Singel::Singel(ifstream& infile) {
+Singel::Singel(int romnr, ifstream& infile): Rom(romnr, infile) {
     
 }
 

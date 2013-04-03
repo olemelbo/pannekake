@@ -14,7 +14,8 @@
 
 using namespace std;
 
-char* read_text(ifstream& file);
-int read_int(ifstream& file);
+char* read_text(ifstream &file);
+int read_int(ifstream &file);
+bool read_bool(ifstream &file);
 
 #endif /* defined(__Prosjekt__utils__) */
