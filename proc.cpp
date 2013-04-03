@@ -1,5 +1,6 @@
 #include <iostream>
-#include <string>
+#include <cstring>
+#include <stdlib.h>
 #include <fstream>
 #include "proc.h"
 #include "coen.h"
@@ -108,7 +109,7 @@ void les_fra_fil() {
     char* fil;
     fil = new char[strlen(HOTELL_FIL)+1];
     strcpy(fil, HOTELL_FIL);
-    cout << fil;
+
     Hotell* h = new Hotell(fil);
     h->display();
     

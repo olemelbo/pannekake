@@ -7,6 +7,8 @@
 //
 
 #include <iostream>
+#include <stdio.h>
+#include <stdlib.h>
 #include <fstream>
 #include "hotell.h"
 
@@ -23,8 +25,9 @@ Hotell::Hotell(char* fil) {
         
         char tmp[MAX_TEXT];
         
-        //Henter antallet leger og konverterer
-        infile.getline(navn, MAX_TEXT);
+        
+        read_line(navn, infile);
+        
         infile.getline(gateadresse, MAX_TEXT);
         infile.getline(postadresse, MAX_TEXT);
         infile.getline(mailadresse, MAX_TEXT);
@@ -44,12 +47,23 @@ Hotell::Hotell(char* fil) {
         infile.getline(tmp, MAX_TEXT);
         antall_fasciliteter = atoi(tmp);
         
-        
     } else {
         cout << "Kunne ikke lese filen.";
     }
     
  
+}
+
+
+void Hotell::read_line(char* pointer, ifstream& file) {
+    
+    char tmp[MAX_TEXT];
+    char* p;
+    //Henter antallet leger og konverterer
+    file.getline(tmp, MAX_TEXT);
+    p = new char[strlen(tmp)+1];
+    strcpy(p, tmp);
+    pointer = p;
 }
 
 Hotell::~Hotell() {

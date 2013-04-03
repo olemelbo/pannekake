@@ -2,6 +2,7 @@
 #define __HOTELL_H
 
 #include "coen.h"
+#include <fstream>
 #include "listtool.h"
 #include "singel.h"
 #include "dobbel.h"
@@ -29,6 +30,7 @@ public:
 	void les_fra_fil();
 	void skriv_til_fil();
 	void display();
+    void read_line(char* pointer, ifstream& infile);
 };
 
 #endif
