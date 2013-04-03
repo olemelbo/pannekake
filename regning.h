@@ -1,9 +1,9 @@
 #if !defined(__REGNING_H)
 #define __REGNING_H 
-class Regning {
+#include "listtool.h"
+class Regning : public Num_element {
 	private:
 		float totalsum;
-		char* navn;
 	public:
     Regning();
     Regning(int total, char* nvn);
