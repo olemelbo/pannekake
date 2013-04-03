@@ -11,6 +11,7 @@ class Hotell {
 private:
 	char* navn;
 	char* gateadresse;
+    char* postadresse;
 	char* mailadresse;
 	char* filnavn;
 	int telefon;

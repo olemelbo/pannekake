@@ -16,6 +16,8 @@ int dagens_dato = timer.hent_dato();
 int main( void ) {
 	char kommando;	//Må endres til å ta tre tegn.
 	
+    les_fra_fil();
+    
 	//  Looper til 'q'/'Q' tastes:
 	while (kommando != 'Q')  {
      switch (kommando)  {

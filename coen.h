@@ -7,5 +7,6 @@ const int DOBBEL = 1;
 const int SUTIE = 2;
 const int MAX_TEXT = 80;
 const int MAX_ARRAY = 100;
+const char HOTELL_FIL[MAX_TEXT] = "GJOVIK.DTA";
 
 #endif

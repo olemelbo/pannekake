@@ -1,5 +1,9 @@
 #include <iostream>
+#include <string>
+#include <fstream>
 #include "proc.h"
+#include "coen.h"
+#include "hotell.h"
 
 using namespace std;
 
@@ -93,7 +97,7 @@ void vis_alle_ledige_rom_i_kategori() {
 }
 
 void skriv_til_fil() {
-
+    
 }
 
 void bytt_hotell() {
@@ -101,7 +105,13 @@ void bytt_hotell() {
 }
 
 void les_fra_fil() {
-
+    char* fil;
+    fil = new char[strlen(HOTELL_FIL)+1];
+    strcpy(fil, HOTELL_FIL);
+    cout << fil;
+    Hotell* h = new Hotell(fil);
+    h->display();
+    
 }
 
 void avslutt() {
