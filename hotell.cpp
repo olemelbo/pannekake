@@ -11,6 +11,7 @@
 #include <stdlib.h>
 #include <fstream>
 #include "hotell.h"
+#include "utils.h"
 
 using namespace std;
 
@@ -25,45 +26,24 @@ Hotell::Hotell(char* fil) {
         
         char tmp[MAX_TEXT];
         
+        //Leser inn tekst
+        navn        = read_text(infile);
+        gateadresse = read_text(infile);
+        postadresse = read_text(infile);
+        mailadresse = read_text(infile);
         
-        read_line(navn, infile);
-        
-        infile.getline(gateadresse, MAX_TEXT);
-        infile.getline(postadresse, MAX_TEXT);
-        infile.getline(mailadresse, MAX_TEXT);
-        
-        infile.getline(tmp, MAX_TEXT);
-        telefon = atoi(tmp);
-        
-        infile.getline(tmp, MAX_TEXT);
-        fax = atoi(tmp);
-        
-        infile.getline(tmp, MAX_TEXT);
-        frokost_pris = atoi(tmp);
-        
-        infile.getline(tmp, MAX_TEXT);
-        ekstra_seng_pris = atoi(tmp);
-        
-        infile.getline(tmp, MAX_TEXT);
-        antall_fasciliteter = atoi(tmp);
+        //Leser inn nummer
+        telefon             = read_int(infile);
+        fax                 = read_int(infile);
+        frokost_pris        = read_int(infile);
+        ekstra_seng_pris    = read_int(infile);
+        antall_fasciliteter = read_int(infile);
         
     } else {
         cout << "Kunne ikke lese filen.";
     }
     
  
-}
-
-
-void Hotell::read_line(char* pointer, ifstream& file) {
-    
-    char tmp[MAX_TEXT];
-    char* p;
-    //Henter antallet leger og konverterer
-    file.getline(tmp, MAX_TEXT);
-    p = new char[strlen(tmp)+1];
-    strcpy(p, tmp);
-    pointer = p;
 }
 
 Hotell::~Hotell() {
