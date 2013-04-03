@@ -8,6 +8,9 @@
 
 using namespace std;
 
+// Extern 
+extern Hotell* hotellet;
+
 //  PROSEDYREDEKLARASJON:
 char les_kommando() {
 	char cmd;
@@ -98,7 +101,11 @@ void vis_alle_ledige_rom_i_kategori() {
 }
 
 void skriv_til_fil() {
-    
+	char* fil;
+    fil = new char[strlen(HOTELL_FIL)+1];
+    strcpy(fil, HOTELL_FIL);
+	ofstream utfil(fil);
+	hotellet->skriv_til_fil(&utfil);
 }
 
 void bytt_hotell() {

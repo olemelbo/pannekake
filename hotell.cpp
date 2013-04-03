@@ -83,8 +83,20 @@ void Hotell::les_fra_fil() {
     
 }
 
-void Hotell::skriv_til_fil() {
-    
+void Hotell::skriv_til_fil(ostream * ut) {
+	*ut << navn << "\n"
+	<< gateadresse << "\n"
+	<< postadresse << "\n"
+	<< mailadresse << "\n"
+	<< telefon << "\n" 
+	<< fax << "\n"
+	<< frokost_pris << "\n"
+	<< ekstra_seng_pris << "\n"
+	<< antall_fasciliteter << "\n";
+
+	// Looper igjennom fasiliteter
+    for(int i = 0; i < antall_fasciliteter; i++) {
+	}
 }
 
 void Hotell::display() {

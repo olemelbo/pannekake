@@ -28,7 +28,7 @@ public:
 	Hotell(char* fil);
 	~Hotell();
 	void les_fra_fil();
-	void skriv_til_fil();
+	void skriv_til_fil(ostream* ut);
 	void display();
 };
 
