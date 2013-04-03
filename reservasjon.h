@@ -1,8 +1,11 @@
 #if !defined(__RESERVASJON_H)
 #define __RESERVASJON_H
 
+#include <fstream>
 #include "listtool.h"
 #include "coen.h"
+
+using namespace std;
 
 class Reservasjon : public Num_element {
 	private:
@@ -17,6 +20,8 @@ class Reservasjon : public Num_element {
     Reservasjon();
 
     Reservasjon(int ankomst );
+    
+    Reservasjon(int ankomst, ifstream &file);
     ~Reservasjon();
 
     void les_fra_fil();

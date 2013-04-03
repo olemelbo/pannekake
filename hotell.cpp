@@ -25,8 +25,6 @@ Hotell::Hotell(char* fil) {
     ifstream infile(fil);
     if(infile.is_open()) {
         
-        char tmp[MAX_TEXT];
-        
         //Leser inn tekst
         navn        = read_text(infile);
         gateadresse = read_text(infile);
