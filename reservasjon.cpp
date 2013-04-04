@@ -40,11 +40,13 @@ Reservasjon::~Reservasjon() {
 }
 
 void Reservasjon::les_fra_fil() {
-    
+   
 }
 
-void Reservasjon::skriv_til_fil() {
-    
+void Reservasjon::skriv_til_fil(ostream* ut) {
+	*ut << avreise_dato << "\n"
+		<< antall_dogn << "\n"
+		<< 
 }
 
 void Reservasjon::display() {
