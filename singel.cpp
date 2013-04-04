@@ -7,6 +7,7 @@
 //
 
 #include "singel.h"
+using namespace std;
 
 Singel::Singel() {
     
@@ -22,4 +23,8 @@ Singel::Singel(int romnr, ifstream& infile): Rom(romnr, infile) {
 
 Singel::~Singel() {
 
+}
+
+void Singel::skriv_til_fil(ostream* ut) {
+	Rom::skriv_til_fil(ut);
 }

@@ -105,7 +105,8 @@ void skriv_til_fil() {
     fil = new char[strlen(HOTELL_FIL)+1];
     strcpy(fil, HOTELL_FIL);
 	ofstream utfil(fil);
-	hotellet->skriv_til_fil(&utfil);
+	if (utfil.is_open()) 	// Åpner filen
+		hotellet->skriv_til_fil(&utfil);
 }
 
 void bytt_hotell() {

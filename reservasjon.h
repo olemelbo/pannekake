@@ -25,7 +25,7 @@ class Reservasjon : public Num_element {
     ~Reservasjon();
 
     void les_fra_fil();
-    void skriv_til_fil();
+    void skriv_til_fil(ostream* ut);
     void display();
 };
 
