@@ -24,3 +24,8 @@ Dobbel::Dobbel(int romnr, ifstream &file): Rom(romnr, file) {
 Dobbel::~Dobbel() {
     
 }
+
+void Dobbel::skriv_til_fil(ostream* ut) {
+	Rom::skriv_til_fil(ut);
+	*ut << ekstra_seng << "\n";
+}

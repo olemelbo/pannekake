@@ -15,6 +15,7 @@ public:
 	Dobbel(int romnr);
     Dobbel(int romnr, ifstream &file);
 	~Dobbel();
+	void skriv_til_fil(ostream *ut);
 };
 
 #endif

@@ -19,3 +19,8 @@ Regning::Regning(int total, char* nvn) : Num_element(total) {
 Regning::~Regning() {
     
 }
+
+void Regning::skriv_til_fil(ostream* ut) {
+	*ut << number << "\n"
+		<< totalsum << "\n";
+}

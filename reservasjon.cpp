@@ -11,6 +11,7 @@
 #include "reservasjon.h"
 #include "listtool.h"
 #include "utils.h"
+#include "regning.h"
 
 using namespace std;
 
@@ -46,6 +47,13 @@ void Reservasjon::les_fra_fil() {
 void Reservasjon::skriv_til_fil(ostream* ut) {
 	*ut << avreise_dato << "\n"
 		<< antall_dogn << "\n";
+		
+	Regning* temp;
+	for (int j = 1;  j <= regninger->no_of_elements();  j++)  {
+		temp = (Regning*) regninger->remove_no(j);
+		temp->skriv_til_fil(ut);
+		regninger->add(temp); 
+	}
 }
 
 void Reservasjon::display() {

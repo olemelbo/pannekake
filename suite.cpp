@@ -25,3 +25,10 @@ Suite::Suite(int romnr, ifstream &file): Rom(romnr, file) {
 Suite::~Suite() {
     
 }
+
+void Suite::skriv_til_fil(ostream* ut) {
+	Rom::skriv_til_fil(ut);
+	*ut << antall_senger << "\n"
+		<< antall_kvadratmeter << "\n"
+		<< beskrivelse << "\n";
+}
