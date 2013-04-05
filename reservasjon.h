@@ -29,12 +29,4 @@ class Reservasjon : public Num_element {
     void display();
 };
 
-<<<<<<< HEAD
-		void les_fra_fil();
-		void skriv_til_fil();
-		void display();
-};
-
-=======
->>>>>>> 5aa4343436c594663d2d2f199ab23c70f3496bf9
 #endif
