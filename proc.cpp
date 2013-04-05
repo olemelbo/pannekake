@@ -102,8 +102,8 @@ void vis_alle_ledige_rom_i_kategori() {
 
 void skriv_til_fil() {
 	char* fil;
-    fil = new char[strlen(HOTELL_FIL)+1];
-    strcpy(fil, HOTELL_FIL);
+    fil = new char[strlen(HOTELL_SKRIV_FIL)+1];
+    strcpy(fil, HOTELL_SKRIV_FIL);
 	ofstream utfil(fil);
 	if (utfil.is_open()) 	// Åpner filen
 		hotellet->skriv_til_fil(&utfil);
@@ -115,11 +115,11 @@ void bytt_hotell() {
 
 void les_fra_fil() {
     char* fil;
-    fil = new char[strlen(HOTELL_FIL)+1];
-    strcpy(fil, HOTELL_FIL);
+	fil = new char[strlen(HOTELL_FIL)+1];
+	strcpy(fil, HOTELL_FIL);
 
-    Hotell* h = new Hotell(fil);
-    h->display();
+    hotellet = new Hotell(fil);
+    hotellet->display();
     
 }
 

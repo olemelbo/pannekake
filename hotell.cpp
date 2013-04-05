@@ -106,7 +106,7 @@ void Hotell::skriv_til_fil(ostream* ut) {
 	int antall_singel = rom[SINGEL]->no_of_elements();
 	*ut << antall_singel << "\n";
 
-	for(int i = 0; i < antall_singel; i++) {
+	for(int i = 1; i <= antall_singel; i++) {
 		singel = (Singel*) rom[SINGEL]->remove_no(i);
 		singel->skriv_til_fil(ut);
 		rom[SINGEL]->add(singel);        
@@ -114,7 +114,7 @@ void Hotell::skriv_til_fil(ostream* ut) {
 
 	int antall_dobbel = rom[DOBBEL]->no_of_elements();
 	*ut << antall_dobbel << "\n";
-	for(int i=0; i < antall_dobbel; i++) {
+	for(int i=1; i <= antall_dobbel; i++) {
 		dobbel = (Dobbel*) rom[DOBBEL]->remove_no(i);
 		dobbel->skriv_til_fil(ut);
 		rom[DOBBEL]->add(dobbel);
@@ -122,7 +122,7 @@ void Hotell::skriv_til_fil(ostream* ut) {
 
 	int antall_suiter = rom[SUITE]->no_of_elements();
 	*ut << antall_suiter << "\n";
-	for(int i=0; i < antall_suiter; i++) {
+	for(int i=1; i <= antall_suiter; i++) {
 		suite = (Suite*) rom[SUITE]->remove_no(i);
 		suite->skriv_til_fil(ut);
 		rom[SUITE]->add(suite);
