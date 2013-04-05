@@ -46,8 +46,8 @@ void Rom::skriv_til_fil(ostream* ut) {
     
     Reservasjon* temp;
     
-	for (int j = 1;  j <= reservasjoner->no_of_elements();  j++)  {
-		temp = (Reservasjon*) reservasjoner->remove_no(j);
+	for (int i = 1;  i <= reservasjoner->no_of_elements();  i++)  {
+		temp = (Reservasjon*) reservasjoner->remove_no(i);
 		temp->skriv_til_fil(ut);
 		reservasjoner->add(temp); 
 	}

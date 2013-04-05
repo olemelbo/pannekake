@@ -5,6 +5,7 @@
 #include "proc.h"
 #include "coen.h"
 #include "hotell.h"
+#include "utils.h"
 
 using namespace std;
 
@@ -112,7 +113,43 @@ void skriv_til_fil() {
 }
 
 void bytt_hotell() {
-
+    char* userinput = getln("Tast inn navnet på filen");
+    ifstream infile(HOTELL_FIL);
+    if(infile.is_open()) {
+        while(!infile.eof()) {
+            
+            //Initierer variabler
+            char linje[MAX_TEXT];
+            char original[MAX_TEXT];
+            
+            //Henter hele linjen fra filen
+            infile.getline(original, MAX_TEXT);
+            
+            //Kopierer linje inn i egen variabel
+            //slik at strtok ikke erstatter originalen
+            strcpy(linje, original);
+            
+            //Henter ut første ord fra linjen
+            char* nextWord = strtok(linje, " ");
+            
+            //Oppretter ny char peker og kopierer
+            //første ordet inn i denne (kortnavn).
+            char* kortnavn = new char[strlen(nextWord) + 1];
+            strcpy(kortnavn, nextWord);
+            
+            //Langnavn er lik original - kortnavn.
+            char* langnavn = stripWord(kortnavn, original);
+            
+            //Hvis brukerinput og langnavn er like
+            if(strcmp(userinput, langnavn) == 0) {
+                char* fil = strcat(kortnavn, ".DTA");
+                hotellet = new Hotell(fil);
+                return;
+            }
+        }
+        
+        cout << "Hotellet du spesifiserte finnes ikke";
+    }
 }
 
 void les_fra_fil() {

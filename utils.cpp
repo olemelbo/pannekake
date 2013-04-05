@@ -33,3 +33,17 @@ bool read_bool(ifstream &file) {
     int test = read_int(file);
     return test > 0 ? true : false;
 }
+
+char* getln(char prompt[]) {
+    cout << prompt << ": ";
+    char input[MAX_TEXT];
+    cin.getline(input, MAX_TEXT);
+    char* result = new char[strlen(input) + 1];
+    strcpy(result, input);
+    return result;
+}
+
+char* stripWord(char word[], char str[]) {
+    
+    return strstr(str, word)+strlen(word)+1;
+}

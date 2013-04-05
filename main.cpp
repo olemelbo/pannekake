@@ -14,8 +14,9 @@ Timer timer;
 int dagens_dato = timer.hent_dato();
 
 int main( void ) {
-	les_fra_fil();
-	skriv_til_fil();
+    bytt_hotell();
+	//les_fra_fil();
+	//skriv_til_fil();
 	skriv_meny();
 	char kommando = les_kommando();	//Må endres til å ta tre tegn.
 

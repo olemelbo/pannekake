@@ -17,5 +17,7 @@ using namespace std;
 char* read_text(ifstream &file);
 int read_int(ifstream &file);
 bool read_bool(ifstream &file);
+char* getln(char prompt[]);
+char* stripWord(char word[], char str[]);
 
 #endif /* defined(__Prosjekt__utils__) */
