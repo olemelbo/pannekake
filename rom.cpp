@@ -38,13 +38,18 @@ Rom::~Rom() {
 }
 
 void Rom::skriv_til_fil(ostream* ut) {
-	Reservasjon* temp;
+	
+    *ut << number << "\n"
+        << ant_senger << "\n"
+        << frokost_inkludert << "\n"
+        << reservasjoner->no_of_elements() << "\n";
+    
+    Reservasjon* temp;
+    
 	for (int j = 1;  j <= reservasjoner->no_of_elements();  j++)  {
 		temp = (Reservasjon*) reservasjoner->remove_no(j);
 		temp->skriv_til_fil(ut);
 		reservasjoner->add(temp); 
 	}
 
-	*ut << ant_senger << "\n"
-	<< frokost_inkludert << "\n";
 }

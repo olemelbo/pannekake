@@ -8,12 +8,18 @@
 
 #include "regning.h"
 #include "listtool.h"
+#include "utils.h"
+
 Regning::Regning() {
 	// Denne skal ikke kjøres    
 }
 
-Regning::Regning(int total, char* nvn) : Num_element(total) {
+Regning::Regning(char* nvn, int total) : Text_element(nvn) {
     
+}
+
+Regning::Regning(char* nvn, ifstream &file): Text_element(nvn) {
+    totalsum = read_int(file);
 }
 
 Regning::~Regning() {
@@ -21,6 +27,6 @@ Regning::~Regning() {
 }
 
 void Regning::skriv_til_fil(ostream* ut) {
-	*ut << number << "\n"
+	*ut << text << "\n"
 		<< totalsum << "\n";
 }

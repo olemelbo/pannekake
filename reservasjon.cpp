@@ -34,6 +34,14 @@ Reservasjon::Reservasjon(int ankomst, ifstream &file): Num_element(ankomst) {
     for(int i = 0; i < antall_beboere; i++) {
         navn[i] = read_text(file);
     }
+    
+    regninger = new List(FIFO);
+    int antall_regninger = read_int(file);
+    for(int i = 0; i < antall_regninger; i++) {
+        char* beskrivelse = read_text(file);
+        Regning* r = new Regning(beskrivelse, file);
+        regninger->add(r);
+    }
 }
 
 Reservasjon::~Reservasjon() {
@@ -45,12 +53,26 @@ void Reservasjon::les_fra_fil() {
 }
 
 void Reservasjon::skriv_til_fil(ostream* ut) {
-	*ut << avreise_dato << "\n"
+	*ut << number << "\n"
+        << avreise_dato << "\n"
 		<< antall_dogn << "\n";
-		
+    
+    for(int i = 0; i < antall_dogn; i++) {
+        *ut << pris[i] << "\n";
+    }
+    
+    *ut << status_seng << "\n"
+        << antall_beboere << "\n";
+    
+    for(int i = 0; i < antall_beboere; i++) {
+        *ut << navn[i] << "\n";
+    }
+    
+    *ut << regninger->no_of_elements() << "\n";
+    
 	Regning* temp;
 	for (int j = 1;  j <= regninger->no_of_elements();  j++)  {
-		temp = (Regning*) regninger->remove_no(j);
+		temp = (Regning*) regninger->remove();
 		temp->skriv_til_fil(ut);
 		regninger->add(temp); 
 	}

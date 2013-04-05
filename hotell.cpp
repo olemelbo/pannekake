@@ -100,7 +100,7 @@ void Hotell::skriv_til_fil(ostream* ut) {
 
 	// Looper igjennom fasiliteter
     for(int i = 0; i < antall_fasciliteter; i++) {
-		*ut << i << "\n";
+		*ut << fasciliteter[i] << "\n";
 	}
 	
 	int antall_singel = rom[SINGEL]->no_of_elements();

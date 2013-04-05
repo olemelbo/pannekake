@@ -107,6 +107,8 @@ void skriv_til_fil() {
 	ofstream utfil(fil);
 	if (utfil.is_open()) 	// Åpner filen
 		hotellet->skriv_til_fil(&utfil);
+    
+    utfil.close();
 }
 
 void bytt_hotell() {

@@ -4,13 +4,14 @@
 #include <fstream>
 using namespace std;
 
-class Regning : public Num_element {
+class Regning : public Text_element {
 
 	private:
 		float totalsum;
 	public:
     Regning();
-    Regning(int total, char* nvn);
+    Regning(char* nvn, int total);
+    Regning(char* nvn, ifstream &file);
     ~Regning();
 	void skriv_til_fil(ostream* ut);
 };
