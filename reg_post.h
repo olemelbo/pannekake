@@ -6,9 +6,9 @@ class Reg_post {
 		int antall_brukt_reg_post;
 		char mest_vanlige_poster[];
 	public:
-		Reg_post() {}
-		Reg_post(int total, char* nvn) {}
-		~Reg_post();
+    Reg_post();
+    Reg_post(int total, char* nvn);
+    ~Reg_post();
 };
 
 #endif

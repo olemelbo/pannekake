@@ -30,7 +30,7 @@
 			     //  INCLUDE:
 #include <iostream>                    //  cout, cin
 #include <cstring>                     //  strcpy, strlen, strcmp
-#include "listtool2.h"                 //  Definition of classes.
+#include "listtool.h"                 //  Definition of classes.
 
 using namespace std;
 

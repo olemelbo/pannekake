@@ -1,7 +1,15 @@
 #include <iostream>
+#include <cstring>
+#include <stdlib.h>
+#include <fstream>
 #include "proc.h"
+#include "coen.h"
+#include "hotell.h"
 
 using namespace std;
+
+// Extern 
+extern Hotell* hotellet;
 
 //  PROSEDYREDEKLARASJON:
 char les_kommando() {
@@ -12,24 +20,24 @@ char les_kommando() {
 }
 
 void skriv_meny()  {
-	cout << "\n\nF›lgende kommandoer er lovlig:";
-	cout << "\n\tB -	 Bestill/reserver/book et rom";
-	cout << "\n\tA -	 Avbestill et rom";
-	cout << "\n\tI -	 Innsjekking paa(ankomst til) hotellet";
-	cout << "\n\tU -	 Utsjekking(avreise) fra hotellet";
-	cout << "\n\tR -	 Registrer/legg inn en regning paa et rom";
-	cout << "\n\tE 1 - Endre ankomst -og/eller avreisedato f>r innsjekking paa hotellet";
-	cout << "\n\tE 2 - Beskrivelse av alle hotellers suiter";
-	cout << "\n\tE 3 - Bytte til et annet (ledig) rom enn det tildelte";
-	cout << "\n\tO 1 - hoveddatene om ett hotell";
-	cout << "\n\tO 2 - beskrivelse av alle hotellets suiter";
-	cout << "\n\tO 3 - alle reservasjoner som står i en persons navn";
-	cout << "\n\tO 4 - naar et rom er ledig";
-	cout << "\n\tO 5 - alle reservasjoner for/paa et rom";
-	cout << "\n\tO 6 - alle data for ett roms nåv>erende beboer, inkludert dens regninger";
-	cout << "\n\tO 7 - alle ledeige rom i en kategori";
-	cout << "\n\tT -   skriv alt om hotellet til fil";
-	cout << "\n\tH -   Bytte over til et annet hotell";
+	cout << "\n\nF>lgende kommandoer er lovlig:";
+	cout << "\n\tB - Bestill/reserver/book et rom";
+	cout << "\n\tA - Avbestill et rom";
+	cout << "\n\tI - Innsjekking paa(ankomst til) hotellet";
+	cout << "\n\tU - Utsjekking(avreise) fra hotellet";
+	cout << "\n\tR - Registrer/legg inn en regning paa et rom";
+	cout << "\n\tZ - Endre ankomst -og/eller avreisedato f>r innsjekking paa hotellet";
+	cout << "\n\tX - Beskrivelse av alle hotellers suiter";
+	cout << "\n\tC - Bytte til et annet (ledig) rom enn det tildelte";
+	cout << "\n\tS - hoveddatene om ett hotell";
+	cout << "\n\tD - beskrivelse av alle hotellets suiter";
+	cout << "\n\tF - alle reservasjoner som står i en persons navn";
+	cout << "\n\tG - naar et rom er ledig";
+	cout << "\n\tJ - alle reservasjoner for/paa et rom";
+	cout << "\n\tK - alle data for ett roms nåv>erende beboer, inkludert dens regninger";
+	cout << "\n\tL - alle ledeige rom i en kategori";
+	cout << "\n\tT - skriv alt om hotellet til fil";
+	cout << "\n\tH - Bytte over til et annet hotell";
 }
 
 void reserver_rom() {
@@ -93,7 +101,12 @@ void vis_alle_ledige_rom_i_kategori() {
 }
 
 void skriv_til_fil() {
-
+	char* fil;
+    fil = new char[strlen(HOTELL_FIL)+1];
+    strcpy(fil, HOTELL_FIL);
+	ofstream utfil(fil);
+	if (utfil.is_open()) 	// Åpner filen
+		hotellet->skriv_til_fil(&utfil);
 }
 
 void bytt_hotell() {
@@ -101,7 +114,13 @@ void bytt_hotell() {
 }
 
 void les_fra_fil() {
+    char* fil;
+    fil = new char[strlen(HOTELL_FIL)+1];
+    strcpy(fil, HOTELL_FIL);
 
+    Hotell* h = new Hotell(fil);
+    h->display();
+    
 }
 
 void avslutt() {

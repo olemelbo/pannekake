@@ -1,2 +1,10 @@
 *.vcxproj
 *.filters
+*.exe
+*.opensdf
+*.sdf
+*.suo
+*.snl
+*.o
+Debug/
+*.sln

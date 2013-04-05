@@ -2,14 +2,18 @@
 #define __DOBBEL_H
 
 #include "rom.h"
+#include <fstream>
+
+using namespace std;
 
 class Dobbel: public Rom {
 private:
-	int ekstra_seng;
+	bool ekstra_seng;
 
 public:
 	Dobbel();
 	Dobbel(int romnr);
+    Dobbel(int romnr, ifstream &file);
 	~Dobbel();
 };
 

@@ -1,13 +1,23 @@
 #include <iostream>
 #include "coen.h"
-#include "proc.cpp"
+#include "proc.h"
+#include "hotell.h"
+#include "reg_post.h"
+#include "timer.h"
 
 using namespace std;
 
+//	Globale variable
+Hotell* hotellet;	// Et hotell
+Reg_post regpost;
+Timer timer;
+int dagens_dato = timer.hent_dato();
 
 int main( void ) {
-	char kommando;	//Må endres til å ta tre tegn.
-	
+	les_fra_fil();
+	skriv_meny();
+	char kommando = les_kommando();	//Må endres til å ta tre tegn.
+
 	//  Looper til 'q'/'Q' tastes:
 	while (kommando != 'Q')  {
      switch (kommando)  {
