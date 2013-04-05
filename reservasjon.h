@@ -26,5 +26,6 @@ class Reservasjon : public Num_element {
 		void les_fra_fil();
 		void skriv_til_fil();
 		void display();
-}
+};
+
 #endif

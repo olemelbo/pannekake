@@ -1,5 +1,6 @@
 #if !defined(__REGNING_H)
 #define __REGNING_H 
+
 class Regning {
 	private:
 		float totalsum;
