@@ -19,7 +19,7 @@ Reservasjon::Reservasjon() {
     
 }
 
-Reservasjon::Reservasjon(int ankomst): Num_element(ankomst) {
+Reservasjon::Reservasjon(char* romtype, int ankomst, int avreise, bool frokost, bool seng): Num_element(ankomst) {
     
 }
 

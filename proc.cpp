@@ -42,6 +42,43 @@ void skriv_meny()  {
 }
 
 void reserver_rom() {
+	char buffer[80];
+
+	char* romtype;
+	cout << "Hvilken romtype ønsker du? [Singel/Dobbel/Suite] ";
+	cin >> buffer;
+	romtype = new char[strlen(buffer)+1];
+	strcpy(romtype, buffer);
+
+	int annkomstdato;
+	cout << "Skriv inn annkomstdato[ddmmåå]: ";
+	cin >> annkomstdato;//Sjekk >= dagens dato
+	cin.ignore();
+
+	int avreisedato;
+	cout << "Skriv inn avreisedato[ddmmåå]: ";
+	cin >> avreisedato;//Større enn annkomstdato
+	cin.ignore();
+
+	bool frokost == false;;
+	char onskerfrokost;
+	cout << "Ønsker du frokost? [y/n] ";
+	cin >> onskerfrokost;
+	if(onskerfrokost == 'y'){
+		frokost == true;
+	}
+	
+	bool ekstraseng == false;;
+	char onskerekstraseng;
+	if(romtype == 'Dobbel'){
+		cout << "Er det behov for en ekstra seng? [y/n] ";
+		cin >> onskerekstraseng;
+		if(onskerekstraseng == 'y'){
+			ekstraseng == true;
+		}
+	}
+
+	new reservasjon(romtype, annkomstdato, avreisedato, frokost, ekstraseng);
 
 }
 

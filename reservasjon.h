@@ -19,7 +19,7 @@ class Reservasjon : public Num_element {
 	public:
     Reservasjon();
 
-    Reservasjon(int ankomst );
+    Reservasjon(char* romtype, int ankomst, int avreise, bool frokost, bool seng );
     
     Reservasjon(int ankomst, ifstream &file);
     ~Reservasjon();
