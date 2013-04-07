@@ -5,6 +5,7 @@
 #include "proc.h"
 #include "coen.h"
 #include "hotell.h"
+#include "reservasjon.h"
 #include "utils.h"
 
 using namespace std;
@@ -44,6 +45,8 @@ void skriv_meny()  {
 void reserver_rom() {
 	char buffer[80];
 
+	Reservasjon *temp;
+
 	char* romtype;
 	cout << "Hvilken romtype ønsker du? [Singel/Dobbel/Suite] ";
 	cin >> buffer;
@@ -60,7 +63,7 @@ void reserver_rom() {
 	cin >> avreisedato;//Større enn annkomstdato
 	cin.ignore();
 
-	bool frokost == false;;
+	bool frokost = false;
 	char onskerfrokost;
 	cout << "Ønsker du frokost? [y/n] ";
 	cin >> onskerfrokost;
@@ -68,9 +71,9 @@ void reserver_rom() {
 		frokost == true;
 	}
 	
-	bool ekstraseng == false;;
+	bool ekstraseng = false;;
 	char onskerekstraseng;
-	if(romtype == 'Dobbel'){
+	if(romtype == "Dobbel"){
 		cout << "Er det behov for en ekstra seng? [y/n] ";
 		cin >> onskerekstraseng;
 		if(onskerekstraseng == 'y'){
@@ -78,16 +81,21 @@ void reserver_rom() {
 		}
 	}
 
-	new reservasjon(romtype, annkomstdato, avreisedato, frokost, ekstraseng);
+	temp = new Reservasjon(romtype, annkomstdato, avreisedato, frokost, ekstraseng);
 
 }
 
 void avbestill_rom() {
-
+	
 }
 
 void innsjekking() {
-
+	cout << "Skriv inn reservat>ens navn";
+	char temp_navn[MAX_TEXT];
+	char* navn;
+	cin >> temp_navn;
+	navn = new char[strlen(temp_navn)+1];
+	
 }
 
 void utsjekking() {

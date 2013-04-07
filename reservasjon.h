@@ -24,6 +24,8 @@ class Reservasjon : public Num_element {
     Reservasjon(int ankomst, ifstream &file);
     ~Reservasjon();
 
+	bool is_name_in_array(char *name);
+
     void les_fra_fil();
     void skriv_til_fil(ostream* ut);
     void display();

@@ -48,6 +48,10 @@ Reservasjon::~Reservasjon() {
     
 }
 
+bool Reservasjon::is_name_in_array(char* name) {
+	return true;
+}
+
 void Reservasjon::les_fra_fil() {
    
 }
