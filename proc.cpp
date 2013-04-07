@@ -54,12 +54,12 @@ void reserver_rom() {
 	strcpy(romtype, buffer);
 
 	int annkomstdato;
-	cout << "Skriv inn annkomstdato[ddmmåå]: ";
+	cout << "Skriv inn annkomstdato[ååmmdd]: ";
 	cin >> annkomstdato;//Sjekk >= dagens dato
 	cin.ignore();
 
 	int avreisedato;
-	cout << "Skriv inn avreisedato[ddmmåå]: ";
+	cout << "Skriv inn avreisedato[ååmmdd]: ";
 	cin >> avreisedato;//Større enn annkomstdato
 	cin.ignore();
 

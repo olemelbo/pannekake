@@ -20,7 +20,22 @@ Reservasjon::Reservasjon() {
 }
 
 Reservasjon::Reservasjon(char* romtype, int ankomst, int avreise, bool frokost, bool seng): Num_element(ankomst) {
-    
+    romtype = romtype;
+	ankomst_dato = ankomst;
+	avreise_dato = avreise;
+	antall_dogn = ;
+	if(seng == true){
+		status_seng = ;//???????
+	}
+	else status_seng = ;
+	if(frokost == true){
+		status_frokost = 1;//???????
+	}
+	else status_frokost = 0;
+	
+	antall_beboere;
+	navn[MAX_ARRAY];
+	pris[MAX_ARRAY];
 }
 
 Reservasjon::Reservasjon(int ankomst, ifstream &file): Num_element(ankomst) {
