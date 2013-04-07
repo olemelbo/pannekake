@@ -9,11 +9,14 @@ using namespace std;
 
 class Reservasjon : public Num_element {
 	private:
+		char* romtype;
 		int avreise_dato;
+		int ankomst_dato;
 		int antall_dogn;
 		float pris[MAX_ARRAY];
 		List* regninger;
 		int status_seng;
+		int status_frokost;
 		int antall_beboere;
 		char* navn[MAX_ARRAY];
 	public:
