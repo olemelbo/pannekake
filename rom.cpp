@@ -69,8 +69,6 @@ void Rom::avbestill_rom(char* name) {
 			if(temp == 'N' || temp == 'n') {
 				reservasjoner->add(reservasjon);
 			}	
-		} else {
-			cout << "Det finnes ingen reservasjoner paa dette navnet" << endl;
-		}
+		} 
 	}
 }
