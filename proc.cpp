@@ -48,7 +48,7 @@ void reserver_rom() {
 	Reservasjon *temp;
 
 	char* romtype_tmp;
-	cout << "Hvilken romtype ønsker du? [Singel/Dobbel/Suite] ";
+	cout << "Hvilken romtype >nsker du? [Singel/Dobbel/Suite] " << endl;
 	cin >> buffer;
 	romtype_tmp = new char[strlen(buffer)+1];
 	strcpy(romtype_tmp, buffer);
@@ -62,12 +62,12 @@ void reserver_rom() {
         romtype = SUITE;
 
 	int annkomstdato;
-	cout << "Skriv inn annkomstdato[ååååmmdd]: ";
+	cout << "Skriv inn annkomstdato[AAAAMMDD]: ";
 	cin >> annkomstdato;//Sjekk >= dagens dato
 	cin.ignore();
 
 	int avreisedato;
-	cout << "Skriv inn avreisedato[ååååmmdd]: ";
+	cout << "Skriv inn avreisedato[AAAAMMDD]: ";
 	cin >> avreisedato;//Større enn annkomstdato
 	cin.ignore();
 
@@ -103,13 +103,30 @@ void reserver_rom() {
     // Denne skal loope til vi har en reservatør
     char tmp[MAX_TEXT];
     int ant;
-    
+
+    /** // Kan ikke allokere array størrelse dynamisk ved runtime.
     cout << "Hvor mange beboere skal reserveres? ";
     cin >> tmp;
     ant = atoi(tmp);
     
     char* beboere[ant];
     for(int i = 0; i < ant; i++) {
+        cout << "Skriv inn navnet på beboer " << i+1 << ": ";
+        
+        cin >> tmp;
+        beboere[i] = new char[strlen(tmp)+1];
+        strcpy(beboere[i], tmp);
+    }
+
+	*/
+
+	cout << "Hvor mange beboere skal reserveres? ";
+    cin >> tmp;
+    ant = atoi(tmp);
+
+	char* beboere[MAX_ARRAY];
+	
+	for(int i = 0; i < ant; i++) {
         cout << "Skriv inn navnet på beboer " << i+1 << ": ";
         
         cin >> tmp;
@@ -133,7 +150,7 @@ void avbestill_rom() {
 	cout << "Skriv inn reservat>ens navn: " << endl;
 	cin >> temp_navn;
 	navn = new char[strlen(temp_navn)+1];
-	
+	strcpy(navn, temp_navn);
 	hotellet->avbestill_rom(navn);
 }
 

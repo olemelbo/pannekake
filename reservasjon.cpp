@@ -116,5 +116,11 @@ void Reservasjon::skriv_til_fil(ostream* ut) {
 }
 
 void Reservasjon::display() {
-    
+	cout << "Ankomst: " << number << "\n"
+		 << "Avreise: " << avreise_dato << "\n"
+		 << "Antall d>gn: " << antall_dogn << "\n"
+		 << "Antall beboere: " << antall_beboere << "\n";
+	for(int i = 0; i < antall_beboere; i++) {
+        cout << "Navn paa beboere: " << navn[i] << "\n";
+    }
 }
