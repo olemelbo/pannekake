@@ -12,6 +12,7 @@
 #include "listtool.h"
 #include "utils.h"
 #include "regning.h"
+#include "timer.h"
 
 using namespace std;
 
@@ -20,10 +21,11 @@ Reservasjon::Reservasjon() {
 }
 
 Reservasjon::Reservasjon(char* romtype, int ankomst, int avreise, bool frokost, bool seng): Num_element(ankomst) {
+	Timer *timer;
     romtype = romtype;
 	ankomst_dato = ankomst;
 	avreise_dato = avreise;
-	antall_dogn = ;
+	antall_dogn = timer->forskjell_datoer(ankomst_dato, avreise_dato);
 	if(seng == true){
 		status_seng = ;//???????
 	}

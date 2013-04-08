@@ -30,6 +30,7 @@ public:
 	void les_fra_fil();
 	void skriv_til_fil(ostream* ut);
 	void display();
+	List* get_rom(int romtype);
 };
 
 #endif

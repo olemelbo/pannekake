@@ -133,3 +133,6 @@ void Hotell::display() {
     cout << navn;
 }
 
+List* Hotell::get_rom(int romtype) {
+	return rom[romtype];
+}
