@@ -38,6 +38,7 @@ Reservasjon::Reservasjon(int ankomst,
 	} else {
         //status_seng = ;
     }
+
 	if(frokost == true){
 		status_frokost = 1;//???????
 	}
@@ -77,7 +78,13 @@ Reservasjon::~Reservasjon() {
 }
 
 bool Reservasjon::is_name_in_array(char* name) {
-	return true;
+	for(int i = 0; i < antall_beboere; i++) {
+		if(navn[i] == name) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 }
 
 void Reservasjon::les_fra_fil() {

@@ -64,3 +64,22 @@ bool Rom::ledig() {
 List* Rom::get_reservasjoner() {
     return reservasjoner;
 }
+
+void Rom::avbestill_rom(char* name) {
+	Reservasjon* reservasjon;
+	char temp;
+	for (int j = 1;  j <= reservasjoner->no_of_elements();  j++)  { 
+		reservasjon = (Reservasjon*) reservasjoner->remove_no(j);
+		if(reservasjon->is_name_in_array(name)) {
+			reservasjon->display();
+			do {
+				cout << "Skal reservasjonen slettes?[Y/n]" << endl;
+				cin >> temp;
+			} while(temp != 'Y' && temp !='y' && temp != 'N' && temp != 'n');
+
+			if(temp == 'N' || temp == 'n') {
+				reservasjoner->add(reservasjon);
+			}	
+		} 
+	}
+}
