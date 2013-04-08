@@ -133,6 +133,17 @@ void Hotell::display() {
     cout << navn;
 }
 
+void Hotell::avbestill_rom(char* navn) {
+	Rom* rommet;
+	for(int i = 0; i < ANTALL_ROMTYPER; i++) {
+		for (int j = 1;  j <= rom[i]->no_of_elements();  j++)  {   //  Går gjennom legelisten.
+			 rommet =  (Rom*) rom[i]->remove_no(j); 
+			 rommet->avbestill_rom(navn);
+			 rom[i]->add(rommet);
+		}
+	}
+}
+
 List* Hotell::get_rom(int romtype) {
 	return rom[romtype];
 }

@@ -27,9 +27,9 @@ Reservasjon::Reservasjon(char* romtype, int ankomst, int avreise, bool frokost, 
 	avreise_dato = avreise;
 	antall_dogn = timer->forskjell_datoer(ankomst_dato, avreise_dato);
 	if(seng == true){
-		status_seng = ;//???????
+		status_seng = true;//???????
 	}
-	else status_seng = ;
+	else status_seng = false;
 	if(frokost == true){
 		status_frokost = 1;//???????
 	}
@@ -66,7 +66,13 @@ Reservasjon::~Reservasjon() {
 }
 
 bool Reservasjon::is_name_in_array(char* name) {
-	return true;
+	for(int i = 0; i < antall_beboere; i++) {
+		if(navn[i] == name) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 }
 
 void Reservasjon::les_fra_fil() {

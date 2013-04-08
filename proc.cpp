@@ -99,6 +99,14 @@ void reserver_rom() {
 }
 
 void avbestill_rom() {
+	char temp_navn[MAX_TEXT];
+	char* navn;
+	
+	cout << "Skriv inn reservat>ens navn";
+	cin >> temp_navn;
+	navn = new char[strlen(temp_navn)+1];
+	
+	hotellet->avbestill_rom(navn);
 	
 }
 

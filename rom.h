@@ -18,6 +18,7 @@ public:
     Rom(int romnr, ifstream &file);
 	~Rom();
 	void skriv_til_fil(ostream* ut);
+	void avbestill_rom(char* navn);
 };
 
 #endif
