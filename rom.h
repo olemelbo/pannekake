@@ -18,6 +18,8 @@ public:
     Rom(int romnr, ifstream &file);
 	~Rom();
 	void skriv_til_fil(ostream* ut);
+    bool ledig();
+    List* get_reservasjoner();
 };
 
 #endif

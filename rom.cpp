@@ -53,3 +53,14 @@ void Rom::skriv_til_fil(ostream* ut) {
 	}
 
 }
+
+bool Rom::ledig() {
+    // Denne er midlertidig.
+    // Skal seienere sjekke reservasjoner
+    // og kalkulere om den faktisk er ledig.
+    return true;
+}
+
+List* Rom::get_reservasjoner() {
+    return reservasjoner;
+}

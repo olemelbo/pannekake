@@ -22,7 +22,7 @@ class Reservasjon : public Num_element {
 	public:
     Reservasjon();
 
-    Reservasjon(char* romtype, int ankomst, int avreise, bool frokost, bool seng );
+    Reservasjon(int ankomst, int avreise, bool frokost, bool seng, int ant_beboere, char* beboere[MAX_ARRAY]);
     
     Reservasjon(int ankomst, ifstream &file);
     ~Reservasjon();

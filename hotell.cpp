@@ -136,3 +136,34 @@ void Hotell::display() {
 List* Hotell::get_rom(int romtype) {
 	return rom[romtype];
 }
+
+Rom* Hotell::get_ledig_rom(int romtype) {
+    
+    int n = rom[romtype]->no_of_elements();
+    int r = rand() % n + 1;
+    int x = r;
+    
+    bool er_ledig = false;
+    Rom* rommet;
+    
+    while(!er_ledig && x <= n) {
+        rommet = (Rom*) rom[romtype]->remove_no(x);
+        er_ledig = rommet->ledig();
+        rom[romtype]->add(rommet);
+        x++;
+    }
+    
+    if(!er_ledig) {
+        for(int i = 1; i <= r; i++) {
+            rommet = (Rom*) rom[romtype]->remove_no(i);
+            er_ledig = rommet->ledig();
+            rom[romtype]->add(rommet);
+        }
+    }
+    
+    if(!er_ledig)
+        return NULL;
+    
+    return rommet;
+    
+}

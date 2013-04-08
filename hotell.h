@@ -31,6 +31,7 @@ public:
 	void skriv_til_fil(ostream* ut);
 	void display();
 	List* get_rom(int romtype);
+    Rom* get_ledig_rom(int romtype);
 };
 
 #endif

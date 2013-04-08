@@ -47,11 +47,19 @@ void reserver_rom() {
 
 	Reservasjon *temp;
 
-	char* romtype;
+	char* romtype_tmp;
 	cout << "Hvilken romtype ønsker du? [Singel/Dobbel/Suite] ";
 	cin >> buffer;
-	romtype = new char[strlen(buffer)+1];
-	strcpy(romtype, buffer);
+	romtype_tmp = new char[strlen(buffer)+1];
+	strcpy(romtype_tmp, buffer);
+    
+    int romtype;
+    if(strcmp(romtype_tmp, "Singel") == 0)
+        romtype = SINGEL;
+    if(strcmp(romtype_tmp, "Dobbel") == 0)
+        romtype = DOBBEL;
+    if(strcmp(romtype_tmp, "Suite") == 0)
+        romtype = SUITE;
 
 	int annkomstdato;
 	cout << "Skriv inn annkomstdato[ååååmmdd]: ";
@@ -68,34 +76,54 @@ void reserver_rom() {
 	cout << "Ønsker du frokost? [y/n] ";
 	cin >> onskerfrokost;
 	if(onskerfrokost == 'y'){
-		frokost == true;
+		frokost = true;
 	}
 	
 	bool ekstraseng = false;
 	char onskerekstraseng;
-	if(romtype == "Dobbel"){
+	if(romtype == DOBBEL){
 		cout << "Er det behov for en ekstra seng? [y/n] ";
 		cin >> onskerekstraseng;
 		if(onskerekstraseng == 'y'){
-			ekstraseng == true;
+			ekstraseng = true;
 		}
 	}
 
+    // Prøver å hente ledig rom i angitt kategori
+    Rom* r = hotellet->get_ledig_rom(romtype);
+    
+    // Avslutter med melding hvis det
+    // ikke finnes ledige rom i kategorien.
+    if(!r) {
+        cout << "Det finnes ingen ledige rom i denne kategorien\n";
+        return;
+    }
+    
+    
+    // Denne skal loope til vi har en reservatør
+    char tmp[MAX_TEXT];
+    int ant;
+    
+    cout << "Hvor mange beboere skal reserveres? ";
+    cin >> tmp;
+    ant = atoi(tmp);
+    
+    char* beboere[ant];
+    for(int i = 0; i < ant; i++) {
+        cout << "Skriv inn navnet på beboer " << i+1 << ": ";
+        
+        cin >> tmp;
+        beboere[i] = new char[strlen(tmp)+1];
+        strcpy(beboere[i], tmp);
+    }
 
+    // Oppretter reservasjon
+	temp = new Reservasjon(annkomstdato, avreisedato, frokost, ekstraseng, ant, beboere);
+    
+    // Legger reservasjonen til i rommet.
+    r->get_reservasjoner()->add(temp);
 
-	temp = new Reservasjon(romtype, annkomstdato, avreisedato, frokost, ekstraseng);
-
-	if(romtype == "Singel"){
-		hotellet->get_rom(SINGEL)->add(temp);
-	}
-	else if(romtype == "Dobbel"){
-		hotellet->get_rom(DOBBEL)->add(temp);
-	}
-	else if(romtype == "Suite"){
-		hotellet->get_rom(SUITE)->add(temp);
-	}
-	else;
-
+    hotellet->les_fra_fil();
 }
 
 void avbestill_rom() {

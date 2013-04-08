@@ -16,28 +16,39 @@
 
 using namespace std;
 
+extern Timer timer;
+
 Reservasjon::Reservasjon() {
     
 }
 
-Reservasjon::Reservasjon(char* romtype, int ankomst, int avreise, bool frokost, bool seng): Num_element(ankomst) {
-	Timer *timer;
-    romtype = romtype;
+Reservasjon::Reservasjon(int ankomst,
+                         int avreise,
+                         bool frokost,
+                         bool seng,
+                         int ant_beboere,
+                         char* beboere[MAX_ARRAY]
+                         ): Num_element(ankomst) {
+	
 	ankomst_dato = ankomst;
 	avreise_dato = avreise;
-	antall_dogn = timer->forskjell_datoer(ankomst_dato, avreise_dato);
+	antall_dogn = timer.forskjell_datoer(ankomst_dato, avreise_dato);
 	if(seng == true){
-		status_seng = ;//???????
-	}
-	else status_seng = ;
+		//status_seng = ;//???????
+	} else {
+        //status_seng = ;
+    }
 	if(frokost == true){
 		status_frokost = 1;//???????
 	}
 	else status_frokost = 0;
 	
-	antall_beboere;
-	navn[MAX_ARRAY];
-	pris[MAX_ARRAY];
+	antall_beboere = ant_beboere;
+    
+    for(int i = 0; i < ant_beboere; i++) {
+        navn[i] = new char[strlen(beboere[i])+1];
+        strcpy(navn[i], beboere[i]);
+    }
 }
 
 Reservasjon::Reservasjon(int ankomst, ifstream &file): Num_element(ankomst) {
