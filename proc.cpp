@@ -102,16 +102,15 @@ void avbestill_rom() {
 	char temp_navn[MAX_TEXT];
 	char* navn;
 	
-	cout << "Skriv inn reservat>ens navn";
+	cout << "Skriv inn reservat>ens navn: " << endl;
 	cin >> temp_navn;
 	navn = new char[strlen(temp_navn)+1];
 	
 	hotellet->avbestill_rom(navn);
-	
 }
 
 void innsjekking() {
-	cout << "Skriv inn reservat>ens navn";
+	cout << "Skriv inn reservat>ens navn" << endl;
 	char temp_navn[MAX_TEXT];
 	char* navn;
 	cin >> temp_navn;
