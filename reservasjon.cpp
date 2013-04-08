@@ -8,6 +8,7 @@
 
 
 #include <fstream>
+#include <cstring>
 #include "reservasjon.h"
 #include "listtool.h"
 #include "utils.h"
@@ -78,13 +79,10 @@ Reservasjon::~Reservasjon() {
 }
 
 bool Reservasjon::is_name_in_array(char* name) {
-	for(int i = 0; i < antall_beboere; i++) {
-		if(navn[i] == name) {
-			return true;
-		} else {
-			return false;
-		}
-	}
+    if(strcmp(navn[0], name) == 0)
+        return true;
+    else
+        return false;
 }
 
 void Reservasjon::les_fra_fil() {

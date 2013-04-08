@@ -135,10 +135,10 @@ void Hotell::display() {
 
 void Hotell::avbestill_rom(char* navn) {
 	Rom* rommet;
-	int antall;
+
 	for(int i = 0; i < ANTALL_ROMTYPER; i++) {
 		for (int j = 0;  j <= rom[i]->no_of_elements();  j++)  {   //  
-			 rommet =  (Rom*) rom[i]->remove_no(j); 
+			 rommet =  (Rom*) rom[i]->remove_no(j);
 			 rommet->avbestill_rom(navn);
 			 rom[i]->add(rommet);
 		}
