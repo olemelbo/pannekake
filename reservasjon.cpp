@@ -82,8 +82,11 @@ void Reservasjon::setAntallBeboere(int ant) {
 	antall_beboere = ant;
 }
 
-void Reservasjon::setBeboere(char* navn[MAX_ARRAY]) {
-
+void Reservasjon::setBeboere(char* beboere[MAX_ARRAY]) {
+	for(int i = 0; i < antall_beboere; i++) {
+        navn[i] = new char[strlen(beboere[i])+1];
+        strcpy(navn[i], beboere[i]);
+    }
 }
 
 int Reservasjon::getAnkomstDato() {
