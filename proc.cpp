@@ -149,25 +149,36 @@ void avbestill_rom() {
 	Reservasjon* reservasjon;
 	char temp;
 	int counter = 0;
-	char *navn = getln("Skriv inn reservat>ens navn: ");
+	char *navn = "Ole";
+	//Looper igjennom romtyper
 	for(int i = 0; i < ANTALL_ROMTYPER; i++) { 
-		for (int j = 1;  j <= rommet->get_reservasjoner()->no_of_elements();  j++)  { 
-			reservasjon = (Reservasjon*) rommet->get_reservasjoner()->remove_no(i);
-			if(reservasjon->is_name_in_array(navn)) { 
-				counter++;
-				reservasjon->display();
-				do {
-					cout << "Skal reservasjonen slettes?[Y/n]" << endl;
-					cin >> temp;
-				} while(temp != 'Y' && temp !='y' && temp != 'N' && temp != 'n');
+		//Finner hotellets rom
+		for (int j = 1;  j <= hotellet->get_rom(i)->no_of_elements();  j++)  { 
+			//Trekker ut et rom av lista.
+			rommet = (Rom*) hotellet->get_rom(i)->remove_no(j);
+			for (int k = 1;  j <= rommet->get_reservasjoner()->no_of_elements();  k++)  {  
+				//Henter reservasjon ut fra rommet.
+				reservasjon = (Reservasjon*) rommet->get_reservasjoner()->remove_no(k); 
+				//Sjekker om navnet er i reservasjonen
+				if(reservasjon->is_name_in_array(navn)) { 
+					counter++;
+					//Displayer reservasjonen
+					reservasjon->display();
+					do {
+						cout << "Skal reservasjonen slettes?[Y/n]" << endl;
+						cin >> temp;
+					} while(temp != 'Y' && temp !='y' && temp != 'N' && temp != 'n');
 
-				if(temp == 'N' || temp == 'n') {
+					if(temp == 'N' || temp == 'n') {
+						rommet->get_reservasjoner()->add(reservasjon);
+					}
+				} else {
 					rommet->get_reservasjoner()->add(reservasjon);
-				}	
-			} else {
-				rommet->get_reservasjoner()->add(reservasjon);
+				}
+				hotellet->get_rom(i)->add(rommet);
 			}
-		} 
+			
+		}
 	}
 	if(counter == 0) {
 		cout << "Personen du s>ker etter har ingen reservasjoner" << endl;
@@ -183,8 +194,9 @@ void innsjekking() {
 	int ant;
 
 	for(int i = 0; i < ANTALL_ROMTYPER; i++) { 
-		for (int j = 1;  j <= rommet->get_reservasjoner()->no_of_elements();  j++)  { 
-			reservasjon = (Reservasjon*) rommet->get_reservasjoner()->remove_no(i);
+		for (int j = 1;  j <= hotellet->get_rom(i)->no_of_elements();  j++)  { 
+			rommet = (Rom*) hotellet->get_rom(i)->remove_no(i);
+			reservasjon = (Reservasjon*) rommet->get_reservasjoner();
 			if(reservasjon->is_name_in_array(navn)) {
 				counter++;
 				if(reservasjon->getAnkomstDato() == dagens_dato) {
@@ -309,7 +321,7 @@ void bytt_hotell() {
 		if(counter > 0) 
 			cout << "Hotellet du s>kte etter finnes ikke. Pr>v igjen!" << endl;
 		ifstream infile(HOTELL_FIL);
-		userinput = getln("Tast inn navnet p> filen");
+		userinput = getln("Tast inn navnet p> hotellet");
 		fil = does_hotell_exist_in_file(infile, userinput);
 		counter++;
 	} while(!fil);
