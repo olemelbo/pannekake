@@ -207,44 +207,52 @@ void innsjekking() {
 				reservasjon = (Reservasjon*) rommet->get_reservasjoner()->remove_no(k); 
 				//Sjekker om navnet er i reservasjonen
 				if(reservasjon->is_name_in_array(navn)) {
+				//Teller opp telleren
 				counter++;
-				if(reservasjon->getAnkomstDato() == dagens_dato) {
+					// Sjekker om ankomst dato er i dag.
+					if(reservasjon->getAnkomstDato() == dagens_dato) {
 					
-					cout << "Romnummer: " << rommet->getRomNummer() << endl;
-					cout << "Hvor mange beboere skal reserveres? ";
-					cin >> tmp;
-					ant = atoi(tmp);
+						cout << "Romnummer: " << rommet->getRomNummer() << endl;
+						cout << "Hvor mange beboere skal reserveres? ";
+						cin >> tmp;
+						ant = atoi(tmp);
 
-					// Setter antall beboere
-					reservasjon->setAntallBeboere(ant);
+						// Setter antall beboere
+						reservasjon->setAntallBeboere(ant);
 					
-					char* beboere[MAX_ARRAY];
+						char* beboere[MAX_ARRAY];
 
-					if(ant > 0) {
+						if(ant > 0) {
 	
-						for(int i = 0; i < ant; i++) {
-							cout << "Skriv inn navnet på beboer " << i+1 << ": ";
-							cin >> tmp;
-							beboere[i] = new char[strlen(tmp)+1];
-							strcpy(beboere[i], tmp);
+							for(int i = 0; i < ant; i++) {
+								cout << "Skriv inn navnet på beboer " << i+1 << ": ";
+								cin >> tmp;
+								beboere[i] = new char[strlen(tmp)+1];
+								strcpy(beboere[i], tmp);
+							}
+					
+							// Setter beboere paa reservasjonen
+							reservasjon->setBeboere(beboere);
+							// Displayer reservasjon
+							reservasjon->display();
+							// Legger reservasjonen tilbake i listen
+							rommet->get_reservasjoner()->add(reservasjon);
+						} else {
+							cout << "Antall beboere må være minst én" << endl;
+							rommet->get_reservasjoner()->add(reservasjon);
 						}
-					
-						// Setter beboere paa reservasjonen
-						reservasjon->setBeboere(beboere);
-					
-					} else {
-						cout << "Antall beboere må være minst én" << endl;
 					}
-				}
-			} else {
+				} else {
+				// Legger resvasjon tilbake i listen
 				rommet->get_reservasjoner()->add(reservasjon);
+				}
 			}
 		}
 	}
 	if(counter == 0) 
 		cout << "Personen du s>kte etter har ingen reservasjoner paa dagens dato" << endl;
-	}
 }
+
 
 void utsjekking() {
 	Rom* rommet;
