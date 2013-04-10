@@ -15,9 +15,9 @@ int dagens_dato = timer.hent_dato();
 
 int main( void ) {
     bytt_hotell();
+	skriv_meny();
 	//les_fra_fil();
 	//skriv_til_fil();
-	skriv_meny();
 	char kommando = les_kommando();	//Må endres til å ta tre tegn.
 
 	//  Looper til 'q'/'Q' tastes:
@@ -58,6 +58,7 @@ int main( void ) {
 		 case 'H' :
                     skriv_til_fil();
                     bytt_hotell();
+					skriv_meny();
 		break;	
     	 default:   skriv_meny();  
         break;

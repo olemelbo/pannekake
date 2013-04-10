@@ -47,3 +47,4 @@ char* stripWord(char word[], char str[]) {
     
     return strstr(str, word)+strlen(word)+1;
 }
+

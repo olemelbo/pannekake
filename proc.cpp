@@ -223,9 +223,21 @@ void skriv_til_fil() {
 }
 
 void bytt_hotell() {
-    char* userinput = getln("Tast inn navnet på filen");
-    ifstream infile(HOTELL_FIL);
-    if(infile.is_open()) {
+	char* userinput;
+	char* fil;
+	do {
+		ifstream infile(HOTELL_FIL);
+		userinput = getln("Tast inn navnet p> filen");
+		fil = does_hotell_exist_in_file(infile, userinput);
+	} while(!fil);
+	
+	cout << userinput << " er lastet inn" << endl;
+	hotellet = new Hotell(fil);
+}
+
+char* does_hotell_exist_in_file(ifstream& infile, char* userinput )
+{
+	if(infile.is_open()) {
         while(!infile.eof()) {
             
             //Initierer variabler
@@ -253,15 +265,12 @@ void bytt_hotell() {
             //Hvis brukerinput og langnavn er like
             if(strcmp(userinput, langnavn) == 0) {
                 char* fil = strcat(kortnavn, ".DTA");
-                hotellet = new Hotell(fil);
-                return;
-            }
+                return fil;
+			} 
         }
-        
-        cout << "Hotellet du spesifiserte finnes ikke";
-    }
+		return false;
+	}
 }
-
 void les_fra_fil() {
     char* fil;
 	fil = new char[strlen(HOTELL_FIL)+1];
