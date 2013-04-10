@@ -30,6 +30,7 @@ class Reservasjon : public Num_element {
 	bool is_name_in_array(char *name);
 
 	int getAnkomstDato();
+	int getAvreiseDato();
 	void setAntallBeboere(int ant);
 	void setBeboere(char* beboere[MAX_ARRAY]);
     void les_fra_fil();

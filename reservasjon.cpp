@@ -89,6 +89,10 @@ void Reservasjon::setBeboere(char* beboere[MAX_ARRAY]) {
     }
 }
 
+int Reservasjon::getAvreiseDato() {
+	return avreise_dato;
+}
+
 int Reservasjon::getAnkomstDato() {
 	return ankomst_dato;
 }

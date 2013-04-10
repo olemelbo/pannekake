@@ -226,8 +226,25 @@ void innsjekking() {
 }
 
 void utsjekking() {
+	Rom* rommet;
+	Reservasjon* reservasjon;
+	int counter = 0;
+	char* temp_romnummer = getln("Skriv inn rommnummeret");
+	int romnummber = atoi(temp_romnummer);
 
+
+	for(int i = 0; i < ANTALL_ROMTYPER; i++) { 
+		if(rommet->getRomNummer() == romnummber) {
+			for (int j = 1;  j <= rommet->get_reservasjoner()->no_of_elements();  j++)  { 
+				reservasjon = (Reservasjon*) rommet->get_reservasjoner()->remove_no(i);
+				if(reservasjon->getAvreiseDato() == dagens_dato) { 
+				
+				}
+			}
+		}
+	}
 }
+
 
 void registrer_regning() {
 
@@ -287,10 +304,14 @@ void skriv_til_fil() {
 void bytt_hotell() {
 	char* userinput;
 	char* fil;
+	int counter = 0;
 	do {
+		if(counter > 0) 
+			cout << "Hotellet du s>kte etter finnes ikke. Pr>v igjen!" << endl;
 		ifstream infile(HOTELL_FIL);
 		userinput = getln("Tast inn navnet p> filen");
 		fil = does_hotell_exist_in_file(infile, userinput);
+		counter++;
 	} while(!fil);
 	
 	cout << userinput << " er lastet inn" << endl;
