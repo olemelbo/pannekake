@@ -20,7 +20,7 @@ public:
 	void skriv_til_fil(ostream* ut);
     bool ledig();
     List* get_reservasjoner();
-	void avbestill_rom(char* navn);
+	int getRomNummer();
 };
 
 #endif

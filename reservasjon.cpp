@@ -78,6 +78,18 @@ Reservasjon::~Reservasjon() {
     
 }
 
+void Reservasjon::setAntallBeboere(int ant) {
+	antall_beboere = ant;
+}
+
+void Reservasjon::setBeboere(char* navn[MAX_ARRAY]) {
+
+}
+
+int Reservasjon::getAnkomstDato() {
+	return ankomst_dato;
+}
+
 bool Reservasjon::is_name_in_array(char* name) {
     if(strcmp(navn[0], name) == 0)
         return true;

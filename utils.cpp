@@ -35,7 +35,7 @@ bool read_bool(ifstream &file) {
 }
 
 char* getln(char prompt[]) {
-    cout << prompt << ": ";
+    cout << prompt << ": " << endl;
     char input[MAX_TEXT];
     cin.getline(input, MAX_TEXT);
     char* result = new char[strlen(input) + 1];

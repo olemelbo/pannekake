@@ -12,6 +12,7 @@ using namespace std;
 
 // Extern 
 extern Hotell* hotellet;
+extern int dagens_dato;
 
 //  PROSEDYREDEKLARASJON:
 char les_kommando() {
@@ -144,22 +145,50 @@ void reserver_rom() {
 }
 
 void avbestill_rom() {
-	char temp_navn[MAX_TEXT];
-	char* navn;
-	
-	cout << "Skriv inn reservat>ens navn: " << endl;
-	cin >> temp_navn;
-	navn = new char[strlen(temp_navn)+1];
-	strcpy(navn, temp_navn);
-	hotellet->avbestill_rom(navn);
+	Rom* rommet;
+	Reservasjon* reservasjon;
+	char temp;
+	char *navn = getln("Skriv inn reservat>ens navn: ");
+	for(int i = 0; i < ANTALL_ROMTYPER; i++) { 
+		for (int j = 1;  j <= rommet->get_reservasjoner()->no_of_elements();  j++)  { 
+			reservasjon = (Reservasjon*) rommet->get_reservasjoner()->remove_no(i);
+			if(reservasjon->is_name_in_array(navn)) { 
+				reservasjon->display();
+				do {
+					cout << "Skal reservasjonen slettes?[Y/n]" << endl;
+					cin >> temp;
+				} while(temp != 'Y' && temp !='y' && temp != 'N' && temp != 'n');
+
+				if(temp == 'N' || temp == 'n') {
+					rommet->get_reservasjoner()->add(reservasjon);
+				}	
+			} else {
+				rommet->get_reservasjoner()->add(reservasjon);
+			}
+		} 
+	}
 }
 
 void innsjekking() {
-	cout << "Skriv inn reservat>ens navn" << endl;
-	char temp_navn[MAX_TEXT];
-	char* navn;
-	cin >> temp_navn;
-	navn = new char[strlen(temp_navn)+1];
+	Rom* rommet;
+	Reservasjon* reservasjon;
+	char *navn = getln("Skriv inn reservat>ens navn: ");
+	
+	for(int i = 0; i < ANTALL_ROMTYPER; i++) { 
+		for (int j = 1;  j <= rommet->get_reservasjoner()->no_of_elements();  j++)  { 
+			reservasjon = (Reservasjon*) rommet->get_reservasjoner()->remove_no(i);
+			if(reservasjon->is_name_in_array(navn)) {
+				if(reservasjon->getAnkomstDato() == dagens_dato) {
+					cout << "Romnummer: " << rommet->getRomNummer() << endl;
+					
+					//reservasjon->setBeboere(name);
+					reservasjon->setAntallBeboere(3);
+				}
+			} else {
+				rommet->get_reservasjoner()->add(reservasjon);
+			}
+		}
+	}
 	
 }
 

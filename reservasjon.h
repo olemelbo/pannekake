@@ -29,6 +29,9 @@ class Reservasjon : public Num_element {
 
 	bool is_name_in_array(char *name);
 
+	int getAnkomstDato();
+	void setAntallBeboere(int ant);
+	void setBeboere(char* navn[MAX_ARRAY]);
     void les_fra_fil();
     void skriv_til_fil(ostream* ut);
     void display();
