@@ -137,9 +137,9 @@ void avbestill_rom() {
 						cout << "Reservasjonen ble fjernet" << endl;
 					}
 				} else {
+					cout << "Personen du s>ker etter har ikke reservert et rom" << endl;
 					rommet->get_reservasjoner()->add(reservasjon);
 				}
-				hotellet->get_rom(i)->add(rommet);
 			}
 			
 		}
@@ -292,7 +292,7 @@ void bytt_hotell() {
 		userinput = getln("Tast inn navnet p> hotellet");
 		fil = does_hotell_exist_in_file(infile, userinput);
 		counter++;
-	} while(fil == "false");
+	} while(fil.empty());
 	
 	cout << userinput << " er lastet inn" << endl;
 	hotellet = new Hotell(fil);
@@ -300,6 +300,7 @@ void bytt_hotell() {
 
 string does_hotell_exist_in_file(ifstream& infile, string userinput )
 {
+	string fil;
 	if(infile.is_open()) {
         while(!infile.eof()) {
             
@@ -320,11 +321,11 @@ string does_hotell_exist_in_file(ifstream& infile, string userinput )
 
             //Hvis brukerinput og langnavn er like
 			if(userinput.compare(langnavn) == 0) {
-                string fil = kortnavn + ".DTA";
+                 fil = kortnavn + ".DTA";
                 return fil;
 			} 
         }
-		return "false";
+		return fil;
 	}
 }
 void les_fra_fil() {
