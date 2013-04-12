@@ -11,13 +11,17 @@
 
 #include <iostream>
 #include <fstream>
-
+#include <string>
 using namespace std;
 
-char* read_text(ifstream &file);
+string read_text(ifstream &file);
 int read_int(ifstream &file);
 bool read_bool(ifstream &file);
-char* getln(char prompt[]);
-char* stripWord(char word[], char str[]);
-
+string getln(string prompt);
+string getln(string prompt, int i);
+int read_int(string promt);
+int convert_to_int(string temp); 
+char* convert_string_to_char(string str);
+char read_char(string promt);
+float read_float(ifstream &file);
 #endif /* defined(__Prosjekt__utils__) */

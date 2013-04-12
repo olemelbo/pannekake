@@ -7,6 +7,9 @@
 //
 
 #include "reg_post.h"
+#include <string>
+
+using namespace std;
 
 Reg_post::Reg_post() {
     

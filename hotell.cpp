@@ -13,6 +13,7 @@
 #include "listtool.h"
 #include "hotell.h"
 #include "utils.h"
+#include <string>
 
 using namespace std;
 
@@ -20,7 +21,7 @@ Hotell::Hotell() {
     
 }
 
-Hotell::Hotell(char* fil) {
+Hotell::Hotell(string fil) {
     
     ifstream infile(fil);
     if(infile.is_open()) {

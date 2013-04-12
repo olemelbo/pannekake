@@ -9,6 +9,9 @@
 #include "regning.h"
 #include "listtool.h"
 #include "utils.h"
+#include <string>
+
+using namespace std;
 
 Regning::Regning() {
 	// Denne skal ikke kjøres    

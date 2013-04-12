@@ -12,7 +12,7 @@ class Suite: public Rom {
 private:
 	int antall_senger;
 	int antall_kvadratmeter;
-	char* beskrivelse;
+	string beskrivelse;
 
 public:
 	Suite();

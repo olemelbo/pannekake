@@ -1,12 +1,14 @@
 #include <iostream>
-#include <cstring>
+#include <string>
 #include <stdlib.h>
 #include <fstream>
 #include "proc.h"
+#include <algorithm>
 #include "coen.h"
 #include "hotell.h"
 #include "reservasjon.h"
 #include "utils.h"
+#include <sstream>
 
 using namespace std;
 
@@ -14,11 +16,10 @@ using namespace std;
 extern Hotell* hotellet;
 extern int dagens_dato;
 
-//  PROSEDYREDEKLARASJON:
 char les_kommando() {
-	char cmd;
+char cmd;
     cout << endl << "Tast inn kommando: ";
-    cin >> cmd; cin.ignore(0);
+    cin >> cmd; cin.ignore();
     return toupper(cmd);
 }
 
@@ -44,48 +45,35 @@ void skriv_meny()  {
 }
 
 void reserver_rom() {
-	char buffer[80];
-
 	Reservasjon *temp;
 
-	char* romtype_tmp;
-	cout << "Hvilken romtype >nsker du? [Singel/Dobbel/Suite] " << endl;
-	cin >> buffer;
-	romtype_tmp = new char[strlen(buffer)+1];
-	strcpy(romtype_tmp, buffer);
+	string romtype_tmp;
+	romtype_tmp = getln("Hvilken romtype >nsker du? [Singel/Dobbel/Suite]");
     
     int romtype;
-    if(strcmp(romtype_tmp, "Singel") == 0)
+	if(romtype_tmp.compare("Singel") == 0)
         romtype = SINGEL;
-    if(strcmp(romtype_tmp, "Dobbel") == 0)
+    if(romtype_tmp.compare("Dobbel") == 0)
         romtype = DOBBEL;
-    if(strcmp(romtype_tmp, "Suite") == 0)
+    if(romtype_tmp.compare("Suite") == 0)
         romtype = SUITE;
 
-	int annkomstdato;
-	cout << "Skriv inn annkomstdato[AAAAMMDD]: ";
-	cin >> annkomstdato;//Sjekk >= dagens dato
-	cin.ignore();
+	int ankomstdato;
+	ankomstdato = read_int("Skriv inn annkomstdato[AAAAMMDD]");
 
 	int avreisedato;
-	cout << "Skriv inn avreisedato[AAAAMMDD]: ";
-	cin >> avreisedato;//Større enn annkomstdato
-	cin.ignore();
+	ankomstdato = read_int("Skriv inn avreisedato[AAAAMMDD]");
 
 	bool frokost = false;
-	char onskerfrokost;
-	cout << "Ønsker du frokost? [y/n] ";
-	cin >> onskerfrokost;
-	if(onskerfrokost == 'y'){
+	char onskerfrokost = read_char(">nsker du frokost? [y/n]");
+	if(onskerfrokost == 'Y'){
 		frokost = true;
 	}
 	
 	bool ekstraseng = false;
-	char onskerekstraseng;
 	if(romtype == DOBBEL){
-		cout << "Er det behov for en ekstra seng? [y/n] ";
-		cin >> onskerekstraseng;
-		if(onskerekstraseng == 'y'){
+		char onskerekstraseng = read_char("Er det behov for en ekstra seng? [y/n]");
+		if(onskerekstraseng == 'Y'){
 			ekstraseng = true;
 		}
 	}
@@ -99,44 +87,19 @@ void reserver_rom() {
         cout << "Det finnes ingen ledige rom i denne kategorien\n";
         return;
     }
-    
-    
-    // Denne skal loope til vi har en reservatør
-    char tmp[MAX_TEXT];
-    int ant;
+     
 
-    /** // Kan ikke allokere array størrelse dynamisk ved runtime.
-    cout << "Hvor mange beboere skal reserveres? ";
-    cin >> tmp;
-    ant = atoi(tmp);
-    
-    char* beboere[ant];
-    for(int i = 0; i < ant; i++) {
-        cout << "Skriv inn navnet på beboer " << i+1 << ": ";
-        
-        cin >> tmp;
-        beboere[i] = new char[strlen(tmp)+1];
-        strcpy(beboere[i], tmp);
-    }
+	int ant = read_int("Hvor mange beboere skal reserveres?");
+   
 
-	*/
-
-	cout << "Hvor mange beboere skal reserveres? ";
-    cin >> tmp;
-    ant = atoi(tmp);
-
-	char* beboere[MAX_ARRAY];
+	string beboere[MAX_ARRAY];
 	
 	for(int i = 0; i < ant; i++) {
-        cout << "Skriv inn navnet på beboer " << i+1 << ": ";
-        
-        cin >> tmp;
-        beboere[i] = new char[strlen(tmp)+1];
-        strcpy(beboere[i], tmp);
+         beboere[i] = getln("Skriv inn navnet p> beboer", i + 1);
     }
 
     // Oppretter reservasjon
-	temp = new Reservasjon(annkomstdato, avreisedato, frokost, ekstraseng, ant, beboere);
+	temp = new Reservasjon(ankomstdato, avreisedato, frokost, ekstraseng, ant, beboere);
     
     // Legger reservasjonen til i rommet.
     r->get_reservasjoner()->add(temp);
@@ -149,7 +112,7 @@ void avbestill_rom() {
 	Reservasjon* reservasjon;
 	char temp;
 	int counter = 0;
-	char *navn = "Ole";
+	string navn = getln("Skriv inn reservat>ens navn");
 	//Looper igjennom romtyper
 	for(int i = 0; i < ANTALL_ROMTYPER; i++) { 
 		//Finner hotellets rom
@@ -165,11 +128,10 @@ void avbestill_rom() {
 					//Displayer reservasjonen
 					reservasjon->display();
 					do {
-						cout << "Skal reservasjonen slettes?[Y/n]" << endl;
-						cin >> temp;
-					} while(temp != 'Y' && temp !='y' && temp != 'N' && temp != 'n');
+						temp = read_char("Skal reservasjonen slettes?[Y/n]");
+					} while(!temp == 'Y' && !temp == 'N');
 
-					if(temp == 'N' || temp == 'n') {
+					if(temp == 'Y') {
 						rommet->get_reservasjoner()->add(reservasjon);
 					} else {
 						cout << "Reservasjonen ble fjernet" << endl;
@@ -190,12 +152,10 @@ void avbestill_rom() {
 void innsjekking() {
 	Rom* rommet;
 	Reservasjon* reservasjon;
-	//char *navn = getln("Skriv inn reservat>ens navn: ");
-	char tmp[MAX_TEXT];
 	int counter = 0;
 	int ant;
 
-	char *navn = "Ole";
+	string navn = getln("Skriv inn reservat>ens navn");
 	//Looper igjennom romtyper
 	for(int i = 0; i < ANTALL_ROMTYPER; i++) { 
 		//Finner hotellets rom
@@ -213,24 +173,18 @@ void innsjekking() {
 					if(reservasjon->getAnkomstDato() == dagens_dato) {
 					
 						cout << "Romnummer: " << rommet->getRomNummer() << endl;
-						cout << "Hvor mange beboere skal reserveres? ";
-						cin >> tmp;
-						ant = atoi(tmp);
+						ant = read_int("Hvor mange beboere skal reserveres? ");
 
 						// Setter antall beboere
 						reservasjon->setAntallBeboere(ant);
 					
-						char* beboere[MAX_ARRAY];
+						string beboere[MAX_ARRAY];
 
 						if(ant > 0) {
 	
-							for(int i = 0; i < ant; i++) {
-								cout << "Skriv inn navnet på beboer " << i+1 << ": ";
-								cin >> tmp;
-								beboere[i] = new char[strlen(tmp)+1];
-								strcpy(beboere[i], tmp);
-							}
-					
+							for(int i = 0; i < ant; i++) 
+								beboere[i] = getln("Skriv inn navnet på beboer", i + 1);
+								
 							// Setter beboere paa reservasjonen
 							reservasjon->setBeboere(beboere);
 							// Displayer reservasjon
@@ -258,9 +212,8 @@ void utsjekking() {
 	Rom* rommet;
 	Reservasjon* reservasjon;
 	int counter = 0;
-	char* temp_romnummer = getln("Skriv inn rommnummeret");
-	int romnummber = atoi(temp_romnummer);
-
+	string temp_romnummer = getln("Skriv inn rommnummeret");
+	int romnummber = convert_to_int(temp_romnummer);
 
 	for(int i = 0; i < ANTALL_ROMTYPER; i++) { 
 		if(rommet->getRomNummer() == romnummber) {
@@ -320,19 +273,17 @@ void vis_alle_ledige_rom_i_kategori() {
 }
 
 void skriv_til_fil() {
-	char* fil;
-    fil = new char[strlen(HOTELL_SKRIV_FIL)+1];
-    strcpy(fil, HOTELL_SKRIV_FIL);
+	string fil = getln("Skriv inn navnet på filen");
 	ofstream utfil(fil);
 	if (utfil.is_open()) 	// Åpner filen
 		hotellet->skriv_til_fil(&utfil);
-    
+   
     utfil.close();
 }
 
 void bytt_hotell() {
-	char* userinput;
-	char* fil;
+	string userinput;
+	string fil;
 	int counter = 0;
 	do {
 		if(counter > 0) 
@@ -341,46 +292,39 @@ void bytt_hotell() {
 		userinput = getln("Tast inn navnet p> hotellet");
 		fil = does_hotell_exist_in_file(infile, userinput);
 		counter++;
-	} while(!fil);
+	} while(fil == "false");
 	
 	cout << userinput << " er lastet inn" << endl;
 	hotellet = new Hotell(fil);
 }
 
-char* does_hotell_exist_in_file(ifstream& infile, char* userinput )
+string does_hotell_exist_in_file(ifstream& infile, string userinput )
 {
 	if(infile.is_open()) {
         while(!infile.eof()) {
             
             //Initierer variabler
-            char linje[MAX_TEXT];
-            char original[MAX_TEXT];
+            string linje;
+            string orginal;
             
             //Henter hele linjen fra filen
-            infile.getline(original, MAX_TEXT);
-            
-            //Kopierer linje inn i egen variabel
-            //slik at strtok ikke erstatter originalen
-            strcpy(linje, original);
-            
-            //Henter ut første ord fra linjen
-            char* nextWord = strtok(linje, " ");
-            
-            //Oppretter ny char peker og kopierer
-            //første ordet inn i denne (kortnavn).
-            char* kortnavn = new char[strlen(nextWord) + 1];
-            strcpy(kortnavn, nextWord);
-            
-            //Langnavn er lik original - kortnavn.
-            char* langnavn = stripWord(kortnavn, original);
-            
+            getline(infile, orginal);
+     
+
+			unsigned pos = orginal.find(" ");  
+
+			string kortnavn = orginal.substr(0,pos); 
+
+            string langnavn = orginal.substr(pos + 1);
+
+
             //Hvis brukerinput og langnavn er like
-            if(strcmp(userinput, langnavn) == 0) {
-                char* fil = strcat(kortnavn, ".DTA");
+			if(userinput.compare(langnavn) == 0) {
+                string fil = kortnavn + ".DTA";
                 return fil;
 			} 
         }
-		return false;
+		return "false";
 	}
 }
 void les_fra_fil() {

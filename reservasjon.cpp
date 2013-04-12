@@ -8,7 +8,7 @@
 
 
 #include <fstream>
-#include <cstring>
+#include <string>
 #include "reservasjon.h"
 #include "listtool.h"
 #include "utils.h"
@@ -28,12 +28,11 @@ Reservasjon::Reservasjon(int ankomst,
                          bool frokost,
                          bool seng,
                          int ant_beboere,
-                         char* beboere[MAX_ARRAY]
+                         string beboere[MAX_ARRAY]
                          ): Num_element(ankomst) {
 	
-	ankomst_dato = ankomst;
 	avreise_dato = avreise;
-	antall_dogn = timer.forskjell_datoer(ankomst_dato, avreise_dato);
+	antall_dogn = timer.forskjell_datoer(number, avreise_dato);
 	if(seng == true){
 		//status_seng = ;//???????
 	} else {
@@ -48,8 +47,7 @@ Reservasjon::Reservasjon(int ankomst,
 	antall_beboere = ant_beboere;
     
     for(int i = 0; i < ant_beboere; i++) {
-        navn[i] = new char[strlen(beboere[i])+1];
-        strcpy(navn[i], beboere[i]);
+        navn[i] = beboere[i];
     }
 }
 
@@ -57,7 +55,7 @@ Reservasjon::Reservasjon(int ankomst, ifstream &file): Num_element(ankomst) {
     avreise_dato = read_int(file);
     antall_dogn = read_int(file);
     for(int i = 0; i < antall_dogn; i++) {
-        pris[i] = read_int(file);
+        pris[i] = read_float(file);
     }
     status_seng = read_int(file);
     antall_beboere = read_int(file);
@@ -68,8 +66,9 @@ Reservasjon::Reservasjon(int ankomst, ifstream &file): Num_element(ankomst) {
     regninger = new List(FIFO);
     int antall_regninger = read_int(file);
     for(int i = 0; i < antall_regninger; i++) {
-        char* beskrivelse = read_text(file);
-        Regning* r = new Regning(beskrivelse, file);
+        string beskrivelse = read_text(file);
+		char* c = convert_string_to_char(beskrivelse);
+        Regning* r = new Regning(c, file);
         regninger->add(r);
     }
 }
@@ -82,10 +81,9 @@ void Reservasjon::setAntallBeboere(int ant) {
 	antall_beboere = ant;
 }
 
-void Reservasjon::setBeboere(char* beboere[MAX_ARRAY]) {
+void Reservasjon::setBeboere(string beboere[MAX_ARRAY]) {
 	for(int i = 0; i < antall_beboere; i++) {
-        navn[i] = new char[strlen(beboere[i])+1];
-        strcpy(navn[i], beboere[i]);
+         navn[i] = beboere[i];
     }
 }
 
@@ -94,11 +92,11 @@ int Reservasjon::getAvreiseDato() {
 }
 
 int Reservasjon::getAnkomstDato() {
-	return ankomst_dato;
+	return number;
 }
 
-bool Reservasjon::is_name_in_array(char* name) {
-    if(strcmp(navn[0], name) == 0)
+bool Reservasjon::is_name_in_array(string name) {
+    if(navn[0].compare(name) == 0)
         return true;
     else
         return false;

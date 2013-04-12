@@ -7,25 +7,27 @@
 #include "singel.h"
 #include "dobbel.h"
 #include "suite.h"
+#include <string>
+using namespace std;
 
 class Hotell {
 private:
-	char* navn;
-	char* gateadresse;
-    char* postadresse;
-	char* mailadresse;
-	char* filnavn;
+	string navn;
+	string gateadresse;
+    string postadresse;
+	string mailadresse;
+	string filnavn;
 	int telefon;
 	int fax;
 	int frokost_pris;
 	int ekstra_seng_pris;
 	int antall_fasciliteter;
-	char* fasciliteter[MAX_ARRAY];
+	string fasciliteter[MAX_ARRAY];
 	List* rom[ANTALL_ROMTYPER];
 
 public:
 	Hotell();
-	Hotell(char* fil);
+	Hotell(string fil);
 	~Hotell();
 	void les_fra_fil();
 	void skriv_til_fil(ostream* ut);

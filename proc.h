@@ -2,9 +2,11 @@
 #define __PROC_H
 #include <iostream>
 #include <fstream>
+#include <algorithm>
+#include <string>
 using namespace std;
 
-//  PROSEDYREDEKLARASJON:
+//  PROSEDYREDEKLARASJON:st
 char les_kommando();
 void skriv_meny();
 void reserver_rom();
@@ -15,7 +17,7 @@ void registrer_regning();
 void endre_ankomst();
 void endre_avreisedato();
 void bytt_rom();
-char* does_hotell_exist_in_file(ifstream& infil, char* userinput);
+string does_hotell_exist_in_file(ifstream& infil, string userinput);
 void oversikt_over_hotell();
 void beskrivelse_av_suiter();
 void alle_reservasjoner_person();

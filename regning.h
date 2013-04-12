@@ -2,6 +2,7 @@
 #define __REGNING_H 
 #include "listtool.h"
 #include <fstream>
+#include <string>
 using namespace std;
 
 class Regning : public Text_element {

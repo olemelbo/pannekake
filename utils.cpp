@@ -8,25 +8,42 @@
 
 #include "utils.h"
 #include "coen.h"
-#include <cstring>
+#include <string>
 #include <stdio.h>
 #include <stdlib.h>
 using namespace std;
 
-char* read_text(ifstream& file) {
-    
-    char tmp[MAX_TEXT];
-    //Henter antallet leger og konverterer
-    file.getline(tmp, MAX_TEXT);
-    char* p = new char[strlen(tmp)+1];
-    strcpy(p, tmp);
-    return p;
+string read_text(ifstream& file) {
+    string tmp;
+    getline(file, tmp);
+    return tmp;
 }
 
+
 int read_int(ifstream& file) {
-    char tmp[MAX_TEXT];
-    file.getline(tmp, MAX_TEXT);
-    return atoi(tmp);
+    string tmp;
+    getline(file, tmp);
+    return stoi(tmp);
+}
+
+float read_float(ifstream& file) {
+	string tmp;
+	getline(file, tmp);
+	return atof(tmp.c_str());
+}
+
+int read_int(string promt) {
+	cout << promt << ": " << endl;
+	string result;
+    getline(cin,result);
+    return stoi(result);
+}
+
+char read_char(string promt) {
+	cout << promt << ": " << endl;
+	char cmd;
+	cin >> cmd; cin.ignore();
+    return toupper(cmd);
 }
 
 bool read_bool(ifstream &file) {
@@ -34,17 +51,30 @@ bool read_bool(ifstream &file) {
     return test > 0 ? true : false;
 }
 
-char* getln(char prompt[]) {
-    cout << prompt << ": " << endl;
-    char input[MAX_TEXT];
-    cin.getline(input, MAX_TEXT);
-    char* result = new char[strlen(input) + 1];
-    strcpy(result, input);
+int convert_to_int(string temp ) {
+	return stoi(temp);
+}
+
+ string getln(string promt) {
+    cout << promt << ": " << endl;
+	string result;
+    getline(cin,result);
     return result;
 }
 
-char* stripWord(char word[], char str[]) {
-    
-    return strstr(str, word)+strlen(word)+1;
-}
+ char * convert_string_to_char(string str) {
+	char * writable = new char[str.size() + 1];
+	std::copy(str.begin(), str.end(), writable);
+	writable[str.size()] = '\0'; // don't forget the terminating 0
 
+	// don't forget to free the string after finished using it
+	delete[] writable;
+	return writable;
+ }
+
+string getln(string promt, int i) {
+    cout << promt << " " << i << ": " << endl;
+	string result;
+    getline(cin,result);
+    return result;
+}
