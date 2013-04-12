@@ -245,7 +245,7 @@ void bytt_rom() {
 }
 
 void oversikt_over_hotell() {
-
+	hotellet->display();
 }
 
 void beskrivelse_av_suiter() {

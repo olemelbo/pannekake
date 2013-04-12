@@ -131,7 +131,18 @@ void Hotell::skriv_til_fil(ostream* ut) {
 }
 
 void Hotell::display() {
-    cout << navn;
+    cout << navn << endl;
+	cout << gateadresse << endl;
+	cout << postadresse << endl;
+	cout << mailadresse << endl;
+	cout << telefon << endl;
+	cout << fax << endl;
+	cout << frokost_pris << endl;
+	cout << ekstra_seng_pris << endl;
+	cout << "Fasiliteter: " << endl;
+	for(int i = 0; i < antall_fasciliteter; i++) {
+		cout << " - " <<  fasciliteter[i] << endl;
+	}
 }
 
 List* Hotell::get_rom(int romtype) {
