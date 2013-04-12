@@ -249,7 +249,13 @@ void oversikt_over_hotell() {
 }
 
 void beskrivelse_av_suiter() {
-
+	Suite* suite;
+	Rom* rommet;
+	for (int j = 1;  j <= hotellet->get_rom(2)->no_of_elements();  j++)  {
+		suite = (Suite*) hotellet->get_rom(2)->remove_no(j);
+		suite->display();
+		hotellet->get_rom(2)->add(suite);
+	} 
 }
 
 void alle_reservasjoner_person() {

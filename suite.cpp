@@ -26,6 +26,13 @@ Suite::~Suite() {
     
 }
 
+void Suite::display() {
+	Rom::display();
+	cout << "Antall senger: " << antall_senger << endl;
+	cout << "Antall kvadratmeter: " << antall_kvadratmeter << endl;
+	cout <<  beskrivelse << endl;
+}
+
 void Suite::skriv_til_fil(ostream* ut) {
 	Rom::skriv_til_fil(ut);
 	*ut << antall_senger << "\n"

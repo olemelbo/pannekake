@@ -54,6 +54,10 @@ void Rom::skriv_til_fil(ostream* ut) {
 
 }
 
+void Rom::display() {
+	cout << "Romnummer: " << number << endl;
+}
+
 bool Rom::ledig() {
     // Denne er midlertidig.
     // Skal seienere sjekke reservasjoner

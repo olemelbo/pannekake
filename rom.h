@@ -19,6 +19,7 @@ public:
 	~Rom();
 	void skriv_til_fil(ostream* ut);
     bool ledig();
+	void display();
     List* get_reservasjoner();
 	int getRomNummer();
 };

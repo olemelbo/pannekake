@@ -19,6 +19,7 @@ public:
 	Suite(int romnr);
     Suite(int romnr, ifstream &file);
 	~Suite();
+	void display();
 	void skriv_til_fil(ostream* ut);
 };
 
