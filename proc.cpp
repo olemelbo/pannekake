@@ -65,7 +65,7 @@ void reserver_rom() {
 	ankomstdato = read_int("Skriv inn annkomstdato[AAAAMMDD]");
 
 	int avreisedato;
-	ankomstdato = read_int("Skriv inn avreisedato[AAAAMMDD]");
+	avreisedato = read_int("Skriv inn avreisedato[AAAAMMDD]");
 
 	bool frokost = false;
 	char onskerfrokost = read_char(">nsker du frokost? [y/n]");
@@ -107,6 +107,7 @@ void reserver_rom() {
     // Legger reservasjonen til i rommet.
     r->get_reservasjoner()->add(temp);
 
+	//Må fjernes før innlevering
     hotellet->les_fra_fil();
 }
 
