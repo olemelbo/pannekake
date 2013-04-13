@@ -9,7 +9,7 @@ using namespace std;
 
 //	Globale variable
 Hotell* hotellet;	// Et hotell
-Reg_post regpost;
+Reg_post reg_post;
 Timer timer;
 int dagens_dato = timer.hent_dato();
 

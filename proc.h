@@ -15,6 +15,7 @@ void innsjekking();
 void utsjekking();
 void registrer_regning();
 void endre_ankomst();
+void opprett_reg_post();
 void endre_avreisedato();
 void bytt_rom();
 string does_hotell_exist_in_file(ifstream& infil, string userinput);

@@ -8,6 +8,6 @@ const int SUITE = 2;
 const int MAX_TEXT = 80;
 const int MAX_ARRAY = 100;
 const char HOTELL_FIL[MAX_TEXT] = "HOTELLER.DTA";
-const char HOTELL_SKRIV_FIL[MAX_TEXT] = "TEST.DTA";
+const char REG_POST_FIL[MAX_TEXT] = "REG_POST.DTA";
 
 #endif

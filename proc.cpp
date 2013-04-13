@@ -8,6 +8,7 @@
 #include "hotell.h"
 #include "reservasjon.h"
 #include "utils.h"
+#include "reg_post.h"
 #include <sstream>
 
 using namespace std;
@@ -15,6 +16,7 @@ using namespace std;
 // Extern 
 extern Hotell* hotellet;
 extern int dagens_dato;
+extern Reg_post reg_post;
 
 char les_kommando() {
 char cmd;
@@ -302,6 +304,7 @@ void bytt_hotell() {
 	
 	cout << userinput << " er lastet inn" << endl;
 	hotellet = new Hotell(fil);
+	opprett_reg_post();
 }
 
 string does_hotell_exist_in_file(ifstream& infile, string userinput )
@@ -334,6 +337,22 @@ string does_hotell_exist_in_file(ifstream& infile, string userinput )
 		return fil;
 	}
 }
+
+void opprett_reg_post() {
+	string vanlige_poster[MAX_ARRAY];
+	int antall = 0;
+	ifstream infile(REG_POST_FIL);
+	if(infile.is_open()) {
+		while(!infile.eof()) {
+			string temp;
+			//Henter hele linjen fra filen
+			getline(infile, temp);
+			vanlige_poster[antall++] = temp;
+		}
+		reg_post = Reg_post(antall, vanlige_poster);
+	}
+}
+
 void les_fra_fil() {
     char* fil;
 	fil = new char[strlen(HOTELL_FIL)+1];

@@ -15,8 +15,10 @@ Reg_post::Reg_post() {
     
 }
 
-Reg_post::Reg_post(int total, char* nvn) {
-    
+Reg_post::Reg_post(int antall, string vanlige_reg_poster[MAX_ARRAY]) {
+    antall_standard_reg_poster = antall;
+	for(int i = 0; i < antall; i++) 
+		mest_vanlige_poster[i] = vanlige_reg_poster[i];
 }
 
 Reg_post::~Reg_post() {
