@@ -6,6 +6,7 @@
 #include <algorithm>
 #include "coen.h"
 #include "hotell.h"
+#include "regning.h"
 #include "reservasjon.h"
 #include "utils.h"
 #include "reg_post.h"
@@ -232,6 +233,8 @@ void utsjekking() {
 
 void registrer_regning() {
 	Rom* rommet;
+	Reservasjon* reservasjon;
+	Regning* regning;
 	int rom_nummer = read_int("Skriv inn romnummeret");
 	int counter = 0;
 	for(int i = 0; i < ANTALL_ROMTYPER; i++) { 

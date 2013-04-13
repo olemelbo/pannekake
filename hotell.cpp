@@ -31,7 +31,7 @@ Hotell::Hotell(string fil) {
         gateadresse = read_text(infile);
         postadresse = read_text(infile);
         mailadresse = read_text(infile);
-        
+        filnavn = read_text(infile);
         //Leser inn nummer
         telefon             = read_int(infile);
         fax                 = read_int(infile);
@@ -93,6 +93,7 @@ void Hotell::skriv_til_fil(ostream* ut) {
 	<< gateadresse << "\n"
 	<< postadresse << "\n"
 	<< mailadresse << "\n"
+	<< filnavn <<	"\n"
 	<< telefon << "\n" 
 	<< fax << "\n"
 	<< frokost_pris << "\n"
@@ -135,6 +136,7 @@ void Hotell::display() {
 	cout << gateadresse << endl;
 	cout << postadresse << endl;
 	cout << mailadresse << endl;
+	cout << "Filnavn: " << filnavn << endl;
 	cout << telefon << endl;
 	cout << fax << endl;
 	cout << frokost_pris << endl;
