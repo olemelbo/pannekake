@@ -316,8 +316,42 @@ void beskrivelse_av_suiter() {
 	} 
 }
 
-void alle_reservasjoner_person() {
+void vis_alle_reservasjoner_for_person() {
+	Rom* rommet;
+	Reservasjon* reservasjon;
+	int counter = 0;
+	int ant;
 
+	string navn = getln("Skriv inn reservat>ens navn");
+	//Looper igjennom romtyper
+	for(int i = 0; i < ANTALL_ROMTYPER; i++) { 
+		//Finner hotellets rom
+		int antall_rom_i_kategori = hotellet->get_rom(i)->no_of_elements();
+		for (int j = 1;  j <= antall_rom_i_kategori;  j++)  { 
+			//Trekker ut et rom av lista.
+			rommet = (Rom*) hotellet->get_rom(i)->remove_no(j);
+			//Henter ut alle reservasjoner innen for et bestemt rom.
+			int antall_reservasjoner = rommet->get_reservasjoner()->no_of_elements();
+			for (int k = 1;  k <= antall_reservasjoner;  k++)  {  
+				//Henter reservasjon ut fra rommet.
+				reservasjon = (Reservasjon*) rommet->get_reservasjoner()->remove_no(k); 
+				//Sjekker om navnet er i reservasjonen
+				if(reservasjon->is_name_in_array(navn)) {
+					//Teller opp telleren
+					counter++;
+					reservasjon->display();
+					rommet->get_reservasjoner()->add(reservasjon);
+				} else {
+					// Legger resvasjon tilbake i listen
+					rommet->get_reservasjoner()->add(reservasjon);
+				}
+			}
+			//Legger rommet tilbake i listen.
+			hotellet->get_rom(i)->add(rommet);
+		}
+	}
+	if(counter == 0) 
+		cout << "Personen du s>kte etter har ingen reservasjoner." << endl;
 }
 
 void rom_ledig() {

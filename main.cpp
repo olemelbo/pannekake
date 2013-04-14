@@ -42,7 +42,7 @@ int main( void ) {
 		break;
 		 case 'D' : beskrivelse_av_suiter();
 		break;
-		 case 'F' : vis_reservasjoner_for_rom();
+		 case 'F' : vis_alle_reservasjoner_for_person();
 		break;	
 		 case 'G' : rom_ledig();
 		break;
