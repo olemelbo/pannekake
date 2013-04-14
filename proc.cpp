@@ -223,7 +223,8 @@ void innsjekking() {
 void utsjekking() {
 	Rom* rommet;
 	Reservasjon* reservasjon;
-	int counter = 0;
+	int counter_rom = 0;
+	int counter_res = 0;
 	int rom_nummer = read_int("Skriv inn rommnummeret");
 	
 	//Looper igjennom romtyper
@@ -238,12 +239,26 @@ void utsjekking() {
 			for (int k = 1;  k <= antall_reservasjoner;  k++)  {  
 				//Henter reservasjon ut fra rommet.
 				reservasjon = (Reservasjon*) rommet->get_reservasjoner()->remove_no(k); 
-				if(reservasjon->getAvreiseDato() == dagens_dato) {
-				
+				if(rommet->getRomNummer() == rom_nummer) {
+					counter_rom++;
+					if(reservasjon->getAvreiseDato() == dagens_dato) {
+						counter_res++;
+						//Skriver ut alle 
+						reservasjon->display();
+					} else {
+						rommet->get_reservasjoner()->add(reservasjon);
+					}
+				} else {
+					rommet->get_reservasjoner()->add(reservasjon);
 				}
 			} // end for reservasjoner
+			hotellet->get_rom(i)->add(rommet);
 		} // end for rom
 	} // end for romtyper
+	if(counter_rom == 0) 
+		cout << "Det finnes ingen rom p> hotellet med det romnummeret!" << endl;
+	if(counter_res == 0 && counter_rom != 0) 
+		cout << "Personen du s>kte etter har ingen reservasjoner paa dagens dato" << endl;
 }
 
 
@@ -291,7 +306,8 @@ void oversikt_over_hotell() {
 void beskrivelse_av_suiter() {
 	Suite* suite;
 	Rom* rommet;
-	for (int j = 1;  j <= hotellet->get_rom(2)->no_of_elements();  j++)  {
+	int antll_suiter = hotellet->get_rom(2)->no_of_elements();
+	for (int j = 1;  j <= antll_suiter; j++)  {
 		suite = (Suite*) hotellet->get_rom(2)->remove_no(j);
 		suite->display();
 		hotellet->get_rom(2)->add(suite);
