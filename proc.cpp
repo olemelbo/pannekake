@@ -226,17 +226,24 @@ void utsjekking() {
 	int counter = 0;
 	int rom_nummer = read_int("Skriv inn rommnummeret");
 	
-
+	//Looper igjennom romtyper
 	for(int i = 0; i < ANTALL_ROMTYPER; i++) { 
-		if(rommet->getRomNummer() == rom_nummer) {
-			for (int j = 1;  j <= rommet->get_reservasjoner()->no_of_elements();  j++)  { 
-				reservasjon = (Reservasjon*) rommet->get_reservasjoner()->remove_no(i);
-				if(reservasjon->getAvreiseDato() == dagens_dato) { 
+		//Finner hotellets rom
+		int antall_rom_i_kategori = hotellet->get_rom(i)->no_of_elements();
+		for (int j = 1;  j <= antall_rom_i_kategori;  j++)  { 
+			//Trekker ut et rom av lista.
+			rommet = (Rom*) hotellet->get_rom(i)->remove_no(j);
+			//Henter ut alle reservasjoner innen for et bestemt rom.
+			int antall_reservasjoner = rommet->get_reservasjoner()->no_of_elements();
+			for (int k = 1;  k <= antall_reservasjoner;  k++)  {  
+				//Henter reservasjon ut fra rommet.
+				reservasjon = (Reservasjon*) rommet->get_reservasjoner()->remove_no(k); 
+				if(reservasjon->getAvreiseDato() == dagens_dato) {
 				
 				}
-			}
-		}
-	}
+			} // end for reservasjoner
+		} // end for rom
+	} // end for romtyper
 }
 
 
