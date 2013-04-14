@@ -120,10 +120,12 @@ void avbestill_rom() {
 	//Looper igjennom romtyper
 	for(int i = 0; i < ANTALL_ROMTYPER; i++) { 
 		//Finner hotellets rom
-		for (int j = 1;  j <= hotellet->get_rom(i)->no_of_elements();  j++)  { 
+		int antall_rom_i_kategori = hotellet->get_rom(i)->no_of_elements();
+		for (int j = 1;  j <= antall_rom_i_kategori;  j++)  { 
 			//Trekker ut et rom av lista.
 			rommet = (Rom*) hotellet->get_rom(i)->remove_no(j);
-			for (int k = 1;  j <= rommet->get_reservasjoner()->no_of_elements();  k++)  {  
+			int antall_reservasjoner = rommet->get_reservasjoner()->no_of_elements();
+			for (int k = 1;  j <= antall_reservasjoner; j++)  {  
 				//Henter reservasjon ut fra rommet.
 				reservasjon = (Reservasjon*) rommet->get_reservasjoner()->remove_no(k); 
 				//Sjekker om navnet er i reservasjonen
@@ -137,17 +139,16 @@ void avbestill_rom() {
 
 					if(temp == 'Y') {
 						rommet->get_reservasjoner()->add(reservasjon);
-					} else {
 						cout << "Reservasjonen ble fjernet" << endl;
-					}
-				} else {
-					cout << "Personen du s>ker etter har ikke reservert et rom" << endl;
-					rommet->get_reservasjoner()->add(reservasjon);
-				}
-			}
-			
-		}
-	}
+					} else {
+						cout << "Reservasjonen ble ikke fjernet" << endl;
+					} 
+				}	// endif 
+				rommet->get_reservasjoner()->add(reservasjon);
+			} // end for
+			hotellet->get_rom(i)->add(rommet);
+		}	// end for
+	} // end for
 	if(counter == 0) {
 		cout << "Personen du s>ker etter har ingen reservasjoner" << endl;
 	}

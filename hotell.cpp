@@ -64,7 +64,7 @@ Hotell::Hotell(string fil) {
         rom[SUITE] = new List(Sorted);
         int antall_suiter = read_int(infile);
         
-        for(int i = 0; i < antall_suiter; i++) {
+       for(int i = 0; i < antall_suiter; i++) {
             int romnr = read_int(infile);
             Suite* s = new Suite(romnr, infile);
             rom[SUITE]->add(s);
