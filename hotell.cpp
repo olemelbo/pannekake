@@ -151,6 +151,10 @@ List* Hotell::get_rom(int romtype) {
 	return rom[romtype];
 }
 
+string Hotell::get_filnavn() {
+	return filnavn;
+}
+
 Rom* Hotell::get_ledig_rom(int romtype) {
     
     int n = rom[romtype]->no_of_elements();

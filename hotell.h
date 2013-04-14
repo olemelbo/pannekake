@@ -34,6 +34,7 @@ public:
 	void display();
 	List* get_rom(int romtype);
     Rom* get_ledig_rom(int romtype);
+	string get_filnavn();
 };
 
 #endif

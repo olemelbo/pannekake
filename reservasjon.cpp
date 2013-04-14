@@ -141,3 +141,26 @@ void Reservasjon::display() {
         cout << "Navn paa beboere: " << navn[i] << "\n";
     }
 }
+
+void Reservasjon::display_faktura() 
+{
+	cout << "/////////////////// FAKTURA //////////////////////" << endl; 
+	cout << "Ankomst: " << number << "\n"
+		 << "Avreise: " << avreise_dato << "\n"
+		 << "Antall d>gn: " << antall_dogn << "\n"
+		 << "Antall beboere: " << antall_beboere << "\n";
+	for(int i = 0; i < antall_beboere; i++) {
+        cout << "Navn paa beboere: " << navn[i] << "\n";
+    }
+	int total = 0;
+	int antall_dogn = timer.forskjell_datoer(number, avreise_dato);
+	int pris = 100;
+	total += antall_dogn * pris;
+	cout << "Pris for overnatting: " <<  total << endl;
+	cout << "Totalt: " << total;
+}
+
+void Reservasjon::skriv_faktura_til_fil(string fil)
+{
+
+}

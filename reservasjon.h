@@ -35,6 +35,8 @@ class Reservasjon : public Num_element {
     void les_fra_fil();
     void skriv_til_fil(ostream* ut);
     void display();
+	void display_faktura();
+	void skriv_faktura_til_fil(string fil);
 };
 
 #endif
