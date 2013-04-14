@@ -359,7 +359,38 @@ void rom_ledig() {
 }
 
 void vis_reservasjoner_for_rom() {
-
+	Rom* rommet;
+	Reservasjon* reservasjon;
+	int counter_rom = 0;
+	int counter_res = 0;
+	int rom_nummer = read_int("Skriv inn rommnummeret");
+	
+	//Looper igjennom romtyper
+	for(int i = 0; i < ANTALL_ROMTYPER; i++) { 
+		//Finner hotellets rom
+		int antall_rom_i_kategori = hotellet->get_rom(i)->no_of_elements();
+		for (int j = 1;  j <= antall_rom_i_kategori;  j++)  { 
+			//Trekker ut et rom av lista.
+			rommet = (Rom*) hotellet->get_rom(i)->remove_no(j);
+			if(rommet->getRomNummer() == rom_nummer) {
+				counter_rom++;
+				//Henter ut alle reservasjoner innen for et bestemt rom.
+				int antall_reservasjoner = rommet->get_reservasjoner()->no_of_elements();
+				for (int k = 1;  k <= antall_reservasjoner;  k++)  {  
+					//Henter reservasjon ut fra rommet.
+					counter_res++;
+					reservasjon = (Reservasjon*) rommet->get_reservasjoner()->remove_no(k); 
+					reservasjon->display();
+					rommet->get_reservasjoner()->add(reservasjon);
+				}
+			} // end for reservasjoner
+			hotellet->get_rom(i)->add(rommet);
+		} // end for rom
+	} // end for romtyper
+	if(counter_rom == 0) 
+		cout << "Det finnes ingen rom p> hotellet med det romnummeret!" << endl;
+	if(counter_res == 0 && counter_rom != 0) 
+		cout << "Det finnes ingen reserveringer paa dette rommet!" << endl;
 }
 
 void vis_alle_data_for_rom() {
