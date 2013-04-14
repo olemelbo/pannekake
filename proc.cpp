@@ -164,10 +164,13 @@ void innsjekking() {
 	//Looper igjennom romtyper
 	for(int i = 0; i < ANTALL_ROMTYPER; i++) { 
 		//Finner hotellets rom
-		for (int j = 1;  j <= hotellet->get_rom(i)->no_of_elements();  j++)  { 
+		int antall_rom_i_kategori = hotellet->get_rom(i)->no_of_elements();
+		for (int j = 1;  j <= antall_rom_i_kategori;  j++)  { 
 			//Trekker ut et rom av lista.
 			rommet = (Rom*) hotellet->get_rom(i)->remove_no(j);
-			for (int k = 1;  j <= rommet->get_reservasjoner()->no_of_elements();  k++)  {  
+			//Henter ut alle reservasjoner innen for et bestemt rom.
+			int antall_reservasjoner = rommet->get_reservasjoner()->no_of_elements();
+			for (int k = 1;  k <= antall_reservasjoner;  k++)  {  
 				//Henter reservasjon ut fra rommet.
 				reservasjon = (Reservasjon*) rommet->get_reservasjoner()->remove_no(k); 
 				//Sjekker om navnet er i reservasjonen
@@ -188,24 +191,28 @@ void innsjekking() {
 						if(ant > 0) {
 	
 							for(int i = 0; i < ant; i++) 
-								beboere[i] = getln("Skriv inn navnet på beboer", i + 1);
+								beboere[i] = getln("Skriv inn navnet p> beboer", i + 1);
 								
 							// Setter beboere paa reservasjonen
 							reservasjon->setBeboere(beboere);
 							// Displayer reservasjon
 							reservasjon->display();
-							// Legger reservasjonen tilbake i listen
+							
 							rommet->get_reservasjoner()->add(reservasjon);
 						} else {
 							cout << "Antall beboere må være minst én" << endl;
 							rommet->get_reservasjoner()->add(reservasjon);
 						}
+					} else {
+						rommet->get_reservasjoner()->add(reservasjon);
 					}
 				} else {
-				// Legger resvasjon tilbake i listen
-				rommet->get_reservasjoner()->add(reservasjon);
+					// Legger resvasjon tilbake i listen
+					rommet->get_reservasjoner()->add(reservasjon);
 				}
 			}
+			//Legger rommet tilbake i listen.
+			hotellet->get_rom(i)->add(rommet);
 		}
 	}
 	if(counter == 0) 
