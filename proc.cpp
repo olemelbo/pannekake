@@ -477,13 +477,25 @@ void vis_alle_ledige_rom_i_kategori() {
 	
 	int antall_rom_i_kategori = hotellet->get_rom(rom_kat)->no_of_elements();
 	for (int j = 1;  j <= antall_rom_i_kategori ;  j++)  { 
-		//Trekker ut et rom av lista.
-		rommet = (Rom*) hotellet->get_rom(rom_kat)->remove_no(j);
+		counter++;
+		
+		switch (rom_kat)  {
+			 case SINGEL : rommet = (Singel*) hotellet->get_rom(rom_kat)->remove_no(j);
+			break;
+			 case DOBBEL : rommet = (Dobbel*) hotellet->get_rom(rom_kat)->remove_no(j);
+			break;
+			 case SUITE :  rommet = (Suite*) hotellet->get_rom(rom_kat)->remove_no(j);
+			break;
+			 default:  rommet = (Rom*) hotellet->get_rom(rom_kat)->remove_no(j);
+			break;
+		}
+
 		//Henter ut alle reservasjoner innen for et bestemt rom.
 		if(rommet->ledig()) {
-
+			rommet->display();
 			//Legger rommet tilbake i listen.
 			hotellet->get_rom(j)->add(rommet);
+
 		} else {
 			//Legger rommet tilbake i listen.
 			hotellet->get_rom(j)->add(rommet);
@@ -492,7 +504,7 @@ void vis_alle_ledige_rom_i_kategori() {
 	}
 	
 	if(counter == 0) 
-		cout << "Personen du s>kte etter har ingen reservasjoner." << endl;
+		cout << "Det finnes ingen rom i denne kategorien." << endl;
 		
 }
 

@@ -56,6 +56,8 @@ void Rom::skriv_til_fil(ostream* ut) {
 
 void Rom::display() {
 	cout << "Romnummer: " << number << endl;
+	cout << "Antall senger: " << ant_senger << endl;
+	
 }
 
 bool Rom::ledig() {

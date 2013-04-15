@@ -55,7 +55,7 @@ char read_char(string promt) {
     strcpy(tmp, c);
     cmd = *tmp;
     
-    delete(tmp);
+    //delete(tmp);
     
     return toupper(cmd);
 }
