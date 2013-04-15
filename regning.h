@@ -15,6 +15,7 @@ class Regning : public Text_element {
     Regning(char* nvn, ifstream &file);
     ~Regning();
 	void skriv_til_fil(ostream* ut);
+	float hent_sum();
 };
 
 #endif

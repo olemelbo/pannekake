@@ -145,24 +145,64 @@ void Reservasjon::display() {
 void Reservasjon::display_faktura() 
 {
 	cout << "/////////////////// FAKTURA //////////////////////" << endl; 
-	cout << "Ankomst: " << number << "\n"
-		 << "Avreise: " << avreise_dato << "\n"
-		 << "Antall d>gn: " << antall_dogn << "\n"
-		 << "Antall beboere: " << antall_beboere << "\n";
-	for(int i = 0; i < antall_beboere; i++) {
-        cout << "Navn paa beboere: " << navn[i] << "\n";
-    }
+	if(status_seng == true){
+	cout << "Ekstra seng\n";
+	}
+	else cout << "Uten ekstra seng\n";
+	if(status_frokost == true){
+	cout << "Med frokost\n";
+	}
+	else cout << "Uten frokost\n";
 	int total = 0;
-	int antall_dogn = timer.forskjell_datoer(number, avreise_dato);
+	int overnatting = 0;
 	int pris = 100;
-	total += antall_dogn * pris;
-	cout << "Pris for overnatting: " <<  total << endl;
+	float tot_regninger;
+	for (int j = 1;  j <= regninger->no_of_elements();  j++)  { 
+		Regning* regning = (Regning*) regninger->remove_no(j);
+		tot_regninger += regning->hent_sum();
+	}
+	
+	overnatting += antall_dogn * pris;
+	total = overnatting + tot_regninger;//LEgge på frokost, ekstra seng
+	cout << "Pris for overnatting: " <<  overnatting << endl;
 	cout << "Totalt: " << total;
 }
 
-void Reservasjon::skriv_faktura_til_fil(string fil)
-{
-
+void Reservasjon::skriv_faktura_til_fil(string fil){
+	int overnatting;
+	int pris = 100;
+	overnatting += antall_dogn * pris;
+	int total = 0;
+	float tot_regninger;
+	for (int j = 1;  j <= regninger->no_of_elements();  j++)  { 
+		Regning* regning = (Regning*) regninger->remove_no(j);
+		tot_regninger += regning->hent_sum();
+	}
+	total = overnatting + tot_regninger;//PLUSS EKSTRA SENG + FROKOST!!!
+	
+	ofstream utfil(fil);
+	utfil.open( fil.c_str(), ios::out | ios::app );
+	utfil << "--------------FAKTURA--------------\n"
+			<< "Ankomst-dato: " << number << "\n"
+			<< "Avreise-dato: " << avreise_dato << "\n"
+			<< "Antall døgn: " << antall_dogn << "\n"
+			<< "Antall beboere: " << antall_beboere << "\n"
+			<< "Navn på beboere: \n";
+	for(int i = 0; i < antall_beboere; i++) {
+		utfil << navn[i] << "\n";
+	}
+	if(status_seng == true){
+		utfil << "Med ekstra seng\n";
+	}
+	if(status_frokost == true){
+		utfil << "Med frokost\n";
+	}
+	utfil << "Antall regninger: " << regninger->no_of_elements() << "\n"
+			<< "Total sum på regninger: " << tot_regninger << "\n"
+			<< "Total sum på overnatting: " << overnatting << "\n"
+			<< "Total pris: " << total << "\n";
+	
+    utfil.close();
 }
 
 void Reservasjon::display_list(int count){
