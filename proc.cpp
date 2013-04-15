@@ -520,15 +520,18 @@ void vis_navarende_beboer() {
         return;
     }
     
-    if(!rom->ledig()) {
-        List* reservasjoner = rom->get_reservasjoner();
-        for(int i = 1; i <= reservasjoner->no_of_elements(); i++) {
-            Reservasjon* res = (Reservasjon*) reservasjoner->remove_no(i);
-            if(res->er_innsjekket()) {
-                res->display();
-            }
-            reservasjoner->add(res);
+    List* reservasjoner = rom->get_reservasjoner();
+    for(int i = 1; i <= reservasjoner->no_of_elements(); i++) {
+        
+        Reservasjon* res = (Reservasjon*) reservasjoner->remove_no(i);
+        
+        if(res->er_innsjekket()) {
+            res->display_faktura();
+        } else {
+            cout << "Ingen er innsjekket på nåværende tidspunkt\n";
         }
+        
+        reservasjoner->add(res);
     }
 }
 

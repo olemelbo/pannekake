@@ -33,3 +33,11 @@ void Regning::skriv_til_fil(ostream* ut) {
 	*ut << text << "\n"
 		<< totalsum << "\n";
 }
+
+void Regning::display() {
+    cout << text << ": " << totalsum << "\n";
+}
+
+int Regning::sum() {
+    return totalsum;
+}

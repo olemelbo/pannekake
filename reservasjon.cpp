@@ -32,6 +32,10 @@ Reservasjon::Reservasjon(int ankomst,
                          ): Num_element(ankomst) {
 	
 	avreise_dato = avreise;
+    
+    //Standard for oppretting av reservasjon
+    innsjekket = false;
+    
 	antall_dogn = timer.forskjell_datoer(number, avreise_dato);
 	if(seng == true){
 		//status_seng = ;//???????
@@ -53,6 +57,7 @@ Reservasjon::Reservasjon(int ankomst,
 
 Reservasjon::Reservasjon(int ankomst, ifstream &file): Num_element(ankomst) {
     avreise_dato = read_int(file);
+    innsjekket = read_bool(file);
     antall_dogn = read_int(file);
     for(int i = 0; i < antall_dogn; i++) {
         pris[i] = read_float(file);
@@ -144,7 +149,6 @@ void Reservasjon::display() {
 
 void Reservasjon::display_faktura() 
 {
-	cout << "/////////////////// FAKTURA //////////////////////" << endl; 
 	cout << "Ankomst: " << number << "\n"
 		 << "Avreise: " << avreise_dato << "\n"
 		 << "Antall d>gn: " << antall_dogn << "\n"
@@ -157,6 +161,14 @@ void Reservasjon::display_faktura()
 	int pris = 100;
 	total += antall_dogn * pris;
 	cout << "Pris for overnatting: " <<  total << endl;
+    
+    cout << "Regninger: \n";
+    for(int i = 1; i <= regninger->no_of_elements(); i++) {
+        Regning* regning = (Regning*) regninger->remove();
+        regning->display();
+        total += regning->sum();
+        regninger->add(regning);
+    }
 	cout << "Totalt: " << total;
 }
 
