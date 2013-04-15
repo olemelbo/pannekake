@@ -14,7 +14,7 @@ void avbestill_rom();
 void innsjekking();
 void utsjekking();
 void registrer_regning();
-void endre_ankomst();
+void endre_ankomst_avreisedato();
 void opprett_reg_post();
 void endre_avreisedato();
 void bytt_rom();

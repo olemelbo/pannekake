@@ -32,7 +32,7 @@ int main( void ) {
 		break;
 		 case 'R' : registrer_regning();
 		break;
-		 case 'Z' : endre_ankomst();
+		 case 'Z' : endre_ankomst_avreisedato();
 		break;
 		 case 'X' : endre_avreisedato();
 		break;

@@ -198,6 +198,7 @@ void innsjekking() {
 							// Displayer reservasjon
 							reservasjon->display();
 							
+							reservasjon->set_innsjekk(true);
 							rommet->get_reservasjoner()->add(reservasjon);
 						} else {
 							cout << "Antall beboere må være minst én" << endl;
@@ -289,8 +290,59 @@ void registrer_regning() {
 	}
 }
 
-void endre_ankomst() {
+void endre_ankomst_avreisedato() {
+	Rom* rommet;
+	Reservasjon* reservasjon;
+	int counter = 0;
+	int ant;
 
+	string reservator = getln("Skriv inn navnet på reservatøren");
+
+	//Looper igjennom romtyper
+	for(int i = 0; i < ANTALL_ROMTYPER; i++) { 
+		//Finner hotellets rom
+		int antall_rom_i_kategori = hotellet->get_rom(i)->no_of_elements();
+		for (int j = 1;  j <= antall_rom_i_kategori;  j++)  { 
+			//Trekker ut et rom av lista.
+			rommet = (Rom*) hotellet->get_rom(i)->remove_no(j);
+			//Henter ut alle reservasjoner innen for et bestemt rom.
+			int antall_reservasjoner = rommet->get_reservasjoner()->no_of_elements();
+			for (int k = 1;  k <= antall_reservasjoner;  k++)  {  
+				//Henter reservasjon ut fra rommet.
+				reservasjon = (Reservasjon*) rommet->get_reservasjoner()->remove_no(k); 
+				//Sjekker om navnet er i reservasjonen
+				if(reservasjon->is_name_in_array(reservator)) {
+					//Teller opp telleren
+					counter++;
+
+					reservasjon->display_list(counter);
+					char svar = read_char("Ønsker du å endre denne reservasjonen? [Y/N]");
+					if(svar == 'Y'){
+						if(reservasjon->er_innsjekket() == false){
+							cout << "Du må være innsjekket på denne reservasjonen for å kunne gjøre dette";
+						} else {
+							//IKKE ENDRE BEGGE, OG/ELLER
+							int ankomst = read_int("Skriv inn den nye ankomstdatoen [AAAAMMDD]");
+							int avreise = read_int("Skriv inn den nye avreisedatoen [AAAAMMDD]");
+
+							reservasjon->endre_ankomst(ankomst);
+							reservasjon->endre_avreise(avreise);
+						}
+					}
+					rommet->get_reservasjoner()->add(reservasjon);
+				} else {
+					// Legger resvasjon tilbake i listen
+					rommet->get_reservasjoner()->add(reservasjon);
+				}
+			}
+			//Legger rommet tilbake i listen.
+			hotellet->get_rom(i)->add(rommet);
+		}
+	}
+	if(counter == 0) {
+		cout << "Personen du søkte etter har ingen reservasjoner" << endl;
+		return;
+	}
 }
 
 void endre_avreisedato() {

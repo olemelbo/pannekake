@@ -164,3 +164,21 @@ void Reservasjon::skriv_faktura_til_fil(string fil)
 {
 
 }
+
+void Reservasjon::display_list(int count){
+	cout << "- Reservasjon "<<count<<": Fra "<<number<<" til "<<avreise_dato<<endl;
+}
+
+void Reservasjon::endre_ankomst(int ankomst){
+	number = ankomst;
+}
+
+void Reservasjon::endre_avreise(int avreise){
+	avreise_dato = avreise;
+}
+void Reservasjon::set_innsjekk(bool svar){
+	innsjekket = svar;
+}
+bool Reservasjon::er_innsjekket(){
+	return innsjekket;
+}
