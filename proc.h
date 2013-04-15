@@ -21,6 +21,7 @@ void bytt_rom();
 string does_hotell_exist_in_file(ifstream& infil, string userinput);
 void oversikt_over_hotell();
 void beskrivelse_av_suiter();
+bool is_rom_category(string rom_kategori);
 void vis_alle_reservasjoner_for_person();
 void rom_ledig();
 void vis_reservasjoner_for_rom();
