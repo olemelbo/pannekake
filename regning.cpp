@@ -33,3 +33,7 @@ void Regning::skriv_til_fil(ostream* ut) {
 	*ut << text << "\n"
 		<< totalsum << "\n";
 }
+
+float Regning::hent_sum(){
+	return totalsum;
+}
