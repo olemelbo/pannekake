@@ -135,9 +135,9 @@ void avbestill_rom() {
 					} while(!temp == 'Y' && !temp == 'N');
 
 					if(temp == 'Y') {
-						rommet->get_reservasjoner()->add(reservasjon);
 						cout << "Reservasjonen ble fjernet" << endl;
 					} else {
+						rommet->get_reservasjoner()->add(reservasjon);
 						cout << "Reservasjonen ble ikke fjernet" << endl;
 					} 
 				}	// endif 
@@ -242,6 +242,7 @@ void utsjekking() {
 					if(reservasjon->getAvreiseDato() == dagens_dato) {
 						counter_res++;
 						//Skriver ut alle 
+						reservasjon->display();
 						reservasjon->display_faktura();
 						string filnavn = hotellet->get_filnavn();
 						reservasjon->skriv_faktura_til_fil(filnavn);
