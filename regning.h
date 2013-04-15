@@ -17,6 +17,7 @@ class Regning : public Text_element {
     void display();
     int sum();
 	void skriv_til_fil(ostream* ut);
+	float hent_sum();
 };
 
 #endif

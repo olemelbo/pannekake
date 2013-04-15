@@ -38,6 +38,6 @@ void Regning::display() {
     cout << text << ": " << totalsum << "\n";
 }
 
-int Regning::sum() {
-    return totalsum;
+float Regning::hent_sum(){
+	return totalsum;
 }

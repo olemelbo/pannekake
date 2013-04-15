@@ -18,7 +18,8 @@ public:
     Rom(int romnr, ifstream &file);
 	~Rom();
 	void skriv_til_fil(ostream* ut);
-    bool ledig();
+    bool ledig(int ankomst, int avreise);
+	bool ledig(int ankomst);
 	void display();
     List* get_reservasjoner();
 	int getRomNummer();

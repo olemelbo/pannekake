@@ -10,8 +10,11 @@
 #include <fstream>
 #include "utils.h"
 #include "reservasjon.h"
+#include "timer.h"
 
 using namespace std;
+
+extern Timer timer;
 
 Rom::Rom() {
     
@@ -64,11 +67,26 @@ void Rom::display() {
 	}
 }
 
-bool Rom::ledig() {
+bool Rom::ledig(int ankomst) {
+	return true;
+}
+
+bool Rom::ledig(int ankomst, int avreise) {
+	Reservasjon* reservasjon;
     // Denne er midlertidig.
     // Skal seienere sjekke reservasjoner
     // og kalkulere om den faktisk er ledig.
+	int forskell = timer.forskjell_datoer(ankomst, avreise);
+
+	int antall_reservasjoner = reservasjoner->no_of_elements();
+	for(int j = 1; j <= antall_reservasjoner; j++) {
+		reservasjon = (Reservasjon*) reservasjoner->remove_no(j); 
+		if(ankomst <= reservasjon->getAvreiseDato() && avreise >= reservasjon->getAnkomstDato())
+            return false;
+	}
+    
     return true;
+    
 }
 
 int Rom::getRomNummer() {
