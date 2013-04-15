@@ -18,6 +18,7 @@ class Reservasjon : public Num_element {
 		int status_frokost;
 		int antall_beboere;
 		string navn[MAX_ARRAY];
+		bool innsjekket;
 	public:
     Reservasjon();
 
@@ -37,6 +38,11 @@ class Reservasjon : public Num_element {
     void display();
 	void display_faktura();
 	void skriv_faktura_til_fil(string fil);
+	void display_list(int count);
+	void endre_ankomst(int ankomst);
+	void endre_avreise(int avreise);
+	void set_innsjekk(bool svar);
+	bool er_innsjekket();
 };
 
 #endif

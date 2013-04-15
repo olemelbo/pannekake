@@ -32,7 +32,7 @@ int main( void ) {
 		break;
 		 case 'R' : registrer_regning();
 		break;
-		 case 'Z' : endre_ankomst();
+		 case 'Z' : endre_ankomst_avreisedato();
 		break;
 		 case 'X' : endre_avreisedato();
 		break;
@@ -48,7 +48,7 @@ int main( void ) {
 		break;
 		 case 'J' : vis_reservasjoner_for_rom();
 		break;
-		 case 'K' : vis_alle_data_for_rom();
+		 case 'K' : vis_navarende_beboer();
 		break;
 		 case 'L' : vis_alle_ledige_rom_i_kategori();
 		break;
