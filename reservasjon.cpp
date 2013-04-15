@@ -149,6 +149,7 @@ void Reservasjon::display() {
 
 void Reservasjon::display_faktura() 
 {
+
 	cout << "Ankomst: " << number << "\n"
 		 << "Avreise: " << avreise_dato << "\n"
 		 << "Antall d>gn: " << antall_dogn << "\n"
@@ -156,9 +157,22 @@ void Reservasjon::display_faktura()
 	for(int i = 0; i < antall_beboere; i++) {
         cout << "Navn paa beboere: " << navn[i] << "\n";
     }
+
+	if(status_seng == true){
+	cout << "Ekstra seng\n";
+	}
+    
+	else cout << "Uten ekstra seng\n";
+	if(status_frokost == true){
+    cout << "Med frokost\n";
+	}
+	else cout << "Uten frokost\n";
+
 	int total = 0;
+	int overnatting = 0;
 	int antall_dogn = timer.forskjell_datoer(number, avreise_dato);
 	int pris = 100;
+
 	total += antall_dogn * pris;
 	cout << "Pris for overnatting: " <<  total << endl;
     
@@ -169,12 +183,24 @@ void Reservasjon::display_faktura()
         total += regning->sum();
         regninger->add(regning);
     }
+	
+	overnatting += antall_dogn * pris;
+	total += overnatting;//LEgge på regninger, frokost, ekstra seng
+	cout << "Pris for overnatting: " <<  overnatting << endl;
 	cout << "Totalt: " << total;
 }
 
 void Reservasjon::skriv_faktura_til_fil(string fil)
 {
-
+	int tot_regninger;
+	for (int j = 1;  j <= regninger->no_of_elements();  j++)  { 
+			rommet = (Rom*) hotellet->get_rom(i)->remove_no(j);	
+	}
+	ofstream utfil(fil);
+	if (utfil.is_open()){ 	// Åpner filen
+		utfil << 
+	}
+    utfil.close();
 }
 
 void Reservasjon::display_list(int count){
