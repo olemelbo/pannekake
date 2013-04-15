@@ -24,7 +24,7 @@ void beskrivelse_av_suiter();
 void vis_alle_reservasjoner_for_person();
 void rom_ledig();
 void vis_reservasjoner_for_rom();
-void vis_alle_data_for_rom();
+void vis_navarende_beboer();
 void vis_alle_ledige_rom_i_kategori();
 void skriv_til_fil();
 void bytt_hotell();

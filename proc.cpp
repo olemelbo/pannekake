@@ -20,10 +20,7 @@ extern int dagens_dato;
 extern Reg_post reg_post;
 
 char les_kommando() {
-char cmd;
-    cout << endl << "Tast inn kommando: ";
-    cin >> cmd; cin.ignore();
-    return toupper(cmd);
+    return read_char("Tast inn kommando");
 }
 
 void skriv_meny()  {
@@ -439,14 +436,23 @@ void vis_reservasjoner_for_rom() {
 			hotellet->get_rom(i)->add(rommet);
 		} // end for rom
 	} // end for romtyper
-	if(counter_rom == 0) 
+	if(counter_rom == 0)
 		cout << "Det finnes ingen rom p> hotellet med det romnummeret!" << endl;
 	if(counter_res == 0 && counter_rom != 0) 
 		cout << "Det finnes ingen reserveringer paa dette rommet!" << endl;
 }
 
-void vis_alle_data_for_rom() {
-
+void vis_navarende_beboer() {
+    int romnr = read_int("Angi romnummer");
+    
+    Rom* rom = (Rom*) hotellet->get_spesifikk_rom(romnr);
+    
+    if(!rom) {
+        cout << "Rommet finnes ikke. Vennligst prøv igjen.\n";
+        return;
+    }
+    
+    
 }
 
 void vis_alle_ledige_rom_i_kategori() {
