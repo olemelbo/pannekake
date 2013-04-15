@@ -151,6 +151,20 @@ List* Hotell::get_rom(int romtype) {
 	return rom[romtype];
 }
 
+Rom* Hotell::get_spesifikk_rom(int romnr) {
+    for(int kat = 0; kat < ANTALL_ROMTYPER; kat++) {
+        for(int j = 1; j <= get_rom(kat)->no_of_elements(); j++) {
+            if(get_rom(kat)->in_list(romnr)) {
+                Rom* r = (Rom*) get_rom(kat)->remove_no(j);
+                get_rom(kat)->add(r);
+                return r;
+            }
+        }
+    }
+    
+    return NULL;
+}
+
 string Hotell::get_filnavn() {
 	return filnavn;
 }

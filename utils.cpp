@@ -33,16 +33,21 @@ float read_float(ifstream& file) {
 }
 
 int read_int(string promt) {
-	cout << promt << ": " << endl;
+	cout << endl << promt << ": ";
 	string result;
     getline(cin,result);
-    return stoi(result);
+    int r = stoi(result);
+    return r;
 }
 
 char read_char(string promt) {
-	cout << promt << ": " << endl;
+	cout << endl << promt << ": ";
 	char cmd;
-	cin >> cmd; cin.ignore();
+	//cin >> cmd; cin.ignore(0);
+    string str;
+    getline(cin, str);
+    const char* c = str.c_str();
+    strcpy(&cmd, c);
     return toupper(cmd);
 }
 
@@ -56,7 +61,7 @@ int convert_to_int(string temp ) {
 }
 
  string getln(string promt) {
-    cout << promt << ": " << endl;
+    cout << endl << promt << ": ";
 	string result;
     getline(cin,result);
     return result;

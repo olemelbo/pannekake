@@ -48,7 +48,7 @@ int main( void ) {
 		break;
 		 case 'J' : vis_reservasjoner_for_rom();
 		break;
-		 case 'K' : vis_alle_data_for_rom();
+		 case 'K' : vis_navarende_beboer();
 		break;
 		 case 'L' : vis_alle_ledige_rom_i_kategori();
 		break;
