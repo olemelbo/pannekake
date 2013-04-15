@@ -520,7 +520,16 @@ void vis_navarende_beboer() {
         return;
     }
     
-    
+    if(!rom->ledig()) {
+        List* reservasjoner = rom->get_reservasjoner();
+        for(int i = 1; i <= reservasjoner->no_of_elements(); i++) {
+            Reservasjon* res = (Reservasjon*) reservasjoner->remove_no(i);
+            if(res->er_innsjekket()) {
+                res->display();
+            }
+            reservasjoner->add(res);
+        }
+    }
 }
 
 void vis_alle_ledige_rom_i_kategori() {

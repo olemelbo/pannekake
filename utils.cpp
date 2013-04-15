@@ -16,6 +16,11 @@ using namespace std;
 string read_text(ifstream& file) {
     string tmp;
     getline(file, tmp);
+    
+    //Fjerner newline for MAC OSX
+    if(*tmp.rbegin() == '\r')
+        tmp.erase(tmp.length() - 1);
+    
     return tmp;
 }
 
