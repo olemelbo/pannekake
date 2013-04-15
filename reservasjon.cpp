@@ -181,27 +181,27 @@ void Reservasjon::skriv_faktura_til_fil(string fil){
 	total = overnatting + tot_regninger;//PLUSS EKSTRA SENG + FROKOST!!!
 	
 	ofstream utfil(fil);
-	if (utfil.is_open()){ 	// Åpner filen
-		utfil << "--------------FAKTURA--------------\n"
-			  << "Ankomst-dato: " << number << "\n"
-			  << "Avreise-dato: " << avreise_dato << "\n"
-			  << "Antall døgn: " << antall_dogn << "\n"
-			  << "Antall beboere: " << antall_beboere << "\n"
-			  << "Navn på beboere: \n";
-		for(int i = 0; i < antall_beboere; i++) {
-			utfil << navn[i] << "\n";
-		}
-		if(status_seng == true){
-			utfil << "Med ekstra seng\n";
-		}
-		if(status_frokost == true){
-			utfil << "Med frokost\n";
-		}
-		utfil << "Antall regninger: " << regninger->no_of_elements() << "\n"
-			  << "Total sum på regninger: " << tot_regninger << "\n"
-			  << "Total sum på overnatting: " << overnatting << "\n"
-			  << "Total pris: " << total << "\n";
+	utfil.open( fil.c_str(), ios::out | ios::app );
+	utfil << "--------------FAKTURA--------------\n"
+			<< "Ankomst-dato: " << number << "\n"
+			<< "Avreise-dato: " << avreise_dato << "\n"
+			<< "Antall døgn: " << antall_dogn << "\n"
+			<< "Antall beboere: " << antall_beboere << "\n"
+			<< "Navn på beboere: \n";
+	for(int i = 0; i < antall_beboere; i++) {
+		utfil << navn[i] << "\n";
 	}
+	if(status_seng == true){
+		utfil << "Med ekstra seng\n";
+	}
+	if(status_frokost == true){
+		utfil << "Med frokost\n";
+	}
+	utfil << "Antall regninger: " << regninger->no_of_elements() << "\n"
+			<< "Total sum på regninger: " << tot_regninger << "\n"
+			<< "Total sum på overnatting: " << overnatting << "\n"
+			<< "Total pris: " << total << "\n";
+	
     utfil.close();
 }
 
