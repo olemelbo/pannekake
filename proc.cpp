@@ -131,7 +131,7 @@ void avbestill_rom() {
 					//Displayer reservasjonen
 					reservasjon->display();
 					do {
-						temp = read_char("Skal reservasjonen slettes?[Y/n]");
+						temp = read_char("Skal reservasjonen slettes?[Y/N]");
 					} while(!temp == 'Y' && !temp == 'N');
 
 					if(temp == 'Y') {
@@ -308,22 +308,37 @@ void endre_ankomst_avreisedato() {
 				//Henter reservasjon ut fra rommet.
 				reservasjon = (Reservasjon*) rommet->get_reservasjoner()->remove_no(k); 
 				//Sjekker om navnet er i reservasjonen
-				if(reservasjon->is_name_in_array(reservator)) {
+				if((reservasjon->is_name_in_array(reservator)) && (reservasjon->er_innsjekket() == false)) {
 					//Teller opp telleren
 					counter++;
 
 					reservasjon->display_list(counter);
 					char svar = read_char("Ønsker du å endre denne reservasjonen? [Y/N]");
 					if(svar == 'Y'){
-						if(reservasjon->er_innsjekket() == false){
-							cout << "Du må være innsjekket på denne reservasjonen for å kunne gjøre dette";
-						} else {
-							//IKKE ENDRE BEGGE, OG/ELLER
-							int ankomst = read_int("Skriv inn den nye ankomstdatoen [AAAAMMDD]");
-							int avreise = read_int("Skriv inn den nye avreisedatoen [AAAAMMDD]");
+						string ankomst = getln("Skriv inn den nye ankomstdatoen [AAAAMMDD]");
+						string avreise = getln("Skriv inn den nye avreisedatoen [AAAAMMDD]");
 
-							reservasjon->endre_ankomst(ankomst);
-							reservasjon->endre_avreise(avreise);
+						if(ankomst.empty() && !avreise.empty()){
+							//Ankomst er tom men ikke avreise
+							int avreise_dato = atoi(avreise.c_str());
+							reservasjon->endre_avreise(avreise_dato);
+						}
+						else if(avreise.empty() && !ankomst.empty()){
+							//Avreise er tom men ikke ankomst
+							int ankomst_dato = atoi(ankomst.c_str());
+							reservasjon->endre_ankomst(ankomst_dato);
+						} 
+						else if(avreise.empty() && ankomst.empty()){
+							//Begge er tomme
+							//Gjør ingenting
+							cout << "Du kan kun endre ankomstdato og/eller avreisedato her. Du har ikke valgt å endre noe" << endl;
+						}
+						else{
+							//Begge er utfylt
+							int avreise_dato = atoi(avreise.c_str());
+							int ankomst_dato = atoi(ankomst.c_str());
+							reservasjon->endre_ankomst(ankomst_dato);
+							reservasjon->endre_avreise(avreise_dato);
 						}
 					}
 					rommet->get_reservasjoner()->add(reservasjon);
@@ -337,13 +352,66 @@ void endre_ankomst_avreisedato() {
 		}
 	}
 	if(counter == 0) {
-		cout << "Personen du søkte etter har ingen reservasjoner" << endl;
+		cout << "Personen du søkte etter har ingen reservasjoner (som ikke er innsjekket)" << endl;
 		return;
 	}
 }
 
 void endre_avreisedato() {
+	Rom* rommet;
+	Reservasjon* reservasjon;
+	int counter = 0;
+	int ant;
 
+	string reservator = getln("Skriv inn navnet på reservatøren");
+
+	//Looper igjennom romtyper
+	for(int i = 0; i < ANTALL_ROMTYPER; i++) { 
+		//Finner hotellets rom
+		int antall_rom_i_kategori = hotellet->get_rom(i)->no_of_elements();
+		for (int j = 1;  j <= antall_rom_i_kategori;  j++)  { 
+			//Trekker ut et rom av lista.
+			rommet = (Rom*) hotellet->get_rom(i)->remove_no(j);
+			//Henter ut alle reservasjoner innen for et bestemt rom.
+			int antall_reservasjoner = rommet->get_reservasjoner()->no_of_elements();
+			for (int k = 1;  k <= antall_reservasjoner;  k++)  {  
+				//Henter reservasjon ut fra rommet.
+				reservasjon = (Reservasjon*) rommet->get_reservasjoner()->remove_no(k); 
+				//Sjekker om navnet er i reservasjonen
+				if((reservasjon->is_name_in_array(reservator)) && (reservasjon->er_innsjekket() == true)) {
+					//Teller opp telleren
+					counter++;
+
+					reservasjon->display_list(counter);
+					char svar = read_char("Ønsker du å endre denne reservasjonen? [Y/N]");
+					if(svar == 'Y'){
+						string avreise = getln("Skriv inn den nye avreisedatoen [AAAAMMDD]");
+
+						if(avreise.empty()){
+							//Avreise er tom
+							//Gjør ingenting
+							cout << "Du kan kun endre avreisedato her. Du har valgt å ikke endre den" << endl;
+						}
+						else{
+							//Avreise er utfylt
+							int avreise_dato = atoi(avreise.c_str());
+							reservasjon->endre_avreise(avreise_dato);
+						}
+					}
+					rommet->get_reservasjoner()->add(reservasjon);
+				} else {
+					// Legger resvasjon tilbake i listen
+					rommet->get_reservasjoner()->add(reservasjon);
+				}
+			}
+			//Legger rommet tilbake i listen.
+			hotellet->get_rom(i)->add(rommet);
+		}
+	}
+	if(counter == 0) {
+		cout << "Personen du søkte etter har ingen reservasjoner (som er insjekket)" << endl;
+		return;
+	}
 }
 
 void bytt_rom() {
