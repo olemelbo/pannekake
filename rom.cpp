@@ -57,7 +57,11 @@ void Rom::skriv_til_fil(ostream* ut) {
 void Rom::display() {
 	cout << "Romnummer: " << number << endl;
 	cout << "Antall senger: " << ant_senger << endl;
-	
+	if(frokost_inkludert) {
+		cout << "Frokost er inkludert" <<endl;
+	} else {
+		cout << "Frokost er ikke inkludert " << endl;
+	}
 }
 
 bool Rom::ledig() {
