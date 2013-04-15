@@ -274,7 +274,7 @@ void registrer_regning() {
 			rommet = (Rom*) hotellet->get_rom(i)->remove_no(j);	
 			if(rommet->getRomNummer() == rom_nummer) {
 				counter++;
-				if(!rommet->ledig()) {
+				if(!rommet->ledig(dagens_dato)) {
 					
 				} else {
 					cout << "Det er ingen som bor p> dette rommet for >yeblikket" << endl;
@@ -520,7 +520,7 @@ void vis_navarende_beboer() {
         return;
     }
     
-    if(!rom->ledig()) {
+	if(!rom->ledig(dagens_dato)) {
         List* reservasjoner = rom->get_reservasjoner();
         for(int i = 1; i <= reservasjoner->no_of_elements(); i++) {
             Reservasjon* res = (Reservasjon*) reservasjoner->remove_no(i);
@@ -553,6 +553,9 @@ void vis_alle_ledige_rom_i_kategori() {
 	if(rom_kategori.compare("SUITE") == 0)  {
 		rom_kat = SUITE;
 	}
+
+	int ankomst_dato = read_int("Skriv inn ankomst dato(AAAAMMDD)");
+	int avreise_dato = read_int("Skriv inn avreise dato(AAAAMMDD)");
 	
 	int antall_rom_i_kategori = hotellet->get_rom(rom_kat)->no_of_elements();
 	for (int j = 1;  j <= antall_rom_i_kategori;  j++)  { 
@@ -570,7 +573,7 @@ void vis_alle_ledige_rom_i_kategori() {
 		}
 
 		//Henter ut alle reservasjoner innen for et bestemt rom.
-		if(rommet->ledig()) {
+		if(rommet->ledig(ankomst_dato, avreise_dato)) {
 			rommet->display();
 			//Legger rommet tilbake i listen.
 			hotellet->get_rom(rom_kat)->add(rommet);
