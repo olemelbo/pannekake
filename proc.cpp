@@ -521,17 +521,28 @@ void vis_navarende_beboer() {
         return;
     }
     
-    
+    if(!rom->ledig()) {
+        List* reservasjoner = rom->get_reservasjoner();
+        for(int i = 1; i <= reservasjoner->no_of_elements(); i++) {
+            Reservasjon* res = (Reservasjon*) reservasjoner->remove_no(i);
+            if(res->er_innsjekket()) {
+                res->display();
+            }
+            reservasjoner->add(res);
+        }
+    }
 }
 
 void vis_alle_ledige_rom_i_kategori() {
 	Rom* rommet;
 	string rom_kategori;
 	int rom_kat;
-	int counter;
+	int counter = 0;
 	do {
 		rom_kategori = getln("Skriv inn romkategori[Singel/Dobbel/Suite]");
+		transform(rom_kategori.begin(), rom_kategori.end(),rom_kategori.begin(), ::toupper);
 	} while(!is_rom_category(rom_kategori));
+
 	if(rom_kategori.compare("SINGEL") == 0)  {
 		rom_kat = SINGEL;
 	}
@@ -545,28 +556,39 @@ void vis_alle_ledige_rom_i_kategori() {
 	}
 	
 	int antall_rom_i_kategori = hotellet->get_rom(rom_kat)->no_of_elements();
-	for (int j = 1;  j <= antall_rom_i_kategori ;  j++)  { 
-		//Trekker ut et rom av lista.
-		rommet = (Rom*) hotellet->get_rom(rom_kat)->remove_no(j);
+	for (int j = 1;  j <= antall_rom_i_kategori;  j++)  { 
+		counter++;
+		
+		switch (rom_kat)  {
+			 case SINGEL : rommet = (Singel*) hotellet->get_rom(rom_kat)->remove_no(j);
+			break;
+			 case DOBBEL : rommet = (Dobbel*) hotellet->get_rom(rom_kat)->remove_no(j);
+			break;
+			 case SUITE :  rommet = (Suite*) hotellet->get_rom(rom_kat)->remove_no(j);
+			break;
+			 default:  rommet = (Rom*) hotellet->get_rom(rom_kat)->remove_no(j);
+			break;
+		}
+
 		//Henter ut alle reservasjoner innen for et bestemt rom.
 		if(rommet->ledig()) {
-
+			rommet->display();
 			//Legger rommet tilbake i listen.
-			hotellet->get_rom(j)->add(rommet);
+			hotellet->get_rom(rom_kat)->add(rommet);
+
 		} else {
 			//Legger rommet tilbake i listen.
-			hotellet->get_rom(j)->add(rommet);
+			hotellet->get_rom(rom_kat)->add(rommet);
 		}
 		
 	}
 	
 	if(counter == 0) 
-		cout << "Personen du s>kte etter har ingen reservasjoner." << endl;
+		cout << "Det finnes ingen rom i denne kategorien." << endl;
 		
 }
 
 bool is_rom_category(string rom_kategori) {
-	transform(rom_kategori.begin(), rom_kategori.end(),rom_kategori.begin(), ::toupper);
 	if(rom_kategori.compare("SINGEL")== 0) {
 		return true;
 	} else if(rom_kategori.compare("DOBBEL") == 0) {

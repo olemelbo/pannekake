@@ -16,6 +16,11 @@ using namespace std;
 string read_text(ifstream& file) {
     string tmp;
     getline(file, tmp);
+    
+    //Fjerner newline for MAC OSX
+    if(*tmp.rbegin() == '\r')
+        tmp.erase(tmp.length() - 1);
+    
     return tmp;
 }
 
@@ -55,7 +60,7 @@ char read_char(string promt) {
     strcpy(tmp, c);
     cmd = *tmp;
     
-    delete(tmp);
+    //delete(tmp);
     
     return toupper(cmd);
 }
@@ -92,3 +97,5 @@ string getln(string promt, int i) {
     getline(cin,result);
     return result;
 }
+
+
