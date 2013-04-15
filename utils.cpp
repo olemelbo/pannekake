@@ -42,12 +42,21 @@ int read_int(string promt) {
 
 char read_char(string promt) {
 	cout << endl << promt << ": ";
-	char cmd;
-	//cin >> cmd; cin.ignore(0);
+
+    char cmd;
+    char* tmp;
+    tmp = new char(1);
+	
+    //Leser input
     string str;
     getline(cin, str);
+    
     const char* c = str.c_str();
-    strcpy(&cmd, c);
+    strcpy(tmp, c);
+    cmd = *tmp;
+    
+    delete(tmp);
+    
     return toupper(cmd);
 }
 
