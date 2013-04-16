@@ -191,13 +191,15 @@ void innsjekking() {
 							
 							string beboere[MAX_ARRAY];
 							string input;
-							int teller;
+							int teller = 0;
 							cout << "Det er registert " << reservasjon->getAntallBeboere() << " beboere.\n"
 								 << "For a legge inn flere, skriv inn navnet pa beboeren. For aa avslutte trykk p> enter" << endl;
 							do {
-								beboere[teller] = getln("Skriv inn navnet p> beboer", counter + 1);
-								input = beboere[teller];
-								teller++;
+								input = getln("Skriv inn navnet p> beboer", reservasjon->getAntallBeboere() + 1);
+								if(!did_the_user_press_enter(input)) {
+									beboere[teller] = input;
+									teller++;
+								}
 							} while(!did_the_user_press_enter(input));
 	
 							
