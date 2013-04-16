@@ -60,9 +60,13 @@ void reserver_rom() {
 
 	int ankomstdato;
 	int avreisedato;
+	int teller = 0;
 	do {
+		if(teller > 0)
+			cout << "Avreisedato m> v>ere større enn avreisedato" << endl;
 		ankomstdato = read_int("Skriv inn annkomstdato[AAAAMMDD]");
 		avreisedato = read_int("Skriv inn avreisedato[AAAAMMDD]");
+		teller++;
 	} while(ankomstdato > avreisedato);
 
 	bool frokost = false;

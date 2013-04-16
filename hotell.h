@@ -9,17 +9,20 @@
 #include "suite.h"
 #include <string>
 using namespace std;
-
+/**
+ *	Hotell klassen
+ *
+ */																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																												
 class Hotell {
 private:
-	string navn;
-	string gateadresse;
-    string postadresse;
-	string mailadresse;
-	string filnavn;
-	int telefon;
-	int fax;
-	int frokost_pris;
+	string navn;					// Hotellnavnet
+	string gateadresse;				// Gateadresse
+    string postadresse;				// Postadresse
+	string mailadresse;				// Mailadresse
+	string filnavn;					// Kortnavnet til fila
+	int telefon;					// Telefon
+	int fax;						// Fax
+	int frokost_pris;				// Frokostpris
 	int ekstra_seng_pris;
 	int antall_fasciliteter;
 	string fasciliteter[MAX_ARRAY];
