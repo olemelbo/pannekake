@@ -93,24 +93,30 @@ void reserver_rom() {
         return;
     }
      
+    string beboere[MAX_ARRAY];
+	int counter = 0;
+	string input;
+	do {
+		beboere[counter] = getln("Skriv inn navnet p> beboer", counter + 1);
+		input = beboere[counter];
+		counter++;
+	} while(!did_the_user_press_enter(input));
 
-	int ant = read_int("Hvor mange beboere skal reserveres?");
-   
-
-	string beboere[MAX_ARRAY];
-	
-	for(int i = 0; i < ant; i++) {
-         beboere[i] = getln("Skriv inn navnet p> beboer", i + 1);
-    }
 
     // Oppretter reservasjon
-	temp = new Reservasjon(ankomstdato, avreisedato, frokost, ekstraseng, ant, beboere);
+	temp = new Reservasjon(ankomstdato, avreisedato, frokost, ekstraseng, counter, beboere);
     
     // Legger reservasjonen til i rommet.
     r->get_reservasjoner()->add(temp);
 
 	//Må fjernes før innlevering
     hotellet->les_fra_fil();
+}
+
+bool did_the_user_press_enter(string temp) {
+	if(temp.empty())
+		return true;
+	return false;
 }
 
 void avbestill_rom() {
