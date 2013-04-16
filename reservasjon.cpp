@@ -176,7 +176,7 @@ void Reservasjon::display_faktura()
 	for (int j = 1;  j <= regninger->no_of_elements();  j++)  { 
 		Regning* regning = (Regning*) regninger->remove_no(j);
 		tot_regninger += regning->hent_sum();
-		//ADD
+		regninger->add(regning);
 	}
 	
 	overnatting += antall_dogn * pris;
@@ -194,7 +194,7 @@ void Reservasjon::skriv_faktura_til_fil(string fil){
 	for (int j = 1;  j <= regninger->no_of_elements();  j++)  { 
 		Regning* regning = (Regning*) regninger->remove_no(j);
 		tot_regninger += regning->hent_sum();
-		//ADD
+		regninger->add(regning);
 	}
 	total = overnatting + tot_regninger;//PLUSS EKSTRA SENG + FROKOST!!!
 	

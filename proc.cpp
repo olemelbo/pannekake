@@ -728,7 +728,3 @@ void les_fra_fil() {
     hotellet->display();
     
 }
-
-void avslutt() {
-
-}

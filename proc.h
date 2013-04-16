@@ -30,6 +30,5 @@ void vis_alle_ledige_rom_i_kategori();
 void skriv_til_fil();
 void bytt_hotell();
 void les_fra_fil();
-void avslutt();
 
 #endif
