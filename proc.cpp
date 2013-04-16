@@ -330,7 +330,6 @@ void endre_ankomst_avreisedato() {
 	Rom* rommet;
 	Reservasjon* reservasjon;
 	int counter = 0;
-	int ant;
 
 	string reservator = getln("Skriv inn navnet på reservatøren");
 
@@ -400,7 +399,6 @@ void endre_avreisedato() {
 	Rom* rommet;
 	Reservasjon* reservasjon;
 	int counter = 0;
-	int ant;
 
 	string reservator = getln("Skriv inn navnet på reservatøren");
 
@@ -463,7 +461,6 @@ void oversikt_over_hotell() {
 
 void beskrivelse_av_suiter() {
 	Suite* suite;
-	Rom* rommet;
 	int antll_suiter = hotellet->get_rom(2)->no_of_elements();
 	for (int j = 1;  j <= antll_suiter; j++)  {
 		suite = (Suite*) hotellet->get_rom(2)->remove_no(j);
@@ -476,7 +473,6 @@ void vis_alle_reservasjoner_for_person() {
 	Rom* rommet;
 	Reservasjon* reservasjon;
 	int counter = 0;
-	int ant;
 
 	string navn = getln("Skriv inn reservat>ens navn");
 	//Looper igjennom romtyper
@@ -707,6 +703,7 @@ string does_hotell_exist_in_file(ifstream& infile, string userinput )
         }
 		return fil;
 	}
+	return false;
 }
 
 void opprett_reg_post() {
