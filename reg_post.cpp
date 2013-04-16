@@ -35,5 +35,5 @@ void Reg_post::display(){
 }
 
 string Reg_post::get_post(int tall){
-	string post = mest_vanlige_poster[tall];
+	return mest_vanlige_poster[tall];
 }

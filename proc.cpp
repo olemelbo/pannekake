@@ -50,7 +50,7 @@ void reserver_rom() {
 	string romtype_tmp;
 	romtype_tmp = getln("Hvilken romtype >nsker du? [Singel/Dobbel/Suite]");
     
-    int romtype;
+    int romtype = 0;
 	if(romtype_tmp.compare("Singel") == 0)
         romtype = SINGEL;
     if(romtype_tmp.compare("Dobbel") == 0)
