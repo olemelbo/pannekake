@@ -86,9 +86,9 @@ void Reservasjon::setAntallBeboere(int ant) {
 	antall_beboere = ant;
 }
 
-void Reservasjon::setBeboere(string beboere[MAX_ARRAY]) {
-	for(int i = 0; i < antall_beboere; i++) {
-         navn[i] = beboere[i];
+void Reservasjon::setBeboere(string beboere[MAX_ARRAY], int teller) {
+	for(int i = 0; i < teller; i++) {
+		navn[antall_beboere++] = beboere[i];
     }
 }
 
@@ -98,6 +98,10 @@ int Reservasjon::getAvreiseDato() {
 
 int Reservasjon::getAnkomstDato() {
 	return number;
+}
+
+int Reservasjon::getAntallBeboere() {
+	return antall_beboere;
 }
 
 bool Reservasjon::is_name_in_array(string name) {

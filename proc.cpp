@@ -97,9 +97,11 @@ void reserver_rom() {
 	int counter = 0;
 	string input;
 	do {
-		beboere[counter] = getln("Skriv inn navnet p> beboer", counter + 1);
-		input = beboere[counter];
-		counter++;
+		input = getln("Skriv inn navnet p> beboer", counter + 1);
+		if(!did_the_user_press_enter(input)) {
+			beboere[counter] = input;
+			counter++;
+		}
 	} while(!did_the_user_press_enter(input));
 
 
@@ -108,9 +110,6 @@ void reserver_rom() {
     
     // Legger reservasjonen til i rommet.
     r->get_reservasjoner()->add(temp);
-
-	//Må fjernes før innlevering
-    hotellet->les_fra_fil();
 }
 
 bool did_the_user_press_enter(string temp) {
@@ -166,7 +165,7 @@ void innsjekking() {
 	Rom* rommet;
 	Reservasjon* reservasjon;
 	int counter = 0;
-	int ant = 0;
+
 
 	string navn = getln("Skriv inn reservat>ens navn");
 	//Looper igjennom romtyper
@@ -189,29 +188,27 @@ void innsjekking() {
 					if(reservasjon->getAnkomstDato() == dagens_dato) {
 					
 						cout << "Romnummer: " << rommet->getRomNummer() << endl;
-						ant = read_int("Hvor mange beboere skal reserveres? ");
-
-						// Setter antall beboere
-						reservasjon->setAntallBeboere(ant);
-					
-						string beboere[MAX_ARRAY];
-
-						if(ant > 0) {
+							
+							string beboere[MAX_ARRAY];
+							string input;
+							int teller;
+							cout << "Det er registert " << reservasjon->getAntallBeboere() << " beboere.\n"
+								 << "For a legge inn flere, skriv inn navnet pa beboeren. For aa avslutte trykk p> enter" << endl;
+							do {
+								beboere[teller] = getln("Skriv inn navnet p> beboer", counter + 1);
+								input = beboere[teller];
+								teller++;
+							} while(!did_the_user_press_enter(input));
 	
-							for(int i = 0; i < ant; i++) 
-								beboere[i] = getln("Skriv inn navnet p> beboer", i + 1);
-								
+							
 							// Setter beboere paa reservasjonen
-							reservasjon->setBeboere(beboere);
+							reservasjon->setBeboere(beboere, teller);
 							// Displayer reservasjon
 							reservasjon->display();
 							
 							reservasjon->set_innsjekk();
 							rommet->get_reservasjoner()->add(reservasjon);
-						} else {
-							cout << "Antall beboere må være minst én" << endl;
-							rommet->get_reservasjoner()->add(reservasjon);
-						}
+			
 					} else {
 						rommet->get_reservasjoner()->add(reservasjon);
 					}
