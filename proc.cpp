@@ -59,10 +59,11 @@ void reserver_rom() {
         romtype = SUITE;
 
 	int ankomstdato;
-	ankomstdato = read_int("Skriv inn annkomstdato[AAAAMMDD]");
-
 	int avreisedato;
-	avreisedato = read_int("Skriv inn avreisedato[AAAAMMDD]");
+	do {
+		ankomstdato = read_int("Skriv inn annkomstdato[AAAAMMDD]");
+		avreisedato = read_int("Skriv inn avreisedato[AAAAMMDD]");
+	} while(ankomstdato > avreisedato);
 
 	bool frokost = false;
 	char onskerfrokost = read_char(">nsker du frokost? [y/n]");
@@ -583,10 +584,18 @@ void vis_alle_ledige_rom_i_kategori() {
 	if(rom_kategori.compare("SUITE") == 0)  {
 		rom_kat = SUITE;
 	}
-
-	int ankomst_dato = read_int("Skriv inn ankomst dato(AAAAMMDD)");
-	int avreise_dato = read_int("Skriv inn avreise dato(AAAAMMDD)");
 	
+	int ankomst_dato;
+	int avreise_dato;
+	int teller = 0;
+	do {
+		if(teller > 0) 
+			cout << "Ankomstdato m> v>re st>rre enn avreise dato" << endl;
+		ankomst_dato = read_int("Skriv inn ankomst dato(AAAAMMDD)");
+		avreise_dato = read_int("Skriv inn avreise dato(AAAAMMDD)");
+		teller++;
+	} while(ankomst_dato > avreise_dato);
+
 	int antall_rom_i_kategori = hotellet->get_rom(rom_kat)->no_of_elements();
 	for (int j = 1;  j <= antall_rom_i_kategori;  j++)  { 
 		counter++;

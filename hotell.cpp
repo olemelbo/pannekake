@@ -17,6 +17,8 @@
 
 using namespace std;
 
+extern int dagens_dato;
+
 Hotell::Hotell() {
     
 }
@@ -180,7 +182,7 @@ Rom* Hotell::get_ledig_rom(int romtype) {
     
     while(!er_ledig && x <= n) {
         rommet = (Rom*) rom[romtype]->remove_no(x);
-        er_ledig = rommet->ledig();
+        er_ledig = rommet->ledig(dagens_dato);
         rom[romtype]->add(rommet);
         x++;
     }
@@ -188,7 +190,7 @@ Rom* Hotell::get_ledig_rom(int romtype) {
     if(!er_ledig) {
         for(int i = 1; i <= r; i++) {
             rommet = (Rom*) rom[romtype]->remove_no(i);
-            er_ledig = rommet->ledig();
+			er_ledig = rommet->ledig(dagens_dato);
             rom[romtype]->add(rommet);
         }
     }
