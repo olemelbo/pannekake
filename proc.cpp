@@ -267,6 +267,8 @@ void registrer_regning() {
 	Rom* rommet;
 	Reservasjon* reservasjon;
 	Regning* regning;
+	Reg_post regpost;
+	char *cstr;
 	int rom_nummer = read_int("Skriv inn romnummeret");
 	int counter = 0;
 	for(int i = 0; i < ANTALL_ROMTYPER; i++) { 
@@ -276,11 +278,37 @@ void registrer_regning() {
 			if(rommet->getRomNummer() == rom_nummer) {
 				counter++;
 				if(!rommet->ledig(dagens_dato)) {
-					
+					regpost.display();
+					int menunr = read_int("Skriv inn nr fra menyelementet over. Dersom du ønsker å skrive inn egen beskrivelse, skriv en bokstav\n");
+					if(menunr == -1){
+						// user didn't input a number
+						string beskrivelse = getln("Skriv inn egen beskrivelse");
+						cstr = new char[beskrivelse.length() + 1];
+						strcpy(cstr, beskrivelse.c_str());
+					}
+					else{
+						//Brukeren skrev inn et nr
+						string post_beskrivelse = regpost.get_post(menunr);
+						cstr = new char[post_beskrivelse.length() + 1];
+						strcpy(cstr, post_beskrivelse.c_str());
+					}
+					float pris = read_float("Skriv inn regningens beløp");
+
+					int antall_reservasjoner = rommet->get_reservasjoner()->no_of_elements();
+					for (int k = 1;  k <= antall_reservasjoner;  k++)  {  
+						//Henter reservasjon ut fra rommet.
+						reservasjon = (Reservasjon*) rommet->get_reservasjoner()->remove_no(k); 
+						if(reservasjon->er_innsjekket()){
+							regning = new Regning(cstr, pris);
+						}
+						rommet->get_reservasjoner()->add(reservasjon);
+					}
+					delete [] cstr;
 				} else {
 					cout << "Det er ingen som bor p> dette rommet for >yeblikket" << endl;
 				}
 			}
+			hotellet->get_rom(i)->add(rommet);
 		}
 	}
 	if(counter == 0) {

@@ -8,6 +8,7 @@
 
 #include "reg_post.h"
 #include <string>
+#include <iostream>
 
 using namespace std;
 
@@ -23,4 +24,16 @@ Reg_post::Reg_post(int antall, string vanlige_reg_poster[MAX_ARRAY]) {
 
 Reg_post::~Reg_post() {
     
+}
+
+void Reg_post::display(){
+	int counter = 0;
+	for(int i = 0; i < antall_standard_reg_poster; i++){
+		counter++;
+		cout << counter << ": " << mest_vanlige_poster[i] << "\n" << endl;
+	}
+}
+
+string Reg_post::get_post(int tall){
+	string post = mest_vanlige_poster[tall];
 }
