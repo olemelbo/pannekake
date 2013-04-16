@@ -234,8 +234,12 @@ void Reservasjon::endre_ankomst(int ankomst){
 void Reservasjon::endre_avreise(int avreise){
 	avreise_dato = avreise;
 }
-void Reservasjon::set_innsjekk(bool svar){
-	innsjekket = svar;
+void Reservasjon::set_innsjekk(){
+	innsjekket = true;
+}
+
+void Reservasjon::set_utsjekk(){
+	innsjekket = false;
 }
 bool Reservasjon::er_innsjekket(){
 	return innsjekket;

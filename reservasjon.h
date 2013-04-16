@@ -41,7 +41,8 @@ class Reservasjon : public Num_element {
 	void display_list(int count);
 	void endre_ankomst(int ankomst);
 	void endre_avreise(int avreise);
-	void set_innsjekk(bool svar);
+	void set_innsjekk();
+	void set_utsjekk();
 	bool er_innsjekket();
 };
 

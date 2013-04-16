@@ -196,7 +196,7 @@ void innsjekking() {
 							// Displayer reservasjon
 							reservasjon->display();
 							
-							reservasjon->set_innsjekk(true);
+							reservasjon->set_innsjekk();
 							rommet->get_reservasjoner()->add(reservasjon);
 						} else {
 							cout << "Antall beboere må være minst én" << endl;
@@ -245,6 +245,7 @@ void utsjekking() {
 						//Skriver ut alle 
 						reservasjon->display();
 						reservasjon->display_faktura();
+						reservasjon->set_utsjekk();
 						string filnavn = hotellet->get_filnavn();
 						reservasjon->skriv_faktura_til_fil(filnavn);
 					} else {
@@ -278,38 +279,37 @@ void registrer_regning() {
 			rommet = (Rom*) hotellet->get_rom(i)->remove_no(j);	
 			if(rommet->getRomNummer() == rom_nummer) {
 				counter++;
-				if(!rommet->ledig(dagens_dato)) {
-					regpost.display();
-					int menunr = read_int("Skriv inn nr fra menyelementet over. Dersom du ønsker å skrive inn egen beskrivelse, skriv en bokstav\n");
-					if(menunr == -1){
-						// user didn't input a number
-						string beskrivelse = getln("Skriv inn egen beskrivelse");
-						cstr = new char[beskrivelse.length() + 1];
-						strcpy(cstr, beskrivelse.c_str());
-					}
-					else{
-						//Brukeren skrev inn et nr
-						string post_beskrivelse = regpost.get_post(menunr);
-						cstr = new char[post_beskrivelse.length() + 1];
-						strcpy(cstr, post_beskrivelse.c_str());
-					}
-					float pris = read_float("Skriv inn regningens beløp");
-
-					int antall_reservasjoner = rommet->get_reservasjoner()->no_of_elements();
-					for (int k = 1;  k <= antall_reservasjoner;  k++)  {  
-						//Henter reservasjon ut fra rommet.
-						reservasjon = (Reservasjon*) rommet->get_reservasjoner()->remove_no(k); 
-						if(reservasjon->er_innsjekket()){
-							regning = new Regning(cstr, pris);
+				int antall_reservasjoner = rommet->get_reservasjoner()->no_of_elements();
+				for (int k = 1;  k <= antall_reservasjoner;  k++)  {  
+					//Henter reservasjon ut fra rommet.
+					reservasjon = (Reservasjon*) rommet->get_reservasjoner()->remove_no(k); 
+					if(reservasjon->er_innsjekket()){
+						regpost.display();
+						int menunr = read_int("Skriv inn nr fra menyelementet over. Dersom du ønsker å skrive inn egen beskrivelse, skriv en bokstav\n");
+						if(menunr == -1){
+							// user didn't input a number
+							string beskrivelse = getln("Skriv inn egen beskrivelse");
+							cstr = new char[beskrivelse.length() + 1];
+							strcpy(cstr, beskrivelse.c_str());
 						}
-						rommet->get_reservasjoner()->add(reservasjon);
+						else{
+							//Brukeren skrev inn et nr
+							string post_beskrivelse = regpost.get_post(menunr);
+							cstr = new char[post_beskrivelse.length() + 1];
+							strcpy(cstr, post_beskrivelse.c_str());
+						}
+						float pris = read_float("Skriv inn regningens beløp");
+
+						regning = new Regning(cstr, pris);
+						delete [] cstr;
+					} 
+					else {
+						cout << "Det er ingen som bor p> dette rommet for >yeblikket" << endl;
 					}
-					delete [] cstr;
-				} else {
-					cout << "Det er ingen som bor p> dette rommet for >yeblikket" << endl;
+					rommet->get_reservasjoner()->add(reservasjon);
 				}
+				hotellet->get_rom(i)->add(rommet);
 			}
-			hotellet->get_rom(i)->add(rommet);
 		}
 	}
 	if(counter == 0) {
