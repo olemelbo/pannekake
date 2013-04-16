@@ -17,8 +17,8 @@ Regning::Regning() {
 	// Denne skal ikke kjøres    
 }
 
-Regning::Regning(char* nvn, int total) : Text_element(nvn) {
-    
+Regning::Regning(char* nvn, float total) : Text_element(nvn) {
+    totalsum = total;
 }
 
 Regning::Regning(char* nvn, ifstream &file): Text_element(nvn) {

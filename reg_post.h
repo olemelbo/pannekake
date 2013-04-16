@@ -14,6 +14,8 @@ class Reg_post {
 		Reg_post();
 		Reg_post( int antall, string vanlige_reg_poster[MAX_ARRAY] );
 		~Reg_post();
+		void display();
+		string Reg_post::get_post(int tall);
 };
 
 #endif

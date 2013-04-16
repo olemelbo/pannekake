@@ -11,7 +11,7 @@ class Regning : public Text_element {
 		float totalsum;
 	public:
     Regning();
-    Regning(char* nvn, int total);
+    Regning(char* nvn, float total);
     Regning(char* nvn, ifstream &file);
     ~Regning();
     void display();

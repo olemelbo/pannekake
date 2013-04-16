@@ -31,6 +31,13 @@ int read_int(ifstream& file) {
     return stoi(tmp);
 }
 
+float read_float(string promt) {
+	cout << endl << promt << ": ";
+	string result;
+    getline(cin,result);
+	return atof(result.c_str());
+}
+
 float read_float(ifstream& file) {
 	string tmp;
 	getline(file, tmp);
@@ -41,8 +48,13 @@ int read_int(string promt) {
 	cout << endl << promt << ": ";
 	string result;
     getline(cin,result);
-    int r = stoi(result);
-    return r;
+	if(cin.fail()){
+		return -1;
+	}
+	else{
+		int r = stoi(result);
+		return r;
+	}
 }
 
 char read_char(string promt) {
