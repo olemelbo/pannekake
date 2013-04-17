@@ -110,6 +110,9 @@ void reserver_rom() {
     
     // Legger reservasjonen til i rommet.
     r->get_reservasjoner()->add(temp);
+	
+	cout << "Reservasjonen ble velykket opprettet!" << endl;
+	temp->display();
 }
 
 void avbestill_rom() {
