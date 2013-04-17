@@ -112,7 +112,7 @@ void reserver_rom() {
     r->get_reservasjoner()->add(temp);
 	
 	cout << "Reservasjonen ble velykket opprettet!" << endl;
-	temp->display();
+	temp->display(r);
 }
 
 void avbestill_rom() {
