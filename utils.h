@@ -25,4 +25,11 @@ char* convert_string_to_char(string str);
 char read_char(string promt);
 float read_float(string promt);
 float read_float(ifstream &file);
+
+bool did_the_user_press_enter(string beboere);
+bool ingen_beboere(string temp, int counter);
+
+bool is_number_less(int num_one, int num_two);
+bool gyldig_ankomst(int ankomst, int avreise, int dagens_dato);
+
 #endif /* defined(__Prosjekt__utils__) */

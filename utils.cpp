@@ -111,3 +111,25 @@ string getln(string promt, int i) {
 }
 
 
+
+
+bool did_the_user_press_enter(string temp) {
+	if(temp.empty())
+		return true;
+	return false;
+}
+bool gyldig_ankomst(int ankomst, int avreise, int dagens_dato) {
+	if((ankomst >= dagens_dato) && (ankomst < avreise) ) 
+
+		return true;
+	return false;
+}
+
+bool ingen_beboere(string temp, int counter){
+	if((temp.empty()) && (counter == 0))
+		return true;
+	if((temp.empty()) && (counter > 0))
+		return false;
+	return true;
+}
+

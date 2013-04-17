@@ -167,15 +167,7 @@ void Reservasjon::display() {
 
 void Reservasjon::display_faktura() 
 {
-
-	cout << "Ankomst: " << number << "\n"
-		 << "Avreise: " << avreise_dato << "\n"
-		 << "Antall d>gn: " << antall_dogn << "\n"
-		 << "Antall beboere: " << antall_beboere << "\n";
-	for(int i = 0; i < antall_beboere; i++) {
-        cout << "Navn paa beboere: " << navn[i] << "\n";
-    }
-
+	Regning* regning;
 	if(status_seng == true){
 	cout << "Ekstra seng\n";
 	}
@@ -191,8 +183,9 @@ void Reservasjon::display_faktura()
 	int pris = 100;
 
 	float tot_regninger;
-	for (int j = 1;  j <= regninger->no_of_elements();  j++)  { 
-		Regning* regning = (Regning*) regninger->remove_no(j);
+	int antall_regninger = regninger->no_of_elements();
+	for (int j = 1;  j <= antall_regninger;  j++)  { 
+		regning = (Regning*) regninger->remove();
 		tot_regninger += regning->hent_sum();
 		regninger->add(regning);
 	}
