@@ -42,13 +42,13 @@ Reservasjon::Reservasjon(int ankomst,
     Pris* prs = new Pris(number, avreise_dato);
     
 	if(seng == true){
-		//status_seng = ;//???????
+		status_seng = 1;
 	} else {
-        //status_seng = ;
+        status_seng = 0;
     }
 
 	if(frokost == true){
-		status_frokost = 1;//???????
+		status_frokost = 1;
 	}
 	else status_frokost = 0;
 	
@@ -252,4 +252,12 @@ void Reservasjon::set_utsjekk(){
 }
 bool Reservasjon::er_innsjekket(){
 	return innsjekket;
+}
+
+void Reservasjon::set_seng_status(int status){
+	status_seng = status;
+}
+
+int Reservasjon::get_status_seng(){
+	return status_seng;
 }
