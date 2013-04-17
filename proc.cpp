@@ -102,7 +102,7 @@ void reserver_rom() {
 			beboere[counter] = input;
 			counter++;
 		}
-	} while(!did_the_user_press_enter(input));
+	} while(ingen_beboere(input, counter));
 
 
     // Oppretter reservasjon
@@ -110,12 +110,6 @@ void reserver_rom() {
     
     // Legger reservasjonen til i rommet.
     r->get_reservasjoner()->add(temp);
-}
-
-bool did_the_user_press_enter(string temp) {
-	if(temp.empty())
-		return true;
-	return false;
 }
 
 void avbestill_rom() {

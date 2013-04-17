@@ -25,4 +25,6 @@ char* convert_string_to_char(string str);
 char read_char(string promt);
 float read_float(string promt);
 float read_float(ifstream &file);
+bool did_the_user_press_enter(string beboere);
+bool ingen_beboere(string temp, int counter);
 #endif /* defined(__Prosjekt__utils__) */

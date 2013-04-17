@@ -23,7 +23,6 @@ void oversikt_over_hotell();
 void beskrivelse_av_suiter();
 bool is_rom_category(string rom_kategori);
 void vis_alle_reservasjoner_for_person();
-bool did_the_user_press_enter(string beboere);
 void rom_ledig();
 void vis_reservasjoner_for_rom();
 void vis_navarende_beboer();
