@@ -5,6 +5,7 @@
 #include "listtool.h"
 #include "coen.h"
 #include <string>
+#include "rom.h"
 using namespace std;
 
 class Reservasjon : public Num_element {
@@ -36,6 +37,7 @@ class Reservasjon : public Num_element {
     void les_fra_fil();
     void skriv_til_fil(ostream* ut);
     void display();
+	void display(Rom* rom);
 	int getAntallBeboere();
 	void display_faktura();
 	void skriv_faktura_til_fil(string fil);
@@ -45,6 +47,8 @@ class Reservasjon : public Num_element {
 	void set_innsjekk();
 	void set_utsjekk();
 	bool er_innsjekket();
+	void set_seng_status(int status);
+	int get_status_seng();
 };
 
 #endif

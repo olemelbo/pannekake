@@ -14,6 +14,7 @@ public:
 	Singel(int romnr);
     Singel(int romnr, ifstream& infile);
 	~Singel();
+	void display();
 	void skriv_til_fil(ostream* ut);
 };
 
