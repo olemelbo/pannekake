@@ -35,10 +35,10 @@ void skriv_meny()  {
 	cout << "\n\tC - Bytte til et annet (ledig) rom enn det tildelte";
 	cout << "\n\tS - hoveddatene om ett hotell";
 	cout << "\n\tD - beskrivelse av alle hotellets suiter";
-	cout << "\n\tF - alle reservasjoner som står i en persons navn";
+	cout << "\n\tF - alle reservasjoner som staar i en persons navn";
 	cout << "\n\tG - naar et rom er ledig";
 	cout << "\n\tJ - alle reservasjoner for/paa et rom";
-	cout << "\n\tK - alle data for ett roms nåv>erende beboer, inkludert dens regninger";
+	cout << "\n\tK - alle data for ett roms n>v>erende beboer, inkludert dens regninger";
 	cout << "\n\tL - alle ledeige rom i en kategori";
 	cout << "\n\tT - skriv alt om hotellet til fil";
 	cout << "\n\tH - Bytte over til et annet hotell";
@@ -58,16 +58,16 @@ void reserver_rom() {
     if(romtype_tmp.compare("Suite") == 0)
         romtype = SUITE;
 
-	int ankomstdato;
-	int avreisedato;
+	int ankomstdato = 0;
+	int avreisedato = 0;
 	int teller = 0;
 	do {
 		if(teller > 0)
-			cout << "Avreisedato m> v>ere større enn avreisedato" << endl;
+			cout << "Avreisedato m> v>ere st>rre enn ankomstdato" << endl;
 		ankomstdato = read_int("Skriv inn annkomstdato[AAAAMMDD]");
 		avreisedato = read_int("Skriv inn avreisedato[AAAAMMDD]");
 		teller++;
-	} while(ankomstdato > avreisedato);
+	} while(!gyldig_ankomst(ankomstdato, avreisedato, dagens_dato));
 
 	bool frokost = false;
 	char onskerfrokost = read_char(">nsker du frokost? [y/n]");
@@ -106,7 +106,7 @@ void reserver_rom() {
 
 
     // Oppretter reservasjon
-	temp = new Reservasjon(ankomstdato, avreisedato, frokost, ekstraseng, counter, beboere);
+	temp = new Reservasjon(ankomstdato, avreisedato, romtype, frokost, ekstraseng, counter, beboere);
     
     // Legger reservasjonen til i rommet.
     r->get_reservasjoner()->add(temp);
@@ -339,7 +339,7 @@ void endre_ankomst_avreisedato() {
 	Reservasjon* reservasjon;
 	int counter = 0;
 
-	string reservator = getln("Skriv inn navnet på reservat>ren");
+	string reservator = getln("Skriv inn navnet p> reservat>ren");
 
 	//Looper igjennom romtyper
 	for(int i = 0; i < ANTALL_ROMTYPER; i++) { 
@@ -359,7 +359,7 @@ void endre_ankomst_avreisedato() {
 					counter++;
 
 					reservasjon->display_list(counter);
-					char svar = read_char("Ønsker du å endre denne reservasjonen? [Y/N]");
+					char svar = read_char(">nsker du aa endre denne reservasjonen? [Y/N]");
 					if(svar == 'Y'){
 						string ankomst = getln("Skriv inn den nye ankomstdatoen [AAAAMMDD]");
 						string avreise = getln("Skriv inn den nye avreisedatoen [AAAAMMDD]");
@@ -377,7 +377,7 @@ void endre_ankomst_avreisedato() {
 						else if(avreise.empty() && ankomst.empty()){
 							//Begge er tomme
 							//Gjør ingenting
-							cout << "Du kan kun endre ankomstdato og/eller avreisedato her. Du har ikke valgt å endre noe" << endl;
+							cout << "Du kan kun endre ankomstdato og/eller avreisedato her. Du har ikke valgt aa endre noe" << endl;
 						}
 						else{
 							//Begge er utfylt
@@ -398,7 +398,7 @@ void endre_ankomst_avreisedato() {
 		}
 	}
 	if(counter == 0) {
-		cout << "Personen du søkte etter har ingen reservasjoner (som ikke er innsjekket)" << endl;
+		cout << "Personen du s>kte etter har ingen reservasjoner (som ikke er innsjekket)" << endl;
 		return;
 	}
 }
@@ -408,7 +408,7 @@ void endre_avreisedato() {
 	Reservasjon* reservasjon;
 	int counter = 0;
 
-	string reservator = getln("Skriv inn navnet på reservatøren");
+	string reservator = getln("Skriv inn navnet paa reservat>ren");
 
 	//Looper igjennom romtyper
 	for(int i = 0; i < ANTALL_ROMTYPER; i++) { 
@@ -428,14 +428,14 @@ void endre_avreisedato() {
 					counter++;
 
 					reservasjon->display_list(counter);
-					char svar = read_char("Ønsker du å endre denne reservasjonen? [Y/N]");
+					char svar = read_char(">nsker du aa endre denne reservasjonen? [Y/N]");
 					if(svar == 'Y'){
 						string avreise = getln("Skriv inn den nye avreisedatoen [AAAAMMDD]");
 
 						if(avreise.empty()){
 							//Avreise er tom
 							//Gjør ingenting
-							cout << "Du kan kun endre avreisedato her. Du har valgt å ikke endre den" << endl;
+							cout << "Du kan kun endre avreisedato her. Du har valgt aa ikke endre den" << endl;
 						}
 						else{
 							//Avreise er utfylt
@@ -454,7 +454,7 @@ void endre_avreisedato() {
 		}
 	}
 	if(counter == 0) {
-		cout << "Personen du søkte etter har ingen reservasjoner (som er insjekket)" << endl;
+		cout << "Personen du s>kte etter har ingen reservasjoner (som er insjekket)" << endl;
 		return;
 	}
 }
@@ -559,7 +559,7 @@ void vis_navarende_beboer() {
     Rom* rom = (Rom*) hotellet->get_spesifikk_rom(romnr);
     
     if(!rom) {
-        cout << "Rommet finnes ikke. Vennligst prøv igjen.\n";
+        cout << "Rommet finnes ikke. Vennligst pr>v igjen.\n";
         return;
     }
     
@@ -656,7 +656,7 @@ bool is_rom_category(string rom_kategori) {
 }
 
 void skriv_til_fil() {
-	string fil = getln("Skriv inn navnet på filen");
+	string fil = getln("Skriv inn navnet p> filen");
 	ofstream utfil(fil);
 	if (utfil.is_open()) 	// Åpner filen
 		hotellet->skriv_til_fil(&utfil);

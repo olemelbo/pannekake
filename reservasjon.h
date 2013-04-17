@@ -9,7 +9,7 @@ using namespace std;
 
 class Reservasjon : public Num_element {
 	private:
-		string romtype;
+		int romtype;
 		int avreise_dato;
 		int antall_dogn;
 		float pris[MAX_ARRAY];
@@ -22,7 +22,7 @@ class Reservasjon : public Num_element {
 	public:
     Reservasjon();
 
-    Reservasjon(int ankomst, int avreise, bool frokost, bool seng, int ant_beboere, string beboere[MAX_ARRAY]);
+    Reservasjon(int ankomst, int avreise, int romt, bool frokost, bool seng, int ant_beboere, string beboere[MAX_ARRAY]);
     
     Reservasjon(int ankomst, ifstream &file);
     ~Reservasjon();
