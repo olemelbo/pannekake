@@ -203,7 +203,7 @@ void innsjekking() {
 							reservasjon->setBeboere(beboere, teller);
 							// Displayer reservasjon
 							reservasjon->display();
-							if(reservasjon->get_status_seng == 1)
+							if(reservasjon->get_status_seng() == 1)
 								reservasjon->set_seng_status(2);
 							reservasjon->set_innsjekk();
 							rommet->get_reservasjoner()->add(reservasjon);

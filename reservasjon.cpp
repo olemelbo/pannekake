@@ -15,10 +15,12 @@
 #include "regning.h"
 #include "timer.h"
 #include "pris.h"
+#include "hotell.h"
 
 using namespace std;
 
 extern Timer timer;
+extern Hotell* hotellet;
 
 Reservasjon::Reservasjon() {
     
@@ -77,6 +79,7 @@ Reservasjon::Reservasjon(int ankomst, ifstream &file): Num_element(ankomst) {
         pris[i] = read_float(file);
     }
     status_seng = read_int(file);
+	status_frokost = read_int(file);
     antall_beboere = read_int(file);
     for(int i = 0; i < antall_beboere; i++) {
         navn[i] = read_text(file);
@@ -139,6 +142,7 @@ void Reservasjon::skriv_til_fil(ostream* ut) {
     }
     
     *ut << status_seng << "\n"
+		<< status_frokost << "\n"
         << antall_beboere << "\n";
     
     for(int i = 0; i < antall_beboere; i++) {
@@ -167,47 +171,57 @@ void Reservasjon::display() {
 
 void Reservasjon::display_faktura() 
 {
+	int pris_seng = 0;
+	int pris_frokost = 0;
 	Regning* regning;
 	if(status_seng == true){
 	cout << "Ekstra seng\n";
+	pris_seng = hotellet->get_pris_seng();
 	}
-    
 	else cout << "Uten ekstra seng\n";
+
 	if(status_frokost == true){
     cout << "Med frokost\n";
+	pris_frokost = hotellet->get_pris_frokost();
 	}
 	else cout << "Uten frokost\n";
 
 	int total = 0;
 	int overnatting = 0;
 	int pris = 100;
-
-	float tot_regninger;
+	float tot_regninger = 0;
 	int antall_regninger = regninger->no_of_elements();
+
 	for (int j = 1;  j <= antall_regninger;  j++)  { 
 		regning = (Regning*) regninger->remove();
 		tot_regninger += regning->hent_sum();
 		regninger->add(regning);
 	}
-	
+
 	overnatting += antall_dogn * pris;
-	total = overnatting + tot_regninger;//LEgge på frokost, ekstra seng
+	total = overnatting + tot_regninger + pris_frokost + pris_seng;//LEgge på frokost, ekstra seng
 	cout << "Pris for overnatting: " <<  overnatting << endl;
 	cout << "Totalt: " << total;
 }
 
 void Reservasjon::skriv_faktura_til_fil(string fil){
+	int pris_frokost = 0;
+	int pris_seng = 0;
 	int overnatting = 0;
 	int pris = 100;
 	overnatting += antall_dogn * pris;
 	int total = 0;
-	float tot_regninger;
+	float tot_regninger = 0;
 	for (int j = 1;  j <= regninger->no_of_elements();  j++)  { 
 		Regning* regning = (Regning*) regninger->remove_no(j);
 		tot_regninger += regning->hent_sum();
 		regninger->add(regning);
 	}
-	total = overnatting + tot_regninger;//PLUSS EKSTRA SENG + FROKOST!!!
+	if(status_frokost == true)
+		pris_frokost = hotellet->get_pris_frokost();
+	if(status_seng == true)
+		pris_seng = hotellet->get_pris_seng();
+	total = overnatting + tot_regninger + pris_frokost + pris_seng;
 	
 	ofstream utfil(fil);
 	utfil.open( fil.c_str(), ios::out | ios::app );

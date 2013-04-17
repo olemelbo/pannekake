@@ -39,6 +39,8 @@ public:
     Rom* get_spesifikk_rom(int romnr);
     Rom* get_ledig_rom(int romtype);
 	string get_filnavn();
+	int get_pris_seng();
+	int get_pris_frokost();
 };
 
 #endif
