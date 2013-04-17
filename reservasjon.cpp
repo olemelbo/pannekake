@@ -180,7 +180,9 @@ void Reservasjon::display_faktura()
 
 	int total = 0;
 	int overnatting = 0;
-	int pris = 100;
+	for(int i = 0; i < antall_dogn; i++) {
+        overnatting += pris[i];
+    }
 
 	float tot_regninger;
 	int antall_regninger = regninger->no_of_elements();
@@ -189,8 +191,7 @@ void Reservasjon::display_faktura()
 		tot_regninger += regning->hent_sum();
 		regninger->add(regning);
 	}
-	
-	overnatting += antall_dogn * pris;
+    
 	total = overnatting + tot_regninger;//LEgge på frokost, ekstra seng
 	cout << "Pris for overnatting: " <<  overnatting << endl;
 	cout << "Totalt: " << total;

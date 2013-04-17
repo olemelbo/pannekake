@@ -68,7 +68,19 @@ void Rom::display() {
 }
 
 bool Rom::ledig(int ankomst) {
-	return true;
+	
+    int antall_reservasjoner = reservasjoner->no_of_elements();
+    bool ledig = true;
+    
+    for(int i = 0; i < antall_reservasjoner; i++) {
+        Reservasjon* reservasjon = (Reservasjon*) reservasjoner->remove_no(i);
+        if(ankomst > reservasjon->getAnkomstDato() && ankomst < reservasjon->getAvreiseDato()) {
+            ledig = false;
+        }
+        reservasjoner->add(reservasjon);
+    }
+    
+    return ledig;
 }
 
 bool Rom::ledig(int ankomst, int avreise) {

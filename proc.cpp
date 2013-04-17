@@ -567,6 +567,8 @@ void vis_navarende_beboer() {
             Reservasjon* res = (Reservasjon*) reservasjoner->remove_no(i);
             if(res->er_innsjekket()) {
                 res->display();
+            } else {
+                cout << "\n Personen er ikke innsjekket enda.";
             }
             reservasjoner->add(res);
         }
