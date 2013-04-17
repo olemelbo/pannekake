@@ -225,8 +225,6 @@ void Reservasjon::display_faktura()
 		tot_regninger += regning->hent_sum();
 		regninger->add(regning);
 	}
-    
-	total = overnatting + tot_regninger;//LEgge på frokost, ekstra seng
 
 	total = overnatting + tot_regninger + pris_frokost + pris_seng;//LEgge på frokost, ekstra seng
 
