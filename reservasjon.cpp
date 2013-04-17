@@ -26,6 +26,7 @@ Reservasjon::Reservasjon() {
 
 Reservasjon::Reservasjon(int ankomst,
                          int avreise,
+                         int romt,
                          bool frokost,
                          bool seng,
                          int ant_beboere,
@@ -34,12 +35,19 @@ Reservasjon::Reservasjon(int ankomst,
 	
 	avreise_dato = avreise;
     
+    romtype = romt;
+    
     //Standard for oppretting av reservasjon
     innsjekket = false;
     
 	antall_dogn = timer.forskjell_datoer(number, avreise_dato);
     
     Pris* prs = new Pris(number, avreise_dato);
+    int dato = ankomst;
+    for(int i = 0; i < antall_dogn; i++) {
+        pris[i] = prs->hent_pris(romtype, dato);
+        dato = timer.nestedato(dato);
+    }
     
 	if(seng == true){
 		//status_seng = ;//???????
@@ -61,6 +69,7 @@ Reservasjon::Reservasjon(int ankomst,
 
 Reservasjon::Reservasjon(int ankomst, ifstream &file): Num_element(ankomst) {
     avreise_dato = read_int(file);
+    romtype = read_int(file);
     innsjekket = read_bool(file);
     antall_dogn = read_int(file);
     
