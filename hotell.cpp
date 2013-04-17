@@ -201,3 +201,11 @@ Rom* Hotell::get_ledig_rom(int romtype) {
     return rommet;
     
 }
+
+int Hotell::get_pris_seng(){
+	return ekstra_seng_pris;
+}
+
+int Hotell::get_pris_frokost(){
+	return frokost_pris;
+}
