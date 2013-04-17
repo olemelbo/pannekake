@@ -14,6 +14,7 @@
 #include "utils.h"
 #include "regning.h"
 #include "timer.h"
+#include "pris.h"
 
 using namespace std;
 
@@ -37,6 +38,9 @@ Reservasjon::Reservasjon(int ankomst,
     innsjekket = false;
     
 	antall_dogn = timer.forskjell_datoer(number, avreise_dato);
+    
+    Pris* prs = new Pris(number, avreise_dato);
+    
 	if(seng == true){
 		//status_seng = ;//???????
 	} else {
@@ -59,6 +63,7 @@ Reservasjon::Reservasjon(int ankomst, ifstream &file): Num_element(ankomst) {
     avreise_dato = read_int(file);
     innsjekket = read_bool(file);
     antall_dogn = read_int(file);
+    
     for(int i = 0; i < antall_dogn; i++) {
         pris[i] = read_float(file);
     }
