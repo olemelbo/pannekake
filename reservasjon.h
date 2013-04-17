@@ -47,6 +47,8 @@ class Reservasjon : public Num_element {
 	void set_innsjekk();
 	void set_utsjekk();
 	bool er_innsjekket();
+	void set_seng_status(int status);
+	int get_status_seng();
 };
 
 #endif

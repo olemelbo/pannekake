@@ -206,7 +206,8 @@ void innsjekking() {
 							reservasjon->setBeboere(beboere, teller);
 							// Displayer reservasjon
 							reservasjon->display();
-							
+							if(reservasjon->get_status_seng == 1)
+								reservasjon->set_seng_status(2);
 							reservasjon->set_innsjekk();
 							rommet->get_reservasjoner()->add(reservasjon);
 			
@@ -254,6 +255,8 @@ void utsjekking() {
 							//Skriver ut alle 
 							reservasjon->display();
 							reservasjon->display_faktura();
+
+							reservasjon->set_seng_status(0);
 							reservasjon->set_utsjekk();
 							string filnavn = hotellet->get_filnavn();
 							reservasjon->skriv_faktura_til_fil(filnavn);
