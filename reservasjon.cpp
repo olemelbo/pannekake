@@ -204,8 +204,8 @@ void Reservasjon::display_faktura()
 	else cout << "Uten ekstra seng\n";
 
 	if(status_frokost == true){
-    cout << "Med frokost\n";
-	pris_frokost = hotellet->get_pris_frokost();
+		cout << "Med frokost\n";
+		pris_frokost = hotellet->get_pris_frokost();
 	}
 	else cout << "Uten frokost\n";
 

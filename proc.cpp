@@ -213,16 +213,17 @@ void innsjekking() {
 			
 					} else {
 						rommet->get_reservasjoner()->add(reservasjon);
-					}
+					} // End ankomst er storre enn dagens_dato
 				} else {
 					// Legger resvasjon tilbake i listen
 					rommet->get_reservasjoner()->add(reservasjon);
-				}
-			}
+				} // End is_name_in_array
+			
+			} // End for reservasjoner
 			//Legger rommet tilbake i listen.
 			hotellet->get_rom(i)->add(rommet);
-		}
-	}
+		}	// end rom
+	} // end rom kat
 	if(counter == 0) 
 		cout << "Personen du s>kte etter har ingen reservasjoner paa dagens dato" << endl;
 }
@@ -234,6 +235,7 @@ void utsjekking() {
 	int counter_rom = 0;
 	int counter_res = 0;
 	int rom_nummer = read_int("Skriv inn rommnummeret");
+	int checked_in = 0;
 	
 	//Looper igjennom romtyper
 	for(int i = 0; i < ANTALL_ROMTYPER; i++) { 
@@ -249,9 +251,9 @@ void utsjekking() {
 				reservasjon = (Reservasjon*) rommet->get_reservasjoner()->remove_no(k); 
 				if(rommet->getRomNummer() == rom_nummer) {
 					counter_rom++;
-					if(reservasjon->er_innsjekket()){
+					if(reservasjon->er_innsjekket()) {
+						checked_in++;
 						if(reservasjon->getAvreiseDato() == dagens_dato) {
-							counter_res++;
 							//Skriver ut alle 
 							reservasjon->display();
 							reservasjon->display_faktura();
@@ -263,23 +265,22 @@ void utsjekking() {
 						
 						
 						} else {
+							cout << "Reservasjonen har ikke avreisedato i dag. Avreisedatoen er: " << reservasjon->getAvreiseDato() << endl;
 							rommet->get_reservasjoner()->add(reservasjon);
-						}
-					}
-					else{
-						cout << "Denne reservasjonen er ikke innsjekket" << endl;
-					}
+						} // end avreisdato == dagens_dato
+					} // end innsjekket	
 				} else {
 					rommet->get_reservasjoner()->add(reservasjon);
-				}
+				} // end getromnummer
 			} // end for reservasjoner
 			hotellet->get_rom(i)->add(rommet);
 		} // end for rom
 	} // end for romtyper
 	if(counter_rom == 0) 
 		cout << "Det finnes ingen rom p> hotellet med det romnummeret!" << endl;
-	if(counter_res == 0 && counter_rom != 0) 
-		cout << "Personen du s>kte etter har ingen reservasjoner paa dagens dato" << endl;
+	if(checked_in == 0 && !counter_rom == 0) {
+		cout << "Reservasjonen du s>kte etter er ikke innsjekket" << endl;
+	}
 }
 
 
