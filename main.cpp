@@ -65,6 +65,5 @@ int main( void ) {
 
      kommando = les_kommando();        //  F†r inn brukers ›nske.
    }
-	avslutt();
 	return 0;
 }

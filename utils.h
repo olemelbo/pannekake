@@ -23,5 +23,6 @@ int read_int(string promt);
 int convert_to_int(string temp); 
 char* convert_string_to_char(string str);
 char read_char(string promt);
+float read_float(string promt);
 float read_float(ifstream &file);
 #endif /* defined(__Prosjekt__utils__) */

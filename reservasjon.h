@@ -32,16 +32,18 @@ class Reservasjon : public Num_element {
 	int getAnkomstDato();
 	int getAvreiseDato();
 	void setAntallBeboere(int ant);
-	void setBeboere(string beboere[MAX_ARRAY]);
+	void setBeboere(string beboere[MAX_ARRAY], int teller);
     void les_fra_fil();
     void skriv_til_fil(ostream* ut);
     void display();
+	int getAntallBeboere();
 	void display_faktura();
 	void skriv_faktura_til_fil(string fil);
 	void display_list(int count);
 	void endre_ankomst(int ankomst);
 	void endre_avreise(int avreise);
-	void set_innsjekk(bool svar);
+	void set_innsjekk();
+	void set_utsjekk();
 	bool er_innsjekket();
 };
 

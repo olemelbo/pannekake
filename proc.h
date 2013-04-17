@@ -23,6 +23,7 @@ void oversikt_over_hotell();
 void beskrivelse_av_suiter();
 bool is_rom_category(string rom_kategori);
 void vis_alle_reservasjoner_for_person();
+bool did_the_user_press_enter(string beboere);
 void rom_ledig();
 void vis_reservasjoner_for_rom();
 void vis_navarende_beboer();
@@ -30,6 +31,5 @@ void vis_alle_ledige_rom_i_kategori();
 void skriv_til_fil();
 void bytt_hotell();
 void les_fra_fil();
-void avslutt();
 
 #endif

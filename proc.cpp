@@ -50,7 +50,7 @@ void reserver_rom() {
 	string romtype_tmp;
 	romtype_tmp = getln("Hvilken romtype >nsker du? [Singel/Dobbel/Suite]");
     
-    int romtype;
+    int romtype = 0;
 	if(romtype_tmp.compare("Singel") == 0)
         romtype = SINGEL;
     if(romtype_tmp.compare("Dobbel") == 0)
@@ -60,9 +60,13 @@ void reserver_rom() {
 
 	int ankomstdato;
 	int avreisedato;
+	int teller = 0;
 	do {
+		if(teller > 0)
+			cout << "Avreisedato m> v>ere større enn avreisedato" << endl;
 		ankomstdato = read_int("Skriv inn annkomstdato[AAAAMMDD]");
 		avreisedato = read_int("Skriv inn avreisedato[AAAAMMDD]");
+		teller++;
 	} while(ankomstdato > avreisedato);
 
 	bool frokost = false;
@@ -89,24 +93,29 @@ void reserver_rom() {
         return;
     }
      
+    string beboere[MAX_ARRAY];
+	int counter = 0;
+	string input;
+	do {
+		input = getln("Skriv inn navnet p> beboer", counter + 1);
+		if(!did_the_user_press_enter(input)) {
+			beboere[counter] = input;
+			counter++;
+		}
+	} while(!did_the_user_press_enter(input));
 
-	int ant = read_int("Hvor mange beboere skal reserveres?");
-   
-
-	string beboere[MAX_ARRAY];
-	
-	for(int i = 0; i < ant; i++) {
-         beboere[i] = getln("Skriv inn navnet p> beboer", i + 1);
-    }
 
     // Oppretter reservasjon
-	temp = new Reservasjon(ankomstdato, avreisedato, frokost, ekstraseng, ant, beboere);
+	temp = new Reservasjon(ankomstdato, avreisedato, frokost, ekstraseng, counter, beboere);
     
     // Legger reservasjonen til i rommet.
     r->get_reservasjoner()->add(temp);
+}
 
-	//Må fjernes før innlevering
-    hotellet->les_fra_fil();
+bool did_the_user_press_enter(string temp) {
+	if(temp.empty())
+		return true;
+	return false;
 }
 
 void avbestill_rom() {
@@ -156,7 +165,7 @@ void innsjekking() {
 	Rom* rommet;
 	Reservasjon* reservasjon;
 	int counter = 0;
-	int ant = 0;
+
 
 	string navn = getln("Skriv inn reservat>ens navn");
 	//Looper igjennom romtyper
@@ -179,29 +188,31 @@ void innsjekking() {
 					if(reservasjon->getAnkomstDato() == dagens_dato) {
 					
 						cout << "Romnummer: " << rommet->getRomNummer() << endl;
-						ant = read_int("Hvor mange beboere skal reserveres? ");
-
-						// Setter antall beboere
-						reservasjon->setAntallBeboere(ant);
-					
-						string beboere[MAX_ARRAY];
-
-						if(ant > 0) {
+							
+							string beboere[MAX_ARRAY];
+							string input;
+							int teller = 0;
+							cout << "Det er registert " << reservasjon->getAntallBeboere() << " beboere.\n"
+								 << "For a legge inn flere, skriv inn navnet pa beboeren. For aa avslutte trykk p> enter" << endl;
+							int antall = reservasjon->getAntallBeboere();
+							do {
+								antall += 1;
+								input = getln("Skriv inn navnet p> beboer", antall);
+								if(!did_the_user_press_enter(input)) {
+									beboere[teller] = input;
+									teller++;
+								}
+							} while(!did_the_user_press_enter(input));
 	
-							for(int i = 0; i < ant; i++) 
-								beboere[i] = getln("Skriv inn navnet p> beboer", i + 1);
-								
+							
 							// Setter beboere paa reservasjonen
-							reservasjon->setBeboere(beboere);
+							reservasjon->setBeboere(beboere, teller);
 							// Displayer reservasjon
 							reservasjon->display();
 							
-							reservasjon->set_innsjekk(true);
+							reservasjon->set_innsjekk();
 							rommet->get_reservasjoner()->add(reservasjon);
-						} else {
-							cout << "Antall beboere må være minst én" << endl;
-							rommet->get_reservasjoner()->add(reservasjon);
-						}
+			
 					} else {
 						rommet->get_reservasjoner()->add(reservasjon);
 					}
@@ -240,15 +251,23 @@ void utsjekking() {
 				reservasjon = (Reservasjon*) rommet->get_reservasjoner()->remove_no(k); 
 				if(rommet->getRomNummer() == rom_nummer) {
 					counter_rom++;
-					if(reservasjon->getAvreiseDato() == dagens_dato) {
-						counter_res++;
-						//Skriver ut alle 
-						reservasjon->display();
-						reservasjon->display_faktura();
-						string filnavn = hotellet->get_filnavn();
-						reservasjon->skriv_faktura_til_fil(filnavn);
-					} else {
-						rommet->get_reservasjoner()->add(reservasjon);
+					if(reservasjon->er_innsjekket()){
+						if(reservasjon->getAvreiseDato() == dagens_dato) {
+							counter_res++;
+							//Skriver ut alle 
+							reservasjon->display();
+							reservasjon->display_faktura();
+							reservasjon->set_utsjekk();
+							string filnavn = hotellet->get_filnavn();
+							reservasjon->skriv_faktura_til_fil(filnavn);
+						
+						
+						} else {
+							rommet->get_reservasjoner()->add(reservasjon);
+						}
+					}
+					else{
+						cout << "Denne reservasjonen er ikke innsjekket" << endl;
 					}
 				} else {
 					rommet->get_reservasjoner()->add(reservasjon);
@@ -268,22 +287,51 @@ void registrer_regning() {
 	Rom* rommet;
 	Reservasjon* reservasjon;
 	Regning* regning;
+	char *cstr;
 	int rom_nummer = read_int("Skriv inn romnummeret");
 	int counter = 0;
 	for(int i = 0; i < ANTALL_ROMTYPER; i++) { 
 		//Finner hotellets rom
-		for (int j = 1;  j <= hotellet->get_rom(i)->no_of_elements();  j++)  { 
+		int antall_rom_i_kategori = hotellet->get_rom(i)->no_of_elements();
+		for (int j = 1;  j <= antall_rom_i_kategori; j++)  { 
 			rommet = (Rom*) hotellet->get_rom(i)->remove_no(j);	
 			if(rommet->getRomNummer() == rom_nummer) {
 				counter++;
-				if(!rommet->ledig(dagens_dato)) {
-					
-				} else {
-					cout << "Det er ingen som bor p> dette rommet for >yeblikket" << endl;
-				}
-			}
-		}
-	}
+				int antall_reservasjoner = rommet->get_reservasjoner()->no_of_elements();
+				for (int k = 1;  k <= antall_reservasjoner;  k++)  {  
+					//Henter reservasjon ut fra rommet.
+					reservasjon = (Reservasjon*) rommet->get_reservasjoner()->remove_no(k); 
+					if(reservasjon->er_innsjekket()) {
+						reg_post.display();
+						int menunr = read_int("Skriv inn nr fra menyelementet over. Dersom du >nsker aa skrive inn egen beskrivelse, skriv en bokstav\n");
+							if(menunr == -1){
+								// user didn't input a number
+								string beskrivelse = getln("Skriv inn egen beskrivelse");
+								cstr = new char[beskrivelse.length() + 1];
+								strcpy(cstr, beskrivelse.c_str());
+							
+							} else{
+								
+								//Brukeren skrev inn et nr
+								string post_beskrivelse = reg_post.get_post(menunr);
+								cstr = new char[post_beskrivelse.length() + 1];
+								strcpy(cstr, post_beskrivelse.c_str());
+							} // end menur else
+
+							float pris = read_float("Skriv inn regningens bel>p");
+
+							regning = new Regning(cstr, pris);
+							delete [] cstr;
+						} else {
+						cout << "Det er ingen som bor p> dette rommet for >yeblikket" << endl;
+					} // end innsjekket else
+					rommet->get_reservasjoner()->add(reservasjon);
+				} // end for reservasjoner
+				
+			}	// end if romnummer
+			hotellet->get_rom(i)->add(rommet);
+		}	// end for rom
+	} // end for rom i kategori
 	if(counter == 0) {
 		cout << "Det finnes ingen rom med det romnummeret. Pr>v igjen!" << endl;		
 	}
@@ -293,9 +341,8 @@ void endre_ankomst_avreisedato() {
 	Rom* rommet;
 	Reservasjon* reservasjon;
 	int counter = 0;
-	int ant;
 
-	string reservator = getln("Skriv inn navnet på reservatøren");
+	string reservator = getln("Skriv inn navnet på reservat>ren");
 
 	//Looper igjennom romtyper
 	for(int i = 0; i < ANTALL_ROMTYPER; i++) { 
@@ -363,7 +410,6 @@ void endre_avreisedato() {
 	Rom* rommet;
 	Reservasjon* reservasjon;
 	int counter = 0;
-	int ant;
 
 	string reservator = getln("Skriv inn navnet på reservatøren");
 
@@ -426,7 +472,6 @@ void oversikt_over_hotell() {
 
 void beskrivelse_av_suiter() {
 	Suite* suite;
-	Rom* rommet;
 	int antll_suiter = hotellet->get_rom(2)->no_of_elements();
 	for (int j = 1;  j <= antll_suiter; j++)  {
 		suite = (Suite*) hotellet->get_rom(2)->remove_no(j);
@@ -439,7 +484,6 @@ void vis_alle_reservasjoner_for_person() {
 	Rom* rommet;
 	Reservasjon* reservasjon;
 	int counter = 0;
-	int ant;
 
 	string navn = getln("Skriv inn reservat>ens navn");
 	//Looper igjennom romtyper
@@ -670,6 +714,7 @@ string does_hotell_exist_in_file(ifstream& infile, string userinput )
         }
 		return fil;
 	}
+	return false;
 }
 
 void opprett_reg_post() {
@@ -695,8 +740,4 @@ void les_fra_fil() {
     hotellet = new Hotell(fil);
     hotellet->display();
     
-}
-
-void avslutt() {
-
 }
