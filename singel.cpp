@@ -28,3 +28,7 @@ Singel::~Singel() {
 void Singel::skriv_til_fil(ostream* ut) {
 	Rom::skriv_til_fil(ut);
 }
+
+void Singel::display() {
+	Rom::display();
+}

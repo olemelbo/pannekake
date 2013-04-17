@@ -16,6 +16,9 @@
 #include "timer.h"
 #include "pris.h"
 #include "hotell.h"
+#include "singel.h"
+#include "dobbel.h"
+#include "suite.h"
 
 using namespace std;
 
@@ -167,6 +170,26 @@ void Reservasjon::display() {
 	for(int i = 0; i < antall_beboere; i++) {
         cout << "Navn paa beboere: " << navn[i] << "\n";
     }
+}
+
+void Reservasjon::display(Rom* rom) {
+	if(rom) {
+		if(romtype == SINGEL) {
+			rom = (Singel*) rom;
+			rom->display();
+		}
+		if(romtype == DOBBEL) {
+			rom = (Dobbel*) rom;
+			rom->display();
+		}
+		if(romtype == SUITE) {
+			rom = (Suite*) rom;
+			rom->display();
+		}
+		display();
+	} else {
+		display();
+	}
 }
 
 void Reservasjon::display_faktura() 
