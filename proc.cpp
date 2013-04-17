@@ -194,8 +194,10 @@ void innsjekking() {
 							int teller = 0;
 							cout << "Det er registert " << reservasjon->getAntallBeboere() << " beboere.\n"
 								 << "For a legge inn flere, skriv inn navnet pa beboeren. For aa avslutte trykk p> enter" << endl;
+							int antall = reservasjon->getAntallBeboere();
 							do {
-								input = getln("Skriv inn navnet p> beboer", reservasjon->getAntallBeboere() + 1);
+								antall += 1;
+								input = getln("Skriv inn navnet p> beboer", antall);
 								if(!did_the_user_press_enter(input)) {
 									beboere[teller] = input;
 									teller++;
@@ -278,13 +280,13 @@ void registrer_regning() {
 	Rom* rommet;
 	Reservasjon* reservasjon;
 	Regning* regning;
-	Reg_post regpost;
 	char *cstr;
 	int rom_nummer = read_int("Skriv inn romnummeret");
 	int counter = 0;
 	for(int i = 0; i < ANTALL_ROMTYPER; i++) { 
 		//Finner hotellets rom
-		for (int j = 1;  j <= hotellet->get_rom(i)->no_of_elements();  j++)  { 
+		int antall_rom_i_kategori = hotellet->get_rom(i)->no_of_elements();
+		for (int j = 1;  j <= antall_rom_i_kategori; j++)  { 
 			rommet = (Rom*) hotellet->get_rom(i)->remove_no(j);	
 			if(rommet->getRomNummer() == rom_nummer) {
 				counter++;
@@ -292,35 +294,37 @@ void registrer_regning() {
 				for (int k = 1;  k <= antall_reservasjoner;  k++)  {  
 					//Henter reservasjon ut fra rommet.
 					reservasjon = (Reservasjon*) rommet->get_reservasjoner()->remove_no(k); 
-					if(reservasjon->er_innsjekket()){
-						regpost.display();
-						int menunr = read_int("Skriv inn nr fra menyelementet over. Dersom du ønsker å skrive inn egen beskrivelse, skriv en bokstav\n");
-						if(menunr == -1){
-							// user didn't input a number
-							string beskrivelse = getln("Skriv inn egen beskrivelse");
-							cstr = new char[beskrivelse.length() + 1];
-							strcpy(cstr, beskrivelse.c_str());
-						}
-						else{
-							//Brukeren skrev inn et nr
-							string post_beskrivelse = regpost.get_post(menunr);
-							cstr = new char[post_beskrivelse.length() + 1];
-							strcpy(cstr, post_beskrivelse.c_str());
-						}
-						float pris = read_float("Skriv inn regningens beløp");
+					if(reservasjon->er_innsjekket()) {
+						reg_post.display();
+						int menunr = read_int("Skriv inn nr fra menyelementet over. Dersom du >nsker aa skrive inn egen beskrivelse, skriv en bokstav\n");
+							if(menunr == -1){
+								// user didn't input a number
+								string beskrivelse = getln("Skriv inn egen beskrivelse");
+								cstr = new char[beskrivelse.length() + 1];
+								strcpy(cstr, beskrivelse.c_str());
+							
+							} else{
+								
+								//Brukeren skrev inn et nr
+								string post_beskrivelse = reg_post.get_post(menunr);
+								cstr = new char[post_beskrivelse.length() + 1];
+								strcpy(cstr, post_beskrivelse.c_str());
+							} // end menur else
 
-						regning = new Regning(cstr, pris);
-						delete [] cstr;
-					} 
-					else {
+							float pris = read_float("Skriv inn regningens bel>p");
+
+							regning = new Regning(cstr, pris);
+							delete [] cstr;
+						} else {
 						cout << "Det er ingen som bor p> dette rommet for >yeblikket" << endl;
-					}
+					} // end innsjekket else
 					rommet->get_reservasjoner()->add(reservasjon);
-				}
-				hotellet->get_rom(i)->add(rommet);
-			}
-		}
-	}
+				} // end for reservasjoner
+				
+			}	// end if romnummer
+			hotellet->get_rom(i)->add(rommet);
+		}	// end for rom
+	} // end for rom i kategori
 	if(counter == 0) {
 		cout << "Det finnes ingen rom med det romnummeret. Pr>v igjen!" << endl;		
 	}
@@ -331,7 +335,7 @@ void endre_ankomst_avreisedato() {
 	Reservasjon* reservasjon;
 	int counter = 0;
 
-	string reservator = getln("Skriv inn navnet på reservatøren");
+	string reservator = getln("Skriv inn navnet på reservat>ren");
 
 	//Looper igjennom romtyper
 	for(int i = 0; i < ANTALL_ROMTYPER; i++) { 
