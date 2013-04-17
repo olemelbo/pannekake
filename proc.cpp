@@ -251,16 +251,23 @@ void utsjekking() {
 				reservasjon = (Reservasjon*) rommet->get_reservasjoner()->remove_no(k); 
 				if(rommet->getRomNummer() == rom_nummer) {
 					counter_rom++;
-					if(reservasjon->getAvreiseDato() == dagens_dato) {
-						counter_res++;
-						//Skriver ut alle 
-						reservasjon->display();
-						reservasjon->display_faktura();
-						reservasjon->set_utsjekk();
-						string filnavn = hotellet->get_filnavn();
-						reservasjon->skriv_faktura_til_fil(filnavn);
-					} else {
-						rommet->get_reservasjoner()->add(reservasjon);
+					if(reservasjon->er_innsjekket()){
+						if(reservasjon->getAvreiseDato() == dagens_dato) {
+							counter_res++;
+							//Skriver ut alle 
+							reservasjon->display();
+							reservasjon->display_faktura();
+							reservasjon->set_utsjekk();
+							string filnavn = hotellet->get_filnavn();
+							reservasjon->skriv_faktura_til_fil(filnavn);
+						
+						
+						} else {
+							rommet->get_reservasjoner()->add(reservasjon);
+						}
+					}
+					else{
+						cout << "Denne reservasjonen er ikke innsjekket" << endl;
 					}
 				} else {
 					rommet->get_reservasjoner()->add(reservasjon);
