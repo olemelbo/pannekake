@@ -106,7 +106,7 @@ void reserver_rom() {
 
 
     // Oppretter reservasjon
-	temp = new Reservasjon(ankomstdato, avreisedato, frokost, ekstraseng, counter, beboere);
+	temp = new Reservasjon(ankomstdato, avreisedato, romtype, frokost, ekstraseng, counter, beboere);
     
     // Legger reservasjonen til i rommet.
     r->get_reservasjoner()->add(temp);
