@@ -483,33 +483,43 @@ void bytt_rom() {
 			//Henter ut alle reservasjoner innen for et bestemt rom.
 			if(rommet->getRomNummer() == rom_nummer) {
 				rom_counter++;
-				
-				for (int k = 1;  k <= rommet->get_reservasjoner()->no_of_elements();  k++)  {  
-					//Henter reservasjon ut fra rommet.
-					reservasjon = (Reservasjon*) rommet->get_reservasjoner()->remove_no(k); 
-					//Sjekker om navnet er i reservasjonen
+					for (int k = 1;  k <= rommet->get_reservasjoner()->no_of_elements();  k++)  {  
+						//Henter reservasjon ut fra rommet.
+						reservasjon = (Reservasjon*) rommet->get_reservasjoner()->remove_no(k); 
+						//Sjekker om navnet er i reservasjonen
 					
-					res_counter++;
-					// Pr>er aa bytte rom
-					for (int l = 1;  l <= antall_rom_i_kategori;  l++)  { 
-						if(l != j) { 
-							rom = (Rom*) hotellet->get_rom(i)->remove_no(l);
-							if(rom->ledig(dagens_dato)) {
-								byttet = true;
-								rom->get_reservasjoner()->add(reservasjon);
-								cout << "Rommet ble byttet til romnummer: " << rom->getRomNummer() << endl;
-								hotellet->get_rom(i)->add(rom);
-								break;
-							} else {
-								hotellet->get_rom(i)->add(rom);
+						res_counter++;
+						// Pr>er aa bytte rom
+						for (int l = 1;  l <= antall_rom_i_kategori;  l++)  { 
+							if(l != j) { 
+								rom = (Rom*) hotellet->get_rom(i)->remove_no(l);
+								if(rom->ledig(dagens_dato)) {
+									byttet = true;
+									char input;
+									do {
+										reservasjon->display();
+										input = read_char(">nsker du aa endre denne reservasjonen? [Y/n]");
+									} while (input != 'Y' && input != 'N');
+									if(input == 'Y') {
+										rom->get_reservasjoner()->add(reservasjon);
+										cout << "Rommet ble byttet til romnummer: " << rom->getRomNummer() << endl;
+										hotellet->get_rom(i)->add(rom);
+										break;
+									} else {
+										rommet->get_reservasjoner()->add(reservasjon);
+										hotellet->get_rom(i)->add(rom);
+										cout << "Romnummeret ble ikke byttet " << endl;
+									}
+								} else {
+									hotellet->get_rom(i)->add(rom);
+								}
 							}
-						}
 						
-					}
+						}
 					if(!byttet) {
 						rommet->get_reservasjoner()->add(reservasjon);
 					}
-					
+						
 				} // end antall reservasjoner
 				
 			} // end if
