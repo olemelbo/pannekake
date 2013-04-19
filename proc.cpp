@@ -31,16 +31,16 @@ void skriv_meny()  {
 	cout << "\n\tU - Utsjekking(avreise) fra hotellet";
 	cout << "\n\tR - Registrer/legg inn en regning paa et rom";
 	cout << "\n\tZ - Endre ankomst -og/eller avreisedato f>r innsjekking paa hotellet";
-	cout << "\n\tX - Beskrivelse av alle hotellers suiter";
+	cout << "\n\tX - Endre avreisedato n>r noen allerede bor(er innsjekket) paa hotellet";
 	cout << "\n\tC - Bytte til et annet (ledig) rom enn det tildelte";
-	cout << "\n\tS - hoveddatene om ett hotell";
-	cout << "\n\tD - beskrivelse av alle hotellets suiter";
-	cout << "\n\tF - alle reservasjoner som staar i en persons navn";
-	cout << "\n\tG - naar et rom er ledig";
-	cout << "\n\tJ - alle reservasjoner for/paa et rom";
-	cout << "\n\tK - alle data for ett roms n>v>erende beboer, inkludert dens regninger";
-	cout << "\n\tL - alle ledeige rom i en kategori";
-	cout << "\n\tT - skriv alt om hotellet til fil";
+	cout << "\n\tS - Hoveddatene om ett hotell";
+	cout << "\n\tD - Beskrivelse av alle hotellets suiter";
+	cout << "\n\tF - Alle reservasjoner som staar i en persons navn";
+	cout << "\n\tG - Naar et rom er ledig";
+	cout << "\n\tJ - Alle reservasjoner for/paa et rom";
+	cout << "\n\tK - Alle data for ett roms n>v>erende beboer, inkludert dens regninger";
+	cout << "\n\tL - Alle ledeige rom i en kategori";
+	cout << "\n\tT - Skriv alt om hotellet til fil";
 	cout << "\n\tH - Bytte over til et annet hotell";
 }
 
@@ -84,7 +84,7 @@ void reserver_rom() {
 	}
 
     // Prøver å hente ledig rom i angitt kategori
-    Rom* r = hotellet->get_ledig_rom(romtype);
+	Rom* r = hotellet->get_ledig_rom(romtype, ankomstdato, avreisedato);
     
     // Avslutter med melding hvis det
     // ikke finnes ledige rom i kategorien.
@@ -110,7 +110,7 @@ void reserver_rom() {
     
     // Legger reservasjonen til i rommet.
     r->get_reservasjoner()->add(temp);
-	
+
 	cout << "Reservasjonen ble velykket opprettet!" << endl;
 	temp->display(r);
 }
@@ -464,7 +464,65 @@ void endre_avreisedato() {
 }
 
 void bytt_rom() {
+	Rom* rommet;
+	Rom* rom;
+	Reservasjon* reservasjon;
+	int res_counter = 0;
+	int rom_counter = 0;
+	int rom_nummer = read_int("Skriv inn romnummeret");
+	bool byttet = false;
 
+	//Looper igjennom romtyper
+	for(int i = 0; i < ANTALL_ROMTYPER; i++) { 
+		//Finner hotellets rom
+		int antall_rom_i_kategori = hotellet->get_rom(i)->no_of_elements();
+		for (int j = 1;  j <= antall_rom_i_kategori;  j++)  { 
+			//Trekker ut et rom av lista.
+			rommet = (Rom*) hotellet->get_rom(i)->remove_no(j);
+			hotellet->get_rom(i)->add(rommet);
+			//Henter ut alle reservasjoner innen for et bestemt rom.
+			if(rommet->getRomNummer() == rom_nummer) {
+				rom_counter++;
+				
+				for (int k = 1;  k <= rommet->get_reservasjoner()->no_of_elements();  k++)  {  
+					//Henter reservasjon ut fra rommet.
+					reservasjon = (Reservasjon*) rommet->get_reservasjoner()->remove_no(k); 
+					//Sjekker om navnet er i reservasjonen
+					
+					res_counter++;
+					// Pr>er aa bytte rom
+					for (int l = 1;  l <= antall_rom_i_kategori;  l++)  { 
+						if(l != j) { 
+							rom = (Rom*) hotellet->get_rom(i)->remove_no(l);
+							if(rom->ledig(dagens_dato)) {
+								byttet = true;
+								rom->get_reservasjoner()->add(reservasjon);
+								cout << "Rommet ble byttet til romnummer: " << rom->getRomNummer() << endl;
+								hotellet->get_rom(i)->add(rom);
+								break;
+							} else {
+								hotellet->get_rom(i)->add(rom);
+							}
+						}
+						
+					}
+					if(!byttet) {
+						rommet->get_reservasjoner()->add(reservasjon);
+					}
+					
+				} // end antall reservasjoner
+				
+			} // end if
+			//Legger rommet tilbake i listen.
+			
+		} // end rom i kat
+	} // end rom typer
+	if(rom_counter == 0) 
+		cout << "Det finnes ingen rom paa dette hotellet med det romnummeret" << endl;
+	if(!rom_counter == 0 && res_counter == 0)
+		cout << "Det finnes ingen reservasjoner paa dette rommet" << endl;
+	if(rom_counter != 0 && res_counter != 0 && !byttet) 
+		cout << "Det finnes ingen ledige rom aa bytte til " << endl;
 }
 
 void oversikt_over_hotell() {
@@ -519,7 +577,61 @@ void vis_alle_reservasjoner_for_person() {
 }
 
 void rom_ledig() {
+	Rom* rommet;
+	Reservasjon* reservasjon;
+	int rom_nummer = read_int("Skriv inn rommnummeret");
+	int avreise = 0;
+	int ankomst = 0;
+	int rom_teller = 0;
+	int reservasjon_teller = 0;
+	for(int i = 0; i < ANTALL_ROMTYPER; i++) { 
+		//Finner hotellets rom
+		int antall_rom_i_kategori = hotellet->get_rom(i)->no_of_elements();
+		for (int j = 1;  j <= antall_rom_i_kategori;  j++)  { 
+			//Trekker ut et rom av lista.
+			int teller = 1;
+			rommet = (Rom*) hotellet->get_rom(i)->remove_no(j);
+			//Henter ut alle reservasjoner innen for et bestemt rom.
+			if(rommet->getRomNummer() == rom_nummer) {
+				rom_teller++;
+				int antall_reservasjoner = rommet->get_reservasjoner()->no_of_elements();
+				for (int k = 1;  k <= antall_reservasjoner;  k++)  {  
+					//Henter reservasjon ut fra rommet.
+					reservasjon_teller++;
+					reservasjon = (Reservasjon*) rommet->get_reservasjoner()->remove_no(k); 
+					
 
+					if(teller %2 == 1) {
+						if(antall_reservasjoner == 1) {
+							if(reservasjon->getAnkomstDato() > dagens_dato) {
+								cout << "Rommet er ledig fra : " << dagens_dato << " - " << reservasjon->getAnkomstDato() << endl;
+								cout << "Rommet er ledig fra : " << reservasjon->getAvreiseDato() << " - " << endl;
+							} else { 
+								cout << "Rommet er ledig fra: " << reservasjon->getAvreiseDato() << " - " << endl;	
+							}
+							
+						} 
+						avreise = reservasjon->getAvreiseDato();
+					} else {
+						ankomst = reservasjon->getAnkomstDato();
+						reservasjon->ledig_i_tidsperiode(avreise, ankomst, teller, antall_reservasjoner);
+					} 
+					
+					rommet->get_reservasjoner()->add(reservasjon);
+					teller++;
+				
+				} // End antall reservasjoner 
+				hotellet->get_rom(i)->add(rommet);
+			} else {
+				hotellet->get_rom(i)->add(rommet);
+			}
+		} // Antall rom i kategori
+	} // Antall rom typer
+
+	if(rom_teller == 0) 
+		cout << "Det finnes ingen rom med det romnummeret" << endl;
+	if(!rom_teller == 0 && reservasjon_teller == 0) 
+		cout << "Rommet er ledig fra : " << dagens_dato << " - " << endl;
 }
 
 void vis_reservasjoner_for_rom() {

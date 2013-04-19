@@ -49,6 +49,7 @@ class Reservasjon : public Num_element {
 	bool er_innsjekket();
 	void set_seng_status(int status);
 	int get_status_seng();
+	void ledig_i_tidsperiode(int avreise, int ankomst, int teller, int antall_reservasjoner);
 };
 
 #endif

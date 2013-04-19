@@ -298,6 +298,12 @@ bool Reservasjon::er_innsjekket(){
 	return innsjekket;
 }
 
+void Reservasjon::ledig_i_tidsperiode(int avreise, int ankomst, int teller, int antall_reservasjoner) {
+	if(teller == antall_reservasjoner) 
+		cout << "Rommet er ledig fra : " << avreise << " - " << endl;
+	cout << "Rommer er ledig fra: " << avreise << " - " << ankomst << endl;
+}
+
 void Reservasjon::set_seng_status(int status){
 	status_seng = status;
 }

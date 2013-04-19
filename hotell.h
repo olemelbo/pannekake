@@ -37,7 +37,7 @@ public:
 	void display();
 	List* get_rom(int romtype);
     Rom* get_spesifikk_rom(int romnr);
-    Rom* get_ledig_rom(int romtype);
+    Rom* get_ledig_rom(int romtype, int ankomst, int avreise);
 	string get_filnavn();
 	int get_pris_seng();
 	int get_pris_frokost();

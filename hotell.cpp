@@ -171,7 +171,7 @@ string Hotell::get_filnavn() {
 	return filnavn;
 }
 
-Rom* Hotell::get_ledig_rom(int romtype) {
+Rom* Hotell::get_ledig_rom(int romtype, int ankomst, int avreise) {
     
     int n = rom[romtype]->no_of_elements();
     int r = rand() % n + 1;
@@ -182,7 +182,7 @@ Rom* Hotell::get_ledig_rom(int romtype) {
     
     while(!er_ledig && x <= n) {
         rommet = (Rom*) rom[romtype]->remove_no(x);
-        er_ledig = rommet->ledig(dagens_dato);
+        er_ledig = rommet->ledig(ankomst, avreise);
         rom[romtype]->add(rommet);
         x++;
     }
@@ -190,7 +190,7 @@ Rom* Hotell::get_ledig_rom(int romtype) {
     if(!er_ledig) {
         for(int i = 1; i <= r; i++) {
             rommet = (Rom*) rom[romtype]->remove_no(i);
-			er_ledig = rommet->ledig(dagens_dato);
+			er_ledig = rommet->ledig(ankomst, avreise);
             rom[romtype]->add(rommet);
         }
     }
