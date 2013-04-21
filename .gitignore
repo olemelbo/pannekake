@@ -9,3 +9,7 @@
 Debug/
 *.sln
 *.vcxproj.user
+Release/
+*.aps
+*.rc
+resource.h

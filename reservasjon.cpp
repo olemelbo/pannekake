@@ -99,7 +99,7 @@ Reservasjon::Reservasjon(int ankomst, ifstream &file): Num_element(ankomst) {
 }
 
 Reservasjon::~Reservasjon() {
-    
+    delete regninger;
 }
 
 void Reservasjon::setAntallBeboere(int ant) {

@@ -61,7 +61,7 @@ Hotell::Hotell(string fil) {
             int romnr = read_int(infile);
             Dobbel* d = new Dobbel(romnr, infile);
             rom[DOBBEL]->add(d);
-        }
+		}
         
         rom[SUITE] = new List(Sorted);
         int antall_suiter = read_int(infile);
@@ -70,7 +70,7 @@ Hotell::Hotell(string fil) {
             int romnr = read_int(infile);
             Suite* s = new Suite(romnr, infile);
             rom[SUITE]->add(s);
-        }
+	   }
     } else {
         cout << "Kunne ikke lese filen.";
     }
@@ -79,7 +79,7 @@ Hotell::Hotell(string fil) {
 }
 
 Hotell::~Hotell() {
-    
+	delete [] rom;
 }
 
 void Hotell::les_fra_fil() {

@@ -37,7 +37,7 @@ Rom::Rom(int romnr, ifstream &file): Num_element(romnr) {
 }
 
 Rom::~Rom() {
-    
+    delete reservasjoner;
 }
 
 void Rom::skriv_til_fil(ostream* ut) {

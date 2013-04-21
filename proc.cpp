@@ -161,8 +161,8 @@ void avbestill_rom() {
 void innsjekking() {
 	Rom* rommet;
 	Reservasjon* reservasjon;
-	int counter = 0;
-
+	int navn_teller = 0;
+	int ankomst_teller = 0;
 
 	string navn = getln("Skriv inn reservat>ens navn");
 	//Looper igjennom romtyper
@@ -180,10 +180,10 @@ void innsjekking() {
 				//Sjekker om navnet er i reservasjonen
 				if(reservasjon->is_name_in_array(navn)) {
 				//Teller opp telleren
-				counter++;
+				navn_teller++;
 					// Sjekker om ankomst dato er i dag.
 					if(reservasjon->getAnkomstDato() == dagens_dato) {
-					
+						ankomst_teller++;
 						cout << "Romnummer: " << rommet->getRomNummer() << endl;
 							
 							string beboere[MAX_ARRAY];
@@ -224,7 +224,9 @@ void innsjekking() {
 			hotellet->get_rom(i)->add(rommet);
 		}	// end rom
 	} // end rom kat
-	if(counter == 0) 
+	if(navn_teller == 0) 
+		cout << "Det finnes ingen personer som har reservert rom med det navnet." << endl;
+	if(navn_teller != 0 && ankomst_teller == 0) 
 		cout << "Personen du s>kte etter har ingen reservasjoner paa dagens dato" << endl;
 }
 
@@ -322,6 +324,7 @@ void registrer_regning() {
 							float pris = read_float("Skriv inn regningens bel>p");
 
 							regning = new Regning(cstr, pris);
+							cout << "Regningen ble velykket lagt til" << endl;
 							delete [] cstr;
 						} else {
 						cout << "Det er ingen som bor p> dette rommet for >yeblikket" << endl;
@@ -371,12 +374,23 @@ void endre_ankomst_avreisedato() {
 						if(ankomst.empty() && !avreise.empty()){
 							//Ankomst er tom men ikke avreise
 							int avreise_dato = atoi(avreise.c_str());
-							reservasjon->endre_avreise(avreise_dato);
+							if(rommet->ledig(reservasjon->getAnkomstDato(), avreise_dato)) {
+								reservasjon->endre_avreise(avreise_dato);
+								cout << "Avreisedatoen ble endret til: " << avreise_dato << endl;
+							} else {
+								cout << "Kan ikke bytte avreisedato til " << avreise_dato << ", rommet er ikke ledig den dagen" << endl;
+							}
+							
 						}
 						else if(avreise.empty() && !ankomst.empty()){
 							//Avreise er tom men ikke ankomst
 							int ankomst_dato = atoi(ankomst.c_str());
-							reservasjon->endre_ankomst(ankomst_dato);
+							if(rommet->ledig(ankomst_dato, reservasjon->getAvreiseDato())) {
+								reservasjon->endre_ankomst(ankomst_dato);
+								cout << "Ankomstdatoen ble endret til: " << ankomst_dato << endl;
+							} else {
+								cout << "Kan ikke bytte ankomstdato til " << ankomst_dato << ", rommet er ikke ledig den dagen" << endl;
+							}
 						} 
 						else if(avreise.empty() && ankomst.empty()){
 							//Begge er tomme
@@ -387,8 +401,15 @@ void endre_ankomst_avreisedato() {
 							//Begge er utfylt
 							int avreise_dato = atoi(avreise.c_str());
 							int ankomst_dato = atoi(ankomst.c_str());
-							reservasjon->endre_ankomst(ankomst_dato);
-							reservasjon->endre_avreise(avreise_dato);
+							
+							if(rommet->ledig(avreise_dato, ankomst_dato)) {
+								reservasjon->endre_ankomst(ankomst_dato);
+								reservasjon->endre_avreise(avreise_dato);
+								cout << "Ankomstdatoen ble endret til: " << ankomst_dato << endl;
+								cout << "Avreisedatoen ble endret til: " << avreise_dato << endl;
+							} else {
+								cout << "Kan ikke bytte ankostdato og avreisedato, rommet er ikke ledig i den perioden" << endl;
+							}
 						}
 					}
 					rommet->get_reservasjoner()->add(reservasjon);
@@ -815,7 +836,6 @@ string does_hotell_exist_in_file(ifstream& infile, string userinput )
 	string fil;
 	if(infile.is_open()) {
         while(!infile.eof()) {
-            
             //Initierer variabler
             string linje;
             string orginal;
@@ -823,7 +843,6 @@ string does_hotell_exist_in_file(ifstream& infile, string userinput )
             //Henter hele linjen fra filen
             getline(infile, orginal);
      
-
 			unsigned pos = orginal.find(" ");  
 
 			string kortnavn = orginal.substr(0,pos); 
