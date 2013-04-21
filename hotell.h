@@ -10,7 +10,9 @@
 #include <string>
 using namespace std;
 /**
- *	Hotell klassen
+ *	Hotell klassen inneholder navn, gateadresse, mailadresse,
+ *	filnavn, telefon, fax, ekstra pris for seng, fasiliteter,
+ *  liste med rom.
  *
  */																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																												
 class Hotell {
@@ -23,16 +25,15 @@ private:
 	int telefon;					// Telefon
 	int fax;						// Fax
 	int frokost_pris;				// Frokostpris
-	int ekstra_seng_pris;
-	int antall_fasciliteter;
-	string fasciliteter[MAX_ARRAY];
-	List* rom[ANTALL_ROMTYPER];
+	int ekstra_seng_pris;			// Pris for ekstra seng
+	int antall_fasciliteter;		// Antll fasiliteter
+	string fasciliteter[MAX_ARRAY];	// Fasilteter
+	List* rom[ANTALL_ROMTYPER];		// Liste med rom.
 
 public:
 	Hotell();
 	Hotell(string fil);
 	~Hotell();
-	void les_fra_fil();
 	void skriv_til_fil(ostream* ut);
 	void display();
 	List* get_rom(int romtype);
