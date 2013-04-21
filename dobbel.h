@@ -5,7 +5,9 @@
 #include <fstream>
 
 using namespace std;
-
+/**
+ *	Klassen dobbel inneholder om rommet har mulighet for en ekstra seng
+ */
 class Dobbel: public Rom {
 private:
 	bool ekstra_seng;

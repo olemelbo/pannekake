@@ -5,7 +5,10 @@
 #include <string>
 
 using namespace std;
-
+/**
+ *	Reg_post klassen inneholder antall standard reg poster,
+ *	og navnet på disse.
+ */
 class Reg_post {
 	private:
 		int antall_standard_reg_poster;

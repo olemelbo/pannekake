@@ -2,8 +2,7 @@
 //  rom.cpp
 //  Prosjekt
 //
-//  Created by Emil Kjelsrud on 4/2/13.
-//  Copyright (c) 2013 Emil Kjelsrud. All rights reserved.
+//	Created by Emil Kjelsrud, Kristin Annabel Folland and Ole Christian Melbostad
 //
 
 #include "rom.h"
@@ -20,26 +19,38 @@ Rom::Rom() {
     
 }
 
+/** 
+ * Rom konstruktør, sender romnummer til Num_element. 
+ * Så rommet blir sortert etter romnummer.
+ * @param int romnr		romnummret
+ */ 
 Rom::Rom(int romnr): Num_element(romnr) {
     
 }
-
+/**
+ *	Rom konstruktøren, sender romnummer til Num_element
+ *	@param int romnr	romnummeret
+ *	@param ifstream &file
+ */
 Rom::Rom(int romnr, ifstream &file): Num_element(romnr) {
-    ant_senger = read_int(file);
-    frokost_inkludert = read_bool(file);
-    reservasjoner = new List(Sorted);
-    int antall_reservasjoner = read_int(file);
+    ant_senger = read_int(file);	// Leser inn antall senger
+    frokost_inkludert = read_bool(file);	// Leser inn frokost inkludert
+    reservasjoner = new List(Sorted);	// Oppretter en liste med reservasjoner
+    int antall_reservasjoner = read_int(file);	// Leser inn antall reservasjoner
     for (int i = 0; i < antall_reservasjoner; i++) {
-        int ankomst = read_int(file);
-        Reservasjon* res = new Reservasjon(ankomst, file);
-        reservasjoner->add(res);
+        int ankomst = read_int(file);	// Leser inn ankomst dato.
+        Reservasjon* res = new Reservasjon(ankomst, file);	// Oppretter en ny reservasjon
+        reservasjoner->add(res);	// Legger reservasjonen til i listen over reservasjoner
     }
 }
 
 Rom::~Rom() {
-    delete reservasjoner;
+    delete reservasjoner;  //Frigir minne fra heap.
 }
 
+/**
+ *	Skriver
+ */
 void Rom::skriv_til_fil(ostream* ut) {
 	
     *ut << number << "\n"
