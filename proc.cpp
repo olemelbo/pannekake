@@ -465,7 +465,13 @@ void endre_avreisedato() {
 						else{
 							//Avreise er utfylt
 							int avreise_dato = atoi(avreise.c_str());
-							reservasjon->endre_avreise(avreise_dato);
+					
+							if(rommet->ledig(reservasjon->getAnkomstDato(), avreise_dato)) {
+								reservasjon->endre_avreise(avreise_dato);
+								cout << "Avreisedatoen ble endret til: " << avreise_dato << endl;
+							} else {
+								cout << "Kan ikke bytte avreisedato til " << avreise_dato << ", rommet er ikke ledig den dagen" << endl;
+							}
 						}
 					}
 					rommet->get_reservasjoner()->add(reservasjon);
@@ -562,11 +568,11 @@ void oversikt_over_hotell() {
 
 void beskrivelse_av_suiter() {
 	Suite* suite;
-	int antll_suiter = hotellet->get_rom(2)->no_of_elements();
+	int antll_suiter = hotellet->get_rom(SUITE)->no_of_elements();
 	for (int j = 1;  j <= antll_suiter; j++)  {
-		suite = (Suite*) hotellet->get_rom(2)->remove_no(j);
+		suite = (Suite*) hotellet->get_rom(SUITE)->remove_no(j);
 		suite->display();
-		hotellet->get_rom(2)->add(suite);
+		hotellet->get_rom(SUITE)->add(suite);
 	} 
 }
 
@@ -750,6 +756,8 @@ void vis_alle_ledige_rom_i_kategori() {
 	int ankomst_dato;
 	int avreise_dato;
 	int teller = 0;
+	int ledig_teller = 0;
+
 	do {
 		if(teller > 0) 
 			cout << "Ankomstdato m> v>re st>rre enn avreise dato" << endl;
@@ -773,7 +781,6 @@ void vis_alle_ledige_rom_i_kategori() {
 			break;
 		}
 
-		//Henter ut alle reservasjoner innen for et bestemt rom.
 		if(rommet->ledig(ankomst_dato, avreise_dato)) {
 			rommet->display();
 			//Legger rommet tilbake i listen.
@@ -781,6 +788,7 @@ void vis_alle_ledige_rom_i_kategori() {
 
 		} else {
 			//Legger rommet tilbake i listen.
+			ledig_teller;
 			hotellet->get_rom(rom_kat)->add(rommet);
 		}
 		
@@ -788,7 +796,9 @@ void vis_alle_ledige_rom_i_kategori() {
 	
 	if(counter == 0) 
 		cout << "Det finnes ingen rom i denne kategorien." << endl;
-		
+	
+	if(counter != 0 && ledig_teller == 0) 
+		cout << "Det finnes ingen ledige rom i denne kategorien" << endl;
 }
 
 bool is_rom_category(string rom_kategori) {
@@ -805,12 +815,11 @@ bool is_rom_category(string rom_kategori) {
 }
 
 void skriv_til_fil() {
-	string fil = getln("Skriv inn navnet p> filen");
-	ofstream utfil(fil);
+	ofstream utfil(hotellet->get_filnavn() + ".DTA");
 	if (utfil.is_open()) 	// Åpner filen
 		hotellet->skriv_til_fil(&utfil);
-   
     utfil.close();
+	cout << "Hotellet ble skrevet til fil";
 }
 
 void bytt_hotell() {
@@ -874,14 +883,4 @@ void opprett_reg_post() {
 		}
 		reg_post = Reg_post(antall, vanlige_poster);
 	}
-}
-
-void les_fra_fil() {
-    char* fil;
-	fil = new char[strlen(HOTELL_FIL)+1];
-	strcpy(fil, HOTELL_FIL);
-
-    hotellet = new Hotell(fil);
-    hotellet->display();
-    
 }
