@@ -46,7 +46,7 @@ Reservasjon::Reservasjon(int ankomst,	//ankomstdato
 										//Regner ut antall døgn
 	antall_dogn = timer.forskjell_datoer(number, avreise_dato);
     
-    Pris* prs = new Pris(number, avreise_dato);	//lager et nytt pris-objekt
+    Pris* prs = new Pris();	//lager et nytt pris-objekt
     int dato = ankomst;
 
     for(int i = 0; i < antall_dogn; i++) {  //Looper igjennom alle døgnene

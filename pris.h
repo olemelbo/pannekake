@@ -5,6 +5,11 @@
 //  Created by Emil Kjelsrud on 4/16/13.
 //  Copyright (c) 2013 Emil Kjelsrud. All rights reserved.
 //
+//  Denne klassen er til for å hente ut
+//  egendefinerte priser for hvert hotell.
+//  Det kan lagres både standardpriser og et
+//  vilkårlig antall spesialpriser for gitte tidsperioder.
+//
 
 #ifndef __pris_H
 #define __pris_H
@@ -35,8 +40,8 @@ private:
     
 public:
     Pris();
-    Pris(int ankomst, int avreise);
     ~Pris();
+    //henter pris for angitt romtype ved spesifikk dato.
     int hent_pris(int romtype, int dato);
 };
 
