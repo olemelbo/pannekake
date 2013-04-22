@@ -9,15 +9,15 @@ using namespace std;
 
 //	Globale variable
 Hotell* hotellet;	// Et hotell
-Reg_post reg_post;
-Timer timer;
-int dagens_dato = timer.hent_dato();
+Reg_post reg_post;	// Et reg_post objekt
+Timer timer;		// Et timer objekt
+int dagens_dato = timer.hent_dato();	// Dagensdato
 
 int main( void ) {
     bytt_hotell();
 	skriv_meny();
 	
-	char kommando = les_kommando();	//Må endres til å ta tre tegn.
+	char kommando = les_kommando();	
 
 	//  Looper til 'q'/'Q' tastes:
 	while (kommando != 'Q')  {
