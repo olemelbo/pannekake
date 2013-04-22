@@ -283,17 +283,23 @@ void utsjekking() {
 	
 	
 	//Looper igjennom romtyper
-	for(int i = 0; i < ANTALL_ROMTYPER; i++) { 
+	for(int i = 0; i < ANTALL_ROMTYPER; i++) {
+        
 		//Finner hotellets rom
 		int antall_rom_i_kategori = hotellet->get_rom(i)->no_of_elements();
 		for (int j = 1;  j <= antall_rom_i_kategori;  j++)  { 
-			//Trekker ut et rom av lista.
+			
+            //Trekker ut et rom av lista.
 			rommet = (Rom*) hotellet->get_rom(i)->remove_no(j);
+            
 			//Henter ut alle reservasjoner innen for et bestemt rom.
 			int antall_reservasjoner = rommet->get_reservasjoner()->no_of_elements();
-			for (int k = 1;  k <= antall_reservasjoner;  k++)  {  
+			for (int k = 1;  k <= antall_reservasjoner;  k++)  {
+                
 				//Henter reservasjon ut fra rommet.
-				reservasjon = (Reservasjon*) rommet->get_reservasjoner()->remove_no(k); 
+				reservasjon = (Reservasjon*) rommet->get_reservasjoner()->remove_no(k);
+                rommet->get_reservasjoner()->add(reservasjon);
+                
 				if(rommet->getRomNummer() == rom_nummer) {
 					er_rom = true;	// Det finnes et rom med romnummret.
 					// Sjekker om reservat>ren er innsjekket.
@@ -306,18 +312,15 @@ void utsjekking() {
 
 							reservasjon->set_seng_status(0);
 							reservasjon->set_utsjekk();
-							string filnavn = hotellet->get_filnavn();
-							reservasjon->skriv_faktura_til_fil(filnavn);
+							reservasjon->skriv_faktura_til_fil(hotellet->get_filnavn() + ".HST");
 						
-						
+                            
 						} else {
 							cout << "Reservasjonen har ikke avreisedato i dag. Avreisedatoen er: " << reservasjon->getAvreiseDato() << endl;
 							rommet->get_reservasjoner()->add(reservasjon);
 						} // end avreisdato == dagens_dato
 					} // end innsjekket	
-				} else {
-					rommet->get_reservasjoner()->add(reservasjon);
-				} // end getromnummer
+				}
 			} // end for reservasjoner
 			hotellet->get_rom(i)->add(rommet);
 		} // end for rom

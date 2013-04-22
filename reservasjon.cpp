@@ -292,7 +292,7 @@ void Reservasjon::skriv_faktura_til_fil(string fil){
 									//looper gjennom antall regninger
 	for (int j = 1;  j <= regninger->no_of_elements();  j++)  { 
 									//henter ut regning
-		Regning* regning = (Regning*) regninger->remove_no(j);
+		Regning* regning = (Regning*) regninger->remove();
 		tot_regninger += regning->hent_sum();	//henter summen på regningen
 		regninger->add(regning);	//legger regningen tilbake i listen
 	}
@@ -304,9 +304,16 @@ void Reservasjon::skriv_faktura_til_fil(string fil){
 									//regner ut totalen
 	total = overnatting + tot_regninger + pris_frokost + pris_seng;
 	
-	ofstream utfil(fil);
-	utfil.open( fil.c_str(), ios::out | ios::app );
-												//skriver ut fakturaen
+	fstream utfil(fil);
+    
+    utfil.open(fil.c_str(), fstream::app);
+    
+	if(!utfil.is_open()) {
+        cout << "\nKunne ikke skrive til filen " << fil;
+        return;
+    }
+	
+    //skriver ut fakturaen
 	utfil << "--------------FAKTURA--------------\n"
 			<< "Ankomst-dato: " << number << "\n"	
 			<< "Avreise-dato: " << avreise_dato << "\n"
