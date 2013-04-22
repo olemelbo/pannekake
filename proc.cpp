@@ -332,7 +332,9 @@ void utsjekking() {
 	}
 }
 
-
+/**
+ *	Registerer en regning paa et rom
+ */
 void registrer_regning() {
 	Rom* rommet;
 	Reservasjon* reservasjon;
@@ -340,26 +342,34 @@ void registrer_regning() {
 	char *cstr;
 	int rom_nummer = read_int("Skriv inn romnummeret");
 	bool er_rom_nummer = false;
+	
+	// Looper paa antall rom typer.
 	for(int i = 0; i < ANTALL_ROMTYPER; i++) { 
 		//Finner hotellets rom
 		int antall_rom_i_kategori = hotellet->get_rom(i)->no_of_elements();
 		for (int j = 1;  j <= antall_rom_i_kategori; j++)  { 
-			rommet = (Rom*) hotellet->get_rom(i)->remove_no(j);	
+			// Trekker ut et rom fra listen over rom.
+			rommet = (Rom*) hotellet->get_rom(i)->remove_no(j);
+			// Sjekker romnummeret
 			if(rommet->getRomNummer() == rom_nummer) {
 				er_rom_nummer = true;
+
+				// Henter ut reservasjoner
 				int antall_reservasjoner = rommet->get_reservasjoner()->no_of_elements();
 				for (int k = 1;  k <= antall_reservasjoner;  k++)  {  
 					//Henter reservasjon ut fra rommet.
 					reservasjon = (Reservasjon*) rommet->get_reservasjoner()->remove_no(k); 
+					// Sjekker omr reservasjonen er innsjekket
 					if(reservasjon->er_innsjekket()) {
-						reg_post.display();
+						reg_post.display();	// Displayer reg post
 						int menunr = read_int("Skriv inn nr fra menyelementet over. Dersom du >nsker aa skrive inn egen beskrivelse, skriv en bokstav\n");
+							// Sjekker om brukren skrev inn en numerisk verdi.
 							if(menunr == -1){
-								// user didn't input a number
 								string beskrivelse = getln("Skriv inn egen beskrivelse");
+								// Gjør om string til char for å få brukt listtool.
 								cstr = new char[beskrivelse.length() + 1];
 								strcpy(cstr, beskrivelse.c_str());
-							
+
 							} else{
 								
 								//Brukeren skrev inn et nr
@@ -368,14 +378,16 @@ void registrer_regning() {
 								strcpy(cstr, post_beskrivelse.c_str());
 							} // end menur else
 
+							// Leser inn regningens beløp
 							float pris = read_float("Skriv inn regningens bel>p");
-
+							// Oppretter et nytt regning objekt
 							regning = new Regning(cstr, pris);
 							cout << "Regningen ble velykket lagt til" << endl;
-							delete [] cstr;
+							delete [] cstr;	// Frigir minne
 						} else {
 						cout << "Det er ingen som bor p> dette rommet for >yeblikket" << endl;
 					} // end innsjekket else
+					// Legger reservasjonen tilbake
 					rommet->get_reservasjoner()->add(reservasjon);
 				} // end for reservasjoner
 				
@@ -702,8 +714,11 @@ void rom_ledig() {
     }
 }
 
+// Kristin
+
 /** Metode som viser alle reservasjonene for et rom
  */
+
 void vis_reservasjoner_for_rom() {
 	Rom* rommet;
 	Reservasjon* reservasjon;
