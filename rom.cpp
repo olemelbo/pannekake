@@ -49,7 +49,8 @@ Rom::~Rom() {
 }
 
 /**
- *	Skriver
+ *	Skriver rommet til fil.
+ *	@param ostream* ut
  */
 void Rom::skriv_til_fil(ostream* ut) {
 	
@@ -59,15 +60,17 @@ void Rom::skriv_til_fil(ostream* ut) {
         << reservasjoner->no_of_elements() << "\n";
     
     Reservasjon* temp;
-    
+    // Looper igjennom antall reservasjoner
 	for (int i = 1;  i <= reservasjoner->no_of_elements();  i++)  {
-		temp = (Reservasjon*) reservasjoner->remove_no(i);
-		temp->skriv_til_fil(ut);
-		reservasjoner->add(temp); 
+		temp = (Reservasjon*) reservasjoner->remove_no(i);	// Henter ut en reservasjon
+		temp->skriv_til_fil(ut);		// Skriver reservasjonen til fil
+		reservasjoner->add(temp);	// Legger reservasjonen tilbake i listen
 	}
 
 }
-
+/**
+ *	Displayer rommet.
+ */
 void Rom::display() {
 	cout << "Romnummer: " << number << endl;
 	cout << "Antall senger: " << ant_senger << endl;
@@ -78,34 +81,44 @@ void Rom::display() {
 	}
 }
 
+/**
+ *	Sjekker om rommet er ledig 
+ */
 bool Rom::ledig(int ankomst) {
-	
+	// Henter ut antall reservasjoner
     int antall_reservasjoner = reservasjoner->no_of_elements();
     bool ledig = true;
-    
+    // Looper gjennom alle reservasjoner
     for(int i = 0; i < antall_reservasjoner; i++) {
+		// Henter ut en reservasjon
         Reservasjon* reservasjon = (Reservasjon*) reservasjoner->remove_no(i);
-        if(ankomst > reservasjon->getAnkomstDato() && ankomst < reservasjon->getAvreiseDato()) {
+        // Sjekker om tidsperioden er ledig.
+		if(ankomst > reservasjon->getAnkomstDato() && ankomst < reservasjon->getAvreiseDato()) {
             ledig = false;
         }
+		// Legger reservasjonen tilbake i listen med reservasjoner
         reservasjoner->add(reservasjon);
     }
     
-    return ledig;
+    return ledig;	// Retunerer true eller false.
 }
 
+/**
+ *	Sjekker om rom er ledig i en tidsperiode
+ *	@param int ankomst		ankomstdato
+ *	@param int avreise		avreisedato
+ *	@return bool			retunerer om perioden er ledig eller ikke
+ */
 bool Rom::ledig(int ankomst, int avreise) {
 	Reservasjon* reservasjon;
-    // Denne er midlertidig.
-    // Skal seienere sjekke reservasjoner
-    // og kalkulere om den faktisk er ledig.
-
+	// Antall reservasjoner
 	int antall_reservasjoner = reservasjoner->no_of_elements();
 	for(int j = 1; j <= antall_reservasjoner; j++) {
-		reservasjon = (Reservasjon*) reservasjoner->remove_no(j); 
-		if(ankomst <= reservasjon->getAvreiseDato() && avreise >= reservasjon->getAnkomstDato())
+		reservasjon = (Reservasjon*) reservasjoner->remove_no(j);	// Henter ut en reservasjon
+		// Sjekker om perioden er ledig
+		if(ankomst <= reservasjon->getAvreiseDato() && avreise >= reservasjon->getAnkomstDato())	
             return false;
-        
+		// Legger reservasjonen tilbake i listen over reservasjoner
         reservasjoner->add(reservasjon);
 	}
     
@@ -113,10 +126,18 @@ bool Rom::ledig(int ankomst, int avreise) {
     
 }
 
+/**
+ * Returnerer romnummretet
+ * @return int number romnummer
+ */
 int Rom::getRomNummer() {
 	return number;
 }
 
+/**
+ *	Retunerer listen med rom
+ *	@return reservasjoner
+ */
 List* Rom::get_reservasjoner() {
     return reservasjoner;
 }

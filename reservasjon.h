@@ -8,28 +8,32 @@
 #include "rom.h"
 using namespace std;
 
+/** Klassen Reservasjon inneholder informasjon om romtype, avreise- og ankomst-dato, 
+ *  priser per døgn, regniner, status for ekstra seng og frokost,
+ *  antall beboere, navn på beboere og status for innsjekking
+ */
 class Reservasjon : public Num_element {
 	private:
-		int romtype;
-		int avreise_dato;
-		int antall_dogn;
-		float pris[MAX_ARRAY];
-		List* regninger;
-		int status_seng;
-		int status_frokost;
-		int antall_beboere;
-		string navn[MAX_ARRAY];
-		bool innsjekket;
+		int romtype;		//romtype[singel, dobbel, suite]
+		int avreise_dato;	//avreise-dato
+		int antall_dogn;	//avreise-dato
+		float pris[MAX_ARRAY];	//array med priser per døgn for overnatting
+		List* regninger;	//liste med regninger
+		int status_seng;	//status for ekstra seng
+		int status_frokost;	//status for frokost
+		int antall_beboere;	//antall beboere
+		string navn[MAX_ARRAY];	//array med navn på beboere
+		bool innsjekket;	//om reservasjonen er innsjekket
 	public:
     Reservasjon();
 
     Reservasjon(int ankomst, int avreise, int romt, bool frokost, bool seng, int ant_beboere, string beboere[MAX_ARRAY]);
     
     Reservasjon(int ankomst, ifstream &file);
+
     ~Reservasjon();
 
 	bool is_name_in_array(string name);
-
 	int getAnkomstDato();
 	int getAvreiseDato();
 	void setAntallBeboere(int ant);

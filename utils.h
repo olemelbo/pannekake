@@ -2,8 +2,7 @@
 //  utils.h
 //  Prosjekt
 //
-//  Created by Emil Kjelsrud on 4/3/13.
-//  Copyright (c) 2013 Emil Kjelsrud. All rights reserved.
+//	Created by Emil Kjelsrud, Kristin Annabel Folland and Ole Christian Melbostad
 //
 
 #ifndef __utils__H
