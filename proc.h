@@ -6,7 +6,7 @@
 #include <string>
 using namespace std;
 
-//  PROSEDYREDEKLARASJON:st
+//  PROSEDYREDEKLARASJONER:
 char les_kommando();
 void skriv_meny();
 void reserver_rom();

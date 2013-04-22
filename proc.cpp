@@ -18,11 +18,17 @@ using namespace std;
 extern Hotell* hotellet;
 extern int dagens_dato;
 extern Reg_post reg_post;
-
+/**
+ *	Leser inn char
+ *  @return char
+ */
 char les_kommando() {
     return read_char("Tast inn kommando");
 }
 
+/**
+ *	Skriver ut hovedmenyen for programmet.
+ */
 void skriv_meny()  {
 	cout << "\n\nF>lgende kommandoer er lovlig:";
 	cout << "\n\tB - Bestill/reserver/book et rom";
@@ -43,39 +49,47 @@ void skriv_meny()  {
 	cout << "\n\tT - Skriv alt om hotellet til fil";
 	cout << "\n\tH - Bytte over til et annet hotell";
 }
-
+/**
+ *	Funksjon som reserverer/booker et rom.
+ */
 void reserver_rom() {
 	Reservasjon *temp;
 
 	string romtype_tmp;
+	// Sp>r etter romtype
 	romtype_tmp = getln("Hvilken romtype >nsker du? [Singel/Dobbel/Suite]");
     
     int romtype = 0;
 	if(romtype_tmp.compare("Singel") == 0)
-        romtype = SINGEL;
+        romtype = SINGEL;	// Setter romtype til singel
     if(romtype_tmp.compare("Dobbel") == 0)
-        romtype = DOBBEL;
+        romtype = DOBBEL;	// Setter romtype til dobbel
     if(romtype_tmp.compare("Suite") == 0)
-        romtype = SUITE;
+        romtype = SUITE;	// Setter romtype til suite
 
 	int ankomstdato = 0;
 	int avreisedato = 0;
 	int teller = 0;
+
+	// Leser inn ankomstdato og avreisedato.
 	do {
 		if(teller > 0)
 			cout << "Avreisedato m> v>ere st>rre enn ankomstdato" << endl;
 		ankomstdato = read_int("Skriv inn annkomstdato[AAAAMMDD]");
 		avreisedato = read_int("Skriv inn avreisedato[AAAAMMDD]");
 		teller++;
+	// Looper til det blir skrevet inn en gyldig ankomstdato.
 	} while(!gyldig_ankomst(ankomstdato, avreisedato, dagens_dato));
 
 	bool frokost = false;
+	// Leser inn om beboeren >sker frokost eller ikke.
 	char onskerfrokost = read_char(">nsker du frokost? [y/n]");
 	if(onskerfrokost == 'Y'){
 		frokost = true;
 	}
-	
+
 	bool ekstraseng = false;
+	// Sjekker om romtype er dobbeltrom.
 	if(romtype == DOBBEL){
 		char onskerekstraseng = read_char("Er det behov for en ekstra seng? [y/n]");
 		if(onskerekstraseng == 'Y'){
@@ -92,16 +106,20 @@ void reserver_rom() {
         cout << "Det finnes ingen ledige rom i denne kategorien\n";
         return;
     }
-     
+    
+	// Oppretter array med beboere.
     string beboere[MAX_ARRAY];
 	int counter = 0;
 	string input;
+	// Skriver inn navnet på antall beboere.
 	do {
 		input = getln("Skriv inn navnet p> beboer", counter + 1);
+		// Teller opp hvis brukeren ikke har trykket på enter
 		if(!did_the_user_press_enter(input)) {
 			beboere[counter] = input;
 			counter++;
 		}
+	// Looper til brukeren har trykket på enter og antall bebebore er over 1.
 	} while(ingen_beboere(input, counter));
 
 
@@ -112,14 +130,20 @@ void reserver_rom() {
     r->get_reservasjoner()->add(temp);
 
 	cout << "Reservasjonen ble velykket opprettet!" << endl;
-	temp->display(r);
+	temp->display(r);	// Displayer rom.
 }
 
+/**
+ *	Avbestiller reservasjon/booking
+ *
+ */
 void avbestill_rom() {
 	Rom* rommet;
 	Reservasjon* reservasjon;
 	char temp;
 	int counter = 0;
+	
+	// Skriver inn reservat>ens navn
 	string navn = getln("Skriv inn reservat>ens navn");
 	//Looper igjennom romtyper
 	for(int i = 0; i < ANTALL_ROMTYPER; i++) { 
@@ -137,6 +161,7 @@ void avbestill_rom() {
 					counter++;
 					//Displayer reservasjonen
 					reservasjon->display();
+					// Brukeren maa svare ja eller nei om reservasjonen skal slettes.
 					do {
 						temp = read_char("Skal reservasjonen slettes?[Y/N]");
 					} while(!temp == 'Y' && !temp == 'N');
@@ -144,12 +169,15 @@ void avbestill_rom() {
 					if(temp == 'Y') {
 						cout << "Reservasjonen ble fjernet" << endl;
 					} else {
+						// Reservasjonen skal ikke fjernes. Legger den tilbake i listen.
 						rommet->get_reservasjoner()->add(reservasjon);
 						cout << "Reservasjonen ble ikke fjernet" << endl;
 					} 
 				}	// endif 
+				// Legger reservasjonen tilbake i rommet
 				rommet->get_reservasjoner()->add(reservasjon);
 			} // end for
+			// Legger rommet tilbake i listen over rom
 			hotellet->get_rom(i)->add(rommet);
 		}	// end for
 	} // end for
@@ -158,12 +186,15 @@ void avbestill_rom() {
 	}
 }
 
+/**
+ *	Innsjekker beboeren paa rommet han/hun har reservert / booket.	
+ */
 void innsjekking() {
 	Rom* rommet;
 	Reservasjon* reservasjon;
 	int navn_teller = 0;
 	int ankomst_teller = 0;
-
+	// Henter navnet paa reservat>eren
 	string navn = getln("Skriv inn reservat>ens navn");
 	//Looper igjennom romtyper
 	for(int i = 0; i < ANTALL_ROMTYPER; i++) { 
@@ -195,10 +226,12 @@ void innsjekking() {
 							do {
 								antall += 1;
 								input = getln("Skriv inn navnet p> beboer", antall);
+								// Telelr bare opp hvis brukeren ikke har trykket paa enter.
 								if(!did_the_user_press_enter(input)) {
 									beboere[teller] = input;
 									teller++;
 								}
+							// Looper til brukeren har trykket på enter.
 							} while(!did_the_user_press_enter(input));
 	
 							
@@ -206,9 +239,11 @@ void innsjekking() {
 							reservasjon->setBeboere(beboere, teller);
 							// Displayer reservasjon
 							reservasjon->display();
+							// Setter status paa seng.
 							if(reservasjon->get_status_seng() == 1)
 								reservasjon->set_seng_status(2);
-							reservasjon->set_innsjekk();
+							reservasjon->set_innsjekk();		// Sjekker inn beboren paa rommet.
+							// Legger reservasjon til 
 							rommet->get_reservasjoner()->add(reservasjon);
 			
 					} else {
@@ -230,13 +265,22 @@ void innsjekking() {
 		cout << "Personen du s>kte etter har ingen reservasjoner paa dagens dato" << endl;
 }
 
-
+/**
+ * Sjekker ut en person av rommet han/hun har reservert.
+ */
 void utsjekking() {
 	Rom* rommet;
 	Reservasjon* reservasjon;
 	int counter_rom = 0;
-	int rom_nummer = read_int("Skriv inn rommnummeret");
 	int checked_in = 0;
+	// Henter romnummeret.
+	int rom_nummer = read_int("Skriv inn rommnummeret");
+	// Sjekker om input er et gyldig romnummer
+	if(rom_nummer == -1) {
+		cout << "Du skrev ikke inn et gyldig romnummer" << endl;
+		return;
+	}
+	
 	
 	//Looper igjennom romtyper
 	for(int i = 0; i < ANTALL_ROMTYPER; i++) { 
@@ -495,7 +539,15 @@ void bytt_rom() {
 	Reservasjon* reservasjon;
 	int res_counter = 0;
 	int rom_counter = 0;
-	int rom_nummer = read_int("Skriv inn romnummeret");
+	int rom_nummer = 0;
+	
+	rom_nummer = read_int("Skriv inn romnummeret");
+	
+	if(rom_nummer == -1) {
+		cout << "Du skrev ikke inn et tall!" << endl;
+		return;
+	}
+
 	bool byttet = false;
 
 	//Looper igjennom romtyper
@@ -640,8 +692,7 @@ void rom_ledig() {
         Reservasjon* res2 = (Reservasjon*) reservasjoner->remove_no(i+1);
         reservasjoner->add(res2);
         
-        cout << "Rommet er ledig fra" << res1->getAvreiseDato() << " til " << res2->getAnkomstDato() << endl;
-        
+        cout << "Rommet er ledig fra" << res1->getAvreiseDato() << " til " << res2->getAnkomstDato() << endl;    
     }
 }
 
@@ -651,6 +702,10 @@ void vis_reservasjoner_for_rom() {
 	int counter_rom = 0;
 	int counter_res = 0;
 	int rom_nummer = read_int("Skriv inn rommnummeret");
+	if(rom_nummer == -1) {
+		cout << "Du skrev ikke inn et gyldig romnummer" << endl;
+		return;
+	}
 	
 	//Looper igjennom romtyper
 	for(int i = 0; i < ANTALL_ROMTYPER; i++) { 
@@ -682,6 +737,10 @@ void vis_reservasjoner_for_rom() {
 
 void vis_navarende_beboer() {
     int romnr = read_int("Angi romnummer");
+	if(romnr == -1) {
+		cout << "Du skrev ikke inn et gyldig romnummer" << endl;
+		return;
+	}
     
     Rom* rom = (Rom*) hotellet->get_spesifikk_rom(romnr);
     
