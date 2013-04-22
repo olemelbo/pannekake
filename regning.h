@@ -4,12 +4,16 @@
 #include <fstream>
 #include <string>
 using namespace std;
-
+/**
+ *	Regning inneholder totalsum og sender teksten for hva regningen gjelder til Text_element
+ */
 class Regning : public Text_element {
 
 	private:
-		float totalsum;
-	public:
+		float totalsum; // Totalsum for regning.
+		
+
+public:
     Regning();
     Regning(char* nvn, float total);
     Regning(char* nvn, ifstream &file);
