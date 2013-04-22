@@ -232,6 +232,7 @@ Rom* Hotell::get_ledig_rom(int romtype, int ankomst, int avreise) {
             rommet = (Rom*) rom[romtype]->remove_no(i);
 			er_ledig = rommet->ledig(ankomst, avreise);
             rom[romtype]->add(rommet);
+            if(er_ledig) break;
         }
     }
     

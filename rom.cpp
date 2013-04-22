@@ -105,6 +105,8 @@ bool Rom::ledig(int ankomst, int avreise) {
 		reservasjon = (Reservasjon*) reservasjoner->remove_no(j); 
 		if(ankomst <= reservasjon->getAvreiseDato() && avreise >= reservasjon->getAnkomstDato())
             return false;
+        
+        reservasjoner->add(reservasjon);
 	}
     
     return true;
