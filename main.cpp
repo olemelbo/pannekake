@@ -55,7 +55,7 @@ int main( void ) {
 		 case 'T' : skriv_til_fil();
 		break;
 		 case 'H' :
-                    // skriv_til_fil();
+                    skriv_til_fil();
                     bytt_hotell();
 					skriv_meny();
 		break;	

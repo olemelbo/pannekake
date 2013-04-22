@@ -60,16 +60,18 @@ Reservasjon::Reservasjon(int ankomst,
         status_seng = 0;
     }
 
-	if(frokost == true){
+	if(frokost == true)
 		status_frokost = 1;
-	}
-	else status_frokost = 0;
+	else
+        status_frokost = 0;
 	
 	antall_beboere = ant_beboere;
     
     for(int i = 0; i < ant_beboere; i++) {
         navn[i] = beboere[i];
     }
+    
+    regninger = new List(FIFO);
 }
 
 Reservasjon::Reservasjon(int ankomst, ifstream &file): Num_element(ankomst) {
@@ -138,6 +140,8 @@ void Reservasjon::les_fra_fil() {
 void Reservasjon::skriv_til_fil(ostream* ut) {
 	*ut << number << "\n"
         << avreise_dato << "\n"
+        << romtype << "\n"
+        << innsjekket << "\n"
 		<< antall_dogn << "\n";
     
     for(int i = 0; i < antall_dogn; i++) {

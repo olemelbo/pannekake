@@ -187,19 +187,26 @@ List* Hotell::get_rom(int romtype) {
  */
 Rom* Hotell::get_spesifikk_rom(int romnr) {
 	// Looper igjennom antall rom typer
+    Rom* rom = NULL;
+    
     for(int kat = 0; kat < ANTALL_ROMTYPER; kat++) {
-		// Looper gjennom alle rom innen for en kategori
-        for(int j = 1; j <= get_rom(kat)->no_of_elements(); j++) {
-			// Sjekker om romnummeret er i listen av rom
-            if(get_rom(kat)->in_list(romnr)) {
+        
+        // Sjekker om romnummeret er i listen av rom
+        if(get_rom(kat)->in_list(romnr)) {
+            
+            // Looper gjennom alle rom innen for en kategori
+            for(int j = 1; j <= get_rom(kat)->no_of_elements(); j++) {
+                
                 Rom* r = (Rom*) get_rom(kat)->remove_no(j); // Henter ut rommet
                 get_rom(kat)->add(r); // Legger det tilbake i kategorien
-                return r; // returnerer rommet.
+                
+                if(r->getRomNummer() == romnr)
+                    rom = r;
             }
         }
     }
     
-    return NULL;
+    return rom;
 }
 
 string Hotell::get_filnavn() {

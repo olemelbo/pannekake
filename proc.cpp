@@ -614,60 +614,35 @@ void vis_alle_reservasjoner_for_person() {
 
 void rom_ledig() {
 	Rom* rommet;
-	Reservasjon* reservasjon;
 	int rom_nummer = read_int("Skriv inn rommnummeret");
-	int avreise = 0;
-	int ankomst = 0;
-	int rom_teller = 0;
-	int reservasjon_teller = 0;
-	for(int i = 0; i < ANTALL_ROMTYPER; i++) { 
-		//Finner hotellets rom
-		int antall_rom_i_kategori = hotellet->get_rom(i)->no_of_elements();
-		for (int j = 1;  j <= antall_rom_i_kategori;  j++)  { 
-			//Trekker ut et rom av lista.
-			int teller = 1;
-			rommet = (Rom*) hotellet->get_rom(i)->remove_no(j);
-			//Henter ut alle reservasjoner innen for et bestemt rom.
-			if(rommet->getRomNummer() == rom_nummer) {
-				rom_teller++;
-				int antall_reservasjoner = rommet->get_reservasjoner()->no_of_elements();
-				for (int k = 1;  k <= antall_reservasjoner;  k++)  {  
-					//Henter reservasjon ut fra rommet.
-					reservasjon_teller++;
-					reservasjon = (Reservasjon*) rommet->get_reservasjoner()->remove_no(k); 
-					
-
-					if(teller %2 == 1) {
-						if(antall_reservasjoner == 1) {
-							if(reservasjon->getAnkomstDato() > dagens_dato) {
-								cout << "Rommet er ledig fra : " << dagens_dato << " - " << reservasjon->getAnkomstDato() << endl;
-								cout << "Rommet er ledig fra : " << reservasjon->getAvreiseDato() << " - " << endl;
-							} else { 
-								cout << "Rommet er ledig fra: " << reservasjon->getAvreiseDato() << " - " << endl;	
-							}
-							
-						} 
-						avreise = reservasjon->getAvreiseDato();
-					} else {
-						ankomst = reservasjon->getAnkomstDato();
-						reservasjon->ledig_i_tidsperiode(avreise, ankomst, teller, antall_reservasjoner);
-					} 
-					
-					rommet->get_reservasjoner()->add(reservasjon);
-					teller++;
-				
-				} // End antall reservasjoner 
-				hotellet->get_rom(i)->add(rommet);
-			} else {
-				hotellet->get_rom(i)->add(rommet);
-			}
-		} // Antall rom i kategori
-	} // Antall rom typer
-
-	if(rom_teller == 0) 
-		cout << "Det finnes ingen rom med det romnummeret" << endl;
-	if(!rom_teller == 0 && reservasjon_teller == 0) 
-		cout << "Rommet er ledig fra : " << dagens_dato << " - " << endl;
+    
+    rommet = (Rom*) hotellet->get_spesifikk_rom(rom_nummer);
+    
+    if(!rommet) {
+        cout << "\nRom " << rom_nummer << " finnes ikke i dette hotellet";
+        return;
+    }
+    
+    List* reservasjoner = rommet->get_reservasjoner();
+    int antall_reservasjoner = reservasjoner->no_of_elements();
+    
+    for(int i = 1; i <= antall_reservasjoner; i++) {
+        
+        Reservasjon* res1 = (Reservasjon*) reservasjoner->remove_no(i);
+        reservasjoner->add(res1);
+        
+        //Hvis siste, så vises rommet som ledig fra og med avreisedato
+        if(i == antall_reservasjoner) {
+            cout << "Rommet er ledig fra og med: " << res1->getAvreiseDato() << endl;
+            break;
+        }
+        
+        Reservasjon* res2 = (Reservasjon*) reservasjoner->remove_no(i+1);
+        reservasjoner->add(res2);
+        
+        cout << "Rommet er ledig fra" << res1->getAvreiseDato() << " til " << res2->getAnkomstDato() << endl;
+        
+    }
 }
 
 void vis_reservasjoner_for_rom() {
@@ -715,18 +690,19 @@ void vis_navarende_beboer() {
         return;
     }
     
-
-	if(!rom->ledig(dagens_dato)) {
-        List* reservasjoner = rom->get_reservasjoner();
-        for(int i = 1; i <= reservasjoner->no_of_elements(); i++) {
-            Reservasjon* res = (Reservasjon*) reservasjoner->remove_no(i);
-            if(res->er_innsjekket()) {
-                res->display();
-            } else {
-                cout << "\n Personen er ikke innsjekket enda.";
-            }
-            reservasjoner->add(res);
-        }
+    bool har_vist_reservasjon = false;
+    List* reservasjoner = rom->get_reservasjoner();
+    for(int i = 1; i <= reservasjoner->no_of_elements(); i++) {
+        Reservasjon* res = (Reservasjon*) reservasjoner->remove_no(i);
+        if(res->er_innsjekket()) {
+            res->display();
+            har_vist_reservasjon = true;
+        } 
+        reservasjoner->add(res);
+    }
+    
+    if(!har_vist_reservasjon) {
+        cout << "\n Personen er ikke innsjekket enda.";
     }
 }
 
