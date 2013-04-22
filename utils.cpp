@@ -66,7 +66,7 @@ int read_int(string promt) {
 	cout << endl << promt << ": ";
 	string result;
     getline(cin,result);
-	if(cin.fail()){//dersom det ikke ble skrevet inn et tall
+	if ( !isdigit(result[0]) ) {
 		return -1;
 	}
 	else{//dersom det ble skrevet inn et tall
