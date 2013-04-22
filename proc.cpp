@@ -235,7 +235,6 @@ void utsjekking() {
 	Rom* rommet;
 	Reservasjon* reservasjon;
 	int counter_rom = 0;
-	int counter_res = 0;
 	int rom_nummer = read_int("Skriv inn rommnummeret");
 	int checked_in = 0;
 	
@@ -788,7 +787,7 @@ void vis_alle_ledige_rom_i_kategori() {
 
 		} else {
 			//Legger rommet tilbake i listen.
-			ledig_teller;
+			ledig_teller++;
 			hotellet->get_rom(rom_kat)->add(rommet);
 		}
 		
@@ -852,7 +851,7 @@ string does_hotell_exist_in_file(ifstream& infile, string userinput )
             //Henter hele linjen fra filen
             getline(infile, orginal);
      
-			unsigned pos = orginal.find(" ");  
+			unsigned pos = (int) orginal.find(" ");
 
 			string kortnavn = orginal.substr(0,pos); 
 

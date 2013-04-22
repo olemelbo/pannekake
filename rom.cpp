@@ -99,7 +99,6 @@ bool Rom::ledig(int ankomst, int avreise) {
     // Denne er midlertidig.
     // Skal seienere sjekke reservasjoner
     // og kalkulere om den faktisk er ledig.
-	int forskell = timer.forskjell_datoer(ankomst, avreise);
 
 	int antall_reservasjoner = reservasjoner->no_of_elements();
 	for(int j = 1; j <= antall_reservasjoner; j++) {

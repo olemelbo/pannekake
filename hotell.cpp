@@ -89,7 +89,12 @@ Hotell::Hotell(string fil) {
 }
 
 Hotell::~Hotell() {
-	delete [] rom;	// Frigir minne
+    for(int i = 0; i < ANTALL_ROMTYPER; i++) {
+        for(int j = 1; j <= rom[i]->no_of_elements(); j++) {
+            Rom* rom_for_sletting = (Rom*) rom[i]->remove();
+            delete rom_for_sletting;
+        }
+    }
 }
 /**
  *	Skriver hotellet til fil
