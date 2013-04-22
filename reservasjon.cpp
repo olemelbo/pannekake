@@ -304,9 +304,9 @@ void Reservasjon::skriv_faktura_til_fil(string fil){
 									//regner ut totalen
 	total = overnatting + tot_regninger + pris_frokost + pris_seng;
 	
-	fstream utfil(fil);
+	ofstream utfil(fil);
     
-    utfil.open(fil.c_str(), fstream::app);
+    utfil.open(fil.c_str(), ios::out | ios::app);
     
 	if(!utfil.is_open()) {
         cout << "\nKunne ikke skrive til filen " << fil;
